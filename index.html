@@ -50,7 +50,22 @@
       opacity: .9;
     }
     .navbar .nav-link:hover{ opacity: 1; }
-    .brand-logo{ height: 80px; width: auto; }
+  .brand-logo{
+  height: 64px;
+  width: auto;
+  filter: drop-shadow(0 3px 8px rgba(0,0,0,.65));
+}
+
+@media (min-width: 992px){
+  .brand-logo{
+    height: 104px;   /* desktop = dominant brand */
+  }
+}
+
+.navbar{
+  padding-top: 22px;
+  padding-bottom: 22px;
+}
 
     /* BUTTONS */
     .btn-vam{
