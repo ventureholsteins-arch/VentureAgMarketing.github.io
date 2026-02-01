@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bartelt Angus • Lot Videos | Venture Ag Marketing</title>
+  <meta name="description" content="Bartelt Angus lot videos. Search lots and watch videos." />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    :root{
+      --vam-bg: #0B0B0B;
+      --vam-bg-2:#101010;
+      --vam-text:#F2F2F2;
+      --vam-muted: rgba(242,242,242,.72);
+      --vam-gold:#C9A45C;
+      --vam-gold-dark:#9F7C3B;
+      --vam-shadow: 0 14px 36px rgba(0,0,0,.20);
+    }
+    body{ font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; background:#F7F7F7; color:#111; }
+
+    /* TOP BAR */
+    .topbar{
+      background: rgba(11,11,11,.94);
+      color: var(--vam-text);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .topbar .title{
+      font-weight: 900;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      margin: 0;
+      font-size: .95rem;
+    }
+    .topbar small{ color: var(--vam-muted); }
+
+    /* CONTROLS */
+    .controls{
+      background: rgba(255,255,255,.70);
+      border: 1px solid rgba(0,0,0,.08);
+      border-radius: 18px;
+      box-shadow: 0 10px 26px rgba(0,0,0,.08);
+      padding: 14px;
+    }
+    .search{
+      border-radius: 14px;
+      border: 1px solid rgba(0,0,0,.12);
+      padding: 12px 14px;
+    }
+    .pill{
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,.14);
+      background: rgba(255,255,255,.80);
+      padding: 10px 12px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-size: .78rem;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .pill.active{
+      background: var(--vam-bg);
+      color: var(--vam-text);
+      border-color: rgba(255,255,255,.12);
+    }
+    .pill i{ color: var(--vam-gold-dark); }
+    .pill.active i{ color: var(--vam-gold); }
+
+    /* VIDEO CARDS */
+    .video-card{
+      border-radius: 18px;
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,.08);
+      box-shadow: var(--vam-shadow);
+      height: 100%;
+      transition: transform .12s ease, box-shadow .12s ease;
+    }
+    .video-card:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 18px 44px rgba(0,0,0,.22);
+    }
+    .thumb{
+      background:
+        radial-gradient(circle at 30% 20%, rgba(201,164,92,.26), rgba(0,0,0,0) 55%),
+        linear-gradient(135deg, #111 0%, #0b0b0b 50%, #151515 100%);
+      color: var(--vam-text);
+      padding: 18px;
+      position: relative;
+      min-height: 140px;
+      display:flex;
+      align-items:flex-end;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .lot-num{
+      font-weight: 900;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      font-size: .82rem;
+      color: rgba(242,242,242,.82);
+    }
+    .lot-big{
+      font-weight: 900;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      font-size: 2.1rem;
+      line-height: 1;
+      margin: 6px 0 0;
+      color: var(--vam-gold);
+      text-shadow: 0 6px 18px rgba(0,0,0,.35);
+    }
+    .play{
+      position:absolute;
+      right: 14px;
+      top: 14px;
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.14);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .play i{ color: var(--vam-gold); }
+
+    .card-body{
+      padding: 14px 16px 16px;
+    }
+    .lot-title{
+      font-weight: 900;
+      margin: 0 0 6px;
+      font-size: 1.02rem;
+    }
+    .meta{
+      color: rgba(0,0,0,.62);
+      font-size: .95rem;
+      margin: 0 0 12px;
+    }
+    .tag{
+      display:inline-block;
+      font-size: .74rem;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,.10);
+      background: rgba(0,0,0,.04);
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+
+    .btn-watch{
+      width: 100%;
+      border-radius: 14px;
+      background: var(--vam-gold);
+      border: 1px solid var(--vam-gold);
+      color: #0B0B0B;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 12px 14px;
+    }
+    .btn-watch:hover{
+      background: var(--vam-gold-dark);
+      border-color: var(--vam-gold-dark);
+      color: #0B0B0B;
+    }
+
+    .count{
+      color: rgba(0,0,0,.62);
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      font-size: .82rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Sticky Top Bar -->
+  <div class="topbar">
+    <div class="container py-3 d-flex flex-wrap align-items-center justify-content-between gap-2">
+      <div>
+        <p class="title mb-1">Bartelt Angus • Lot Videos</p>
+        <small>March 4 • Platte Livestock Market • Platte, SD</small>
+      </div>
+      <div class="d-flex gap-2 flex-wrap">
+        <a class="btn btn-outline-light btn-sm" href="sale-bartelt.html">
+          <i class="fa-solid fa-arrow-left"></i> Back to Sale Info
+        </a>
+        <a class="btn btn-outline-light btn-sm" href="./index.html#sales">
+          <i class="fa-solid fa-house"></i> Home
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <main class="py-5">
+    <div class="container">
+
+      <!-- Controls -->
+      <div class="controls mb-4">
+        <div class="row g-3 align-items-center">
+          <div class="col-12 col-lg-6">
+            <input id="searchInput" class="form-control search"
+              placeholder="Search: lot #, title, sire, notes… (ex: 12, heifer, Hoover, etc)">
+          </div>
+
+          <div class="col-12 col-lg-6 d-flex flex-wrap gap-2 justify-content-lg-end">
+            <div class="pill active" data-filter="all"><i class="fa-solid fa-layer-group"></i> All</div>
+            <div class="pill" data-filter="bull"><i class="fa-solid fa-dna"></i> Bulls</div>
+            <div class="pill" data-filter="heifer"><i class="fa-solid fa-cow"></i> Heifers</div>
+          </div>
+
+          <div class="col-12 d-flex justify-content-between align-items-center">
+            <div class="count" id="countText">0 lots</div>
+            <div class="count">Click a lot to watch</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video Grid -->
+      <div class="row g-4" id="grid"></div>
+
+    </div>
+  </main>
+
+  <script>
+    // ====== EDIT THIS LIST (15–20 lots) ======
+    // Put DV Auction / YouTube / Facebook video links in `url`
+    // type: "bull" or "heifer"
+    const lots = [
+      { lot: 1,  title: "Lot 1 • Bull",   type: "bull",   sire: "", notes: "", url: "https://www.dvauction.com/video_catalogs/12558" },
+      { lot: 2,  title: "Lot 2 • Bull",   type: "bull",   sire: "", notes: "", url: "https://www.dvauction.com/video_catalogs/12558" },
+      { lot: 3,  title: "Lot 3 • Heifer", type: "heifer", sire: "", notes: "", url: "https://www.dvauction.com/video_catalogs/12558" },
+      // ...add more lots here
+    ];
+
+    let activeFilter = "all";
+
+    const grid = document.getElementById("grid");
+    const searchInput = document.getElementById("searchInput");
+    const countText = document.getElementById("countText");
+
+    function matchesSearch(item, q){
+      if(!q) return true;
+      const hay = `${item.lot} ${item.title} ${item.type} ${item.sire || ""} ${item.notes || ""}`.toLowerCase();
+      return hay.includes(q);
+    }
+
+    function matchesFilter(item){
+      if(activeFilter === "all") return true;
+      return item.type === activeFilter;
+    }
+
+    function render(){
+      const q = searchInput.value.trim().toLowerCase();
+      const filtered = lots.filter(l => matchesFilter(l) && matchesSearch(l, q));
+
+      countText.textContent = `${filtered.length} lot${filtered.length === 1 ? "" : "s"}`;
+
+      grid.innerHTML = filtered.map(l => {
+        const tags = [
+          l.type ? `<span class="tag">${l.type}</span>` : "",
+          l.sire ? `<span class="tag">Sire: ${l.sire}</span>` : "",
+        ].join("");
+
+        const meta = [
+          l.sire ? `Sire: ${l.sire}` : "",
+          l.notes ? l.notes : ""
+        ].filter(Boolean).join(" • ");
+
+        return `
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="video-card">
+              <div class="thumb">
+                <div>
+                  <div class="lot-num">Lot</div>
+                  <div class="lot-big">${l.lot}</div>
+                </div>
+                <div class="play" aria-hidden="true"><i class="fa-solid fa-play"></i></div>
+              </div>
+              <div class="card-body">
+                <p class="lot-title">${l.title}</p>
+                <p class="meta">${meta || " "}</p>
+                <div>${tags}</div>
+                <a class="btn btn-watch mt-2" href="${l.url}" target="_blank" rel="noopener">
+                  Watch Video
+                </a>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    // filter pills
+    document.querySelectorAll(".pill").forEach(p => {
+      p.addEventListener("click", () => {
+        document.querySelectorAll(".pill").forEach(x => x.classList.remove("active"));
+        p.classList.add("active");
+        activeFilter = p.dataset.filter;
+        render();
+      });
+    });
+
+    searchInput.addEventListener("input", render);
+
+    render();
+  </script>
+</body>
+</html>
