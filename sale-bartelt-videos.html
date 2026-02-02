@@ -53,7 +53,7 @@
     }
     .btn-ghost:hover{ background: rgba(255,255,255,.10); color:#fff; }
 
-    /* Player */
+    /* Player Shell */
     .player-shell{
       border-radius: 18px;
       overflow: hidden;
@@ -80,8 +80,20 @@
       font-size: .95rem;
     }
     .player-sub{ margin: 0; color: rgba(242,242,242,.70); font-size: .92rem; }
-    .player-frame{ width:100%; height:100%; border:0; }
 
+    .player-frame{ width:100%; height:100%; border:0; background:#000; }
+
+    /* Make desktop video a touch smaller (less tall) */
+    .video-ratio{
+      background:#000;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+    }
+    @media (min-width: 992px){
+      /* 21:9-ish feel without changing width */
+      .video-ratio.ratio-16x9{ --bs-aspect-ratio: 42.5%; } /* default 56.25% */
+    }
+
+    /* Prev/Next */
     .player-actions{
       padding: 12px 14px;
       background: #0b0b0b;
@@ -104,9 +116,8 @@
       border: 1px solid rgba(255,255,255,.18);
       background: rgba(255,255,255,.06);
       color: #fff;
-      text-decoration:none;
     }
-    .btn-nav:hover{ background: rgba(255,255,255,.10); color:#fff; }
+    .btn-nav:hover{ background: rgba(255,255,255,.10); }
     .btn-nav:disabled{ opacity: .45; cursor: not-allowed; }
     .lot-counter{
       color: rgba(242,242,242,.75);
@@ -116,19 +127,92 @@
       font-size: .82rem;
     }
 
-    /* Catalog image area (big) */
-    .catalog-wrap{
-      background: #fff;
-      padding: 14px;
+    /* Right panel */
+    .side-panel{
+      background: #0b0b0b;
+      border-left: 1px solid rgba(255,255,255,.10);
+      height: 100%;
     }
+    .side-block{
+      padding: 14px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+    }
+
+    /* Catalog image */
+    .catalog-wrap{ background: transparent; padding: 0; }
     .catalog-img{
       width: 100%;
       height: auto;
       display:block;
       border-radius: 14px;
-      border: 1px solid rgba(0,0,0,.10);
-      box-shadow: 0 12px 30px rgba(0,0,0,.10);
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 12px 30px rgba(0,0,0,.35);
+      background:#fff;
     }
+
+    /* Sale info box */
+    .info-card{
+      border-radius: 16px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      padding: 14px;
+      color: rgba(242,242,242,.90);
+    }
+    .info-title{
+      font-weight: 900;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      font-size: .82rem;
+      margin: 0 0 10px;
+      color: rgba(242,242,242,.85);
+    }
+    .info-line{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      margin-bottom: 10px;
+      color: rgba(242,242,242,.82);
+      font-size: .95rem;
+    }
+    .info-line i{ color: var(--vam-gold); margin-top: 2px; }
+
+    .info-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 10px;
+    }
+    .btn-gold{
+      background: var(--vam-gold);
+      border: 1px solid var(--vam-gold);
+      color:#0B0B0B;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      border-radius: 14px;
+      padding: 10px 14px;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .btn-gold:hover{ background: var(--vam-gold-dark); border-color: var(--vam-gold-dark); color:#0B0B0B; }
+
+    .btn-light-outline{
+      border-radius: 14px;
+      padding: 10px 14px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+      color:#fff;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .btn-light-outline:hover{ background: rgba(255,255,255,.10); color:#fff; }
 
     /* Controls */
     .controls{
@@ -162,17 +246,14 @@
       cursor:pointer;
       transition: transform .12s ease, box-shadow .12s ease;
     }
-    .lot-card:hover{
-      transform: translateY(-2px);
-      box-shadow: 0 18px 44px rgba(0,0,0,.18);
-    }
+    .lot-card:hover{ transform: translateY(-2px); box-shadow: 0 18px 44px rgba(0,0,0,.18); }
+
     .lot-top{
       background:
         radial-gradient(circle at 25% 20%, rgba(201,164,92,.26), rgba(0,0,0,0) 55%),
         linear-gradient(135deg, #111 0%, #0b0b0b 60%, #151515 100%);
       color: var(--vam-text);
       padding: 14px;
-      position: relative;
       border-bottom: 1px solid rgba(255,255,255,.10);
       display:flex;
       align-items:center;
@@ -185,20 +266,14 @@
     .lot-big{ font-weight:900; letter-spacing:.06em; text-transform:uppercase; font-size: 1.9rem; line-height:1; margin:5px 0 0; color: var(--vam-gold); }
 
     .thumb{
-      width: 74px;
-      height: 74px;
+      width: 74px; height: 74px;
       border-radius: 14px;
       overflow:hidden;
       border: 1px solid rgba(255,255,255,.14);
       background: rgba(255,255,255,.06);
       flex: 0 0 auto;
     }
-    .thumb img{
-      width:100%;
-      height:100%;
-      object-fit: cover;
-      display:block;
-    }
+    .thumb img{ width:100%; height:100%; object-fit: cover; display:block; }
 
     .play{
       width: 42px; height: 42px;
@@ -218,6 +293,11 @@
       outline: 3px solid rgba(201,164,92,.55);
       outline-offset: 2px;
     }
+
+    /* Stack right panel below video on mobile (already via Bootstrap cols) */
+    @media (max-width: 991.98px){
+      .side-panel{ border-left: none; border-top: 1px solid rgba(255,255,255,.10); }
+    }
   </style>
 </head>
 
@@ -228,7 +308,7 @@
     <div class="container py-3 d-flex flex-wrap align-items-center justify-content-between gap-2">
       <div>
         <p class="title mb-1">Bartelt Angus • Lot Videos</p>
-        <small>Click a lot to play the video here + see the catalog page. Use Prev/Next to browse.</small>
+        <small>Desktop: video + catalog + info side-by-side. Mobile: stacked.</small>
       </div>
       <div class="d-flex gap-2 flex-wrap">
         <a class="btn-ghost" href="sale-bartelt.html"><i class="fa-solid fa-arrow-left"></i> Sale Info</a>
@@ -240,41 +320,98 @@
   <main class="py-5">
     <div class="container">
 
-      <!-- BIG PLAYER -->
+      <!-- BIG PLAYER (RESPONSIVE LAYOUT) -->
       <div class="player-shell mb-4">
         <div class="player-head">
           <div>
             <p class="player-title mb-1" id="playerTitle">Select a lot to start</p>
-            <p class="player-sub" id="playerSub">Video plays large here (loops). Catalog page shows below.</p>
+            <p class="player-sub" id="playerSub">Video loops until you click Prev/Next.</p>
           </div>
         </div>
 
-        <!-- Large responsive video -->
-        <div class="ratio ratio-16x9">
-          <iframe id="playerFrame" class="player-frame"
-            src=""
-            title="Lot Video"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen>
-          </iframe>
-        </div>
+        <div class="row g-0">
+          <!-- LEFT: VIDEO + NAV -->
+          <div class="col-12 col-lg-8 order-1 order-lg-1">
+            <div class="ratio ratio-16x9 video-ratio">
+              <iframe id="playerFrame" class="player-frame"
+                src=""
+                title="Lot Video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+              </iframe>
+            </div>
 
-        <!-- Prev / Next -->
-        <div class="player-actions">
-          <button id="prevBtn" class="btn-nav" type="button">
-            <i class="fa-solid fa-arrow-left"></i> Prev
-          </button>
+            <div class="player-actions">
+              <button id="prevBtn" class="btn-nav" type="button">
+                <i class="fa-solid fa-arrow-left"></i> Prev
+              </button>
 
-          <div class="lot-counter" id="lotCounter">Lot — / —</div>
+              <div class="lot-counter" id="lotCounter">Lot — / —</div>
 
-          <button id="nextBtn" class="btn-nav" type="button">
-            Next <i class="fa-solid fa-arrow-right"></i>
-          </button>
-        </div>
+              <button id="nextBtn" class="btn-nav" type="button">
+                Next <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
 
-        <!-- Catalog image (big) -->
-        <div class="catalog-wrap" id="catalogWrap" style="display:none;">
-          <img id="catalogImg" class="catalog-img" src="" alt="Catalog image">
+          <!-- RIGHT: CATALOG IMAGE + QUICK SALE INFO -->
+          <div class="col-12 col-lg-4 order-2 order-lg-2 side-panel">
+            <div class="side-block" id="catalogWrap" style="display:none;">
+              <div class="catalog-wrap">
+                <img id="catalogImg" class="catalog-img" src="" alt="Catalog image">
+              </div>
+            </div>
+
+            <div class="side-block">
+              <div class="info-card">
+                <p class="info-title">Sale info</p>
+
+                <div class="info-line">
+                  <i class="fa-solid fa-calendar-days"></i>
+                  <div><strong>March 4</strong> • Platte, SD</div>
+                </div>
+
+                <div class="info-line">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <div>
+                    <div><strong>Platte Livestock Market</strong></div>
+                    <div style="color:rgba(242,242,242,.70);">36580 SD-44, Platte, SD 57369</div>
+                  </div>
+                </div>
+
+                <div class="info-line">
+                  <i class="fa-solid fa-phone"></i>
+                  <div>
+                    <div><strong>Austin (Owner)</strong></div>
+                    <div style="color:rgba(242,242,242,.70);">605-999-0147</div>
+                  </div>
+                </div>
+
+                <div class="info-actions">
+                  <a class="btn-gold" target="_blank" rel="noopener"
+                     href="https://www.google.com/maps/search/?api=1&query=Platte%20Livestock%20Market%2C%2036580%20SD-44%2C%20Platte%2C%20SD%2057369">
+                    <i class="fa-solid fa-map-location-dot"></i> Map
+                  </a>
+
+                  <a class="btn-light-outline" target="_blank" rel="noopener"
+                     href="http://www.plattelivestockmarket.com">
+                    <i class="fa-solid fa-globe"></i> Market site
+                  </a>
+
+                  <!-- Optional: put Bartelt Angus FB link here when you have it -->
+                  <a class="btn-light-outline" target="_blank" rel="noopener"
+                     href="www.facebook.com/barteltangus"
+                     title="Replace # with Bartelt Angus Facebook link">
+                    <i class="fa-brands fa-facebook-f"></i> Facebook
+                  </a>
+
+                  <a class="btn-light-outline" href="tel:6059990147">
+                    <i class="fa-solid fa-phone"></i> Call
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -283,7 +420,7 @@
         <div class="row g-3 align-items-center">
           <div class="col-12 col-lg-6">
             <input id="searchInput" class="form-control search"
-              placeholder="Search lots (ex: 12, bull, heifer, sire name, notes)">
+              placeholder="Search lots (ex: 12, bull, heifer)">
           </div>
           <div class="col-12 col-lg-6 d-flex justify-content-lg-end justify-content-start">
             <div class="count" id="countText">25 lots</div>
@@ -301,8 +438,8 @@
     // youtubeId = YouTube video id (from ...watch?v=VIDEO_ID)
     // catalogImg = image you upload into: assets/img/catalog/bartelt/lot01.jpg etc.
     const lots = [
-      { lot: 1,  title: "Lot 1",  meta: "Bull",   youtubeId: "https://www.youtube.com/watch?v=E1cI1stYvQ0&list=PLOT3UG0o3eE2nL6qRbn7Y7WPanQLjq6yu&index=1", catalogImg: "assets/img/sales/bartelt.jpg" },
-      { lot: 2,  title: "Lot 2",  meta: "Bull",   youtubeId: "https://www.youtube.com/watch?v=E1cI1stYvQ0&list=PLOT3UG0o3eE2nL6qRbn7Y7WPanQLjq6yu&index=1", catalogImg: "assets/img/sales/bartelt.jpg" },
+      { lot: 1,  title: "Lot 1",  meta: "Bull",   youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot01.jpg" },
+      { lot: 2,  title: "Lot 2",  meta: "Bull",   youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot02.jpg" },
       { lot: 3,  title: "Lot 3",  meta: "Bull",   youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot03.jpg" },
       { lot: 4,  title: "Lot 4",  meta: "Bull",   youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot04.jpg" },
       { lot: 5,  title: "Lot 5",  meta: "Bull",   youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot05.jpg" },
@@ -345,23 +482,20 @@
     let currentIndex = -1;
 
     function ytEmbed(id){
-      // Proper YouTube loop requires playlist=id + loop=1
+      // Loop requires playlist=id + loop=1
       return `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&loop=1&playlist=${id}`;
     }
 
     function updateNav(){
       const total = lots.length;
-
       if(currentIndex < 0){
         lotCounter.textContent = "Lot — / —";
         prevBtn.disabled = true;
         nextBtn.disabled = true;
         return;
       }
-
       const currentLot = lots[currentIndex].lot;
       lotCounter.textContent = `Lot ${currentLot} / ${total}`;
-
       prevBtn.disabled = currentIndex === 0;
       nextBtn.disabled = currentIndex === total - 1;
     }
@@ -381,14 +515,14 @@
       playerTitle.textContent = `Lot ${item.lot} • ${item.meta}`;
       playerSub.textContent = item.title || "";
 
-      // Video (stays on page, loops this lot)
+      // Video (loops this lot)
       if(item.youtubeId && item.youtubeId.trim() !== ""){
         playerFrame.src = ytEmbed(item.youtubeId.trim());
       }else{
         playerFrame.src = "";
       }
 
-      // Catalog image (big)
+      // Catalog image (right panel on desktop, below on mobile)
       if(item.catalogImg && item.catalogImg.trim() !== ""){
         catalogImg.src = item.catalogImg.trim();
         catalogWrap.style.display = "block";
@@ -435,26 +569,21 @@
       `).join("");
     }
 
-    // expose for onclick
     window.selectLot = selectLot;
 
     searchInput.addEventListener("input", render);
 
     prevBtn.addEventListener("click", () => {
-      if(currentIndex > 0){
-        selectLot(lots[currentIndex - 1].lot);
-      }
+      if(currentIndex > 0) selectLot(lots[currentIndex - 1].lot);
     });
 
     nextBtn.addEventListener("click", () => {
-      if(currentIndex < lots.length - 1){
-        selectLot(lots[currentIndex + 1].lot);
-      }
+      if(currentIndex < lots.length - 1) selectLot(lots[currentIndex + 1].lot);
     });
 
     render();
     updateNav();
-    // Optional: auto-select first lot
+    // Optional:
     // selectLot(1);
   </script>
 
