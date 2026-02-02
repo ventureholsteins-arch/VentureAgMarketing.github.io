@@ -12,7 +12,6 @@
   <style>
     :root{
       --vam-bg:#0B0B0B;
-      --vam-bg-2:#101010;
       --vam-text:#F2F2F2;
       --vam-muted:rgba(242,242,242,.72);
       --vam-gold:#C9A45C;
@@ -37,6 +36,22 @@
       font-size: .95rem;
     }
     .topbar small{ color: var(--vam-muted); }
+
+    .btn-ghost{
+      border: 1px solid rgba(255,255,255,.22);
+      color: #fff;
+      background: rgba(255,255,255,.06);
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      border-radius: 14px;
+      padding: 10px 14px;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .btn-ghost:hover{ background: rgba(255,255,255,.10); color:#fff; }
 
     /* Player */
     .player-shell{
@@ -65,42 +80,45 @@
       font-size: .95rem;
     }
     .player-sub{ margin: 0; color: rgba(242,242,242,.70); font-size: .92rem; }
-
-    .btn-gold{
-      background: var(--vam-gold);
-      border: 1px solid var(--vam-gold);
-      color:#0B0B0B;
-      font-weight: 900;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      border-radius: 14px;
-      padding: 10px 14px;
-    }
-    .btn-gold:hover{ background: var(--vam-gold-dark); border-color: var(--vam-gold-dark); color:#0B0B0B; }
-    .btn-ghost{
-      border: 1px solid rgba(255,255,255,.22);
-      color: #fff;
-      background: rgba(255,255,255,.06);
-      font-weight: 900;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      border-radius: 14px;
-      padding: 10px 14px;
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-    }
-    .btn-ghost:hover{ background: rgba(255,255,255,.10); color:#fff; }
-
-    /* Make video BIG */
-    .ratio-16x9{ background:#000; }
     .player-frame{ width:100%; height:100%; border:0; }
 
-    /* Catalog image area */
+    .player-actions{
+      padding: 12px 14px;
+      background: #0b0b0b;
+      border-top: 1px solid rgba(255,255,255,.10);
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .btn-nav{
+      border-radius: 14px;
+      padding: 10px 14px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+      color: #fff;
+      text-decoration:none;
+    }
+    .btn-nav:hover{ background: rgba(255,255,255,.10); color:#fff; }
+    .btn-nav:disabled{ opacity: .45; cursor: not-allowed; }
+    .lot-counter{
+      color: rgba(242,242,242,.75);
+      font-weight: 900;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      font-size: .82rem;
+    }
+
+    /* Catalog image area (big) */
     .catalog-wrap{
       background: #fff;
-      border-top: 1px solid rgba(255,255,255,.10);
       padding: 14px;
     }
     .catalog-img{
@@ -153,27 +171,49 @@
         radial-gradient(circle at 25% 20%, rgba(201,164,92,.26), rgba(0,0,0,0) 55%),
         linear-gradient(135deg, #111 0%, #0b0b0b 60%, #151515 100%);
       color: var(--vam-text);
-      padding: 16px;
+      padding: 14px;
       position: relative;
-      min-height: 116px;
-      display:flex;
-      align-items:flex-end;
       border-bottom: 1px solid rgba(255,255,255,.10);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      min-height: 92px;
     }
-    .lot-num{ font-weight:900; letter-spacing:.10em; text-transform:uppercase; font-size:.82rem; color: rgba(242,242,242,.82); }
-    .lot-big{ font-weight:900; letter-spacing:.06em; text-transform:uppercase; font-size: 2.0rem; line-height:1; margin:6px 0 0; color: var(--vam-gold); }
+    .lot-left{ display:flex; align-items:center; gap:12px; }
+    .lot-num{ font-weight:900; letter-spacing:.10em; text-transform:uppercase; font-size:.80rem; color: rgba(242,242,242,.82); }
+    .lot-big{ font-weight:900; letter-spacing:.06em; text-transform:uppercase; font-size: 1.9rem; line-height:1; margin:5px 0 0; color: var(--vam-gold); }
+
+    .thumb{
+      width: 74px;
+      height: 74px;
+      border-radius: 14px;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      flex: 0 0 auto;
+    }
+    .thumb img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+    }
+
     .play{
-      position:absolute; right:14px; top:14px;
       width: 42px; height: 42px;
       border-radius: 14px;
       background: rgba(255,255,255,.08);
       border: 1px solid rgba(255,255,255,.14);
       display:flex; align-items:center; justify-content:center;
+      flex: 0 0 auto;
     }
     .play i{ color: var(--vam-gold); }
+
     .lot-body{ padding: 12px 14px 14px; }
     .lot-title{ font-weight: 900; margin:0 0 4px; }
     .lot-meta{ color: rgba(0,0,0,.62); margin:0; font-size:.95rem; }
+
     .active-lot{
       outline: 3px solid rgba(201,164,92,.55);
       outline-offset: 2px;
@@ -188,7 +228,7 @@
     <div class="container py-3 d-flex flex-wrap align-items-center justify-content-between gap-2">
       <div>
         <p class="title mb-1">Bartelt Angus • Lot Videos</p>
-        <small>Click a lot to play. Video + catalog image shown below.</small>
+        <small>Click a lot to play the video here + see the catalog page. Use Prev/Next to browse.</small>
       </div>
       <div class="d-flex gap-2 flex-wrap">
         <a class="btn-ghost" href="sale-bartelt.html"><i class="fa-solid fa-arrow-left"></i> Sale Info</a>
@@ -205,12 +245,7 @@
         <div class="player-head">
           <div>
             <p class="player-title mb-1" id="playerTitle">Select a lot to start</p>
-            <p class="player-sub" id="playerSub">Video will play here (large) and the catalog image will show below.</p>
-          </div>
-          <div class="d-flex gap-2 flex-wrap">
-            <a id="openYoutubeBtn" class="btn-gold" href="#" target="_blank" rel="noopener" style="display:none;">
-              <i class="fa-brands fa-youtube"></i> Open on YouTube
-            </a>
+            <p class="player-sub" id="playerSub">Video plays large here (loops). Catalog page shows below.</p>
           </div>
         </div>
 
@@ -224,7 +259,20 @@
           </iframe>
         </div>
 
-        <!-- Catalog image -->
+        <!-- Prev / Next -->
+        <div class="player-actions">
+          <button id="prevBtn" class="btn-nav" type="button">
+            <i class="fa-solid fa-arrow-left"></i> Prev
+          </button>
+
+          <div class="lot-counter" id="lotCounter">Lot — / —</div>
+
+          <button id="nextBtn" class="btn-nav" type="button">
+            Next <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+
+        <!-- Catalog image (big) -->
         <div class="catalog-wrap" id="catalogWrap" style="display:none;">
           <img id="catalogImg" class="catalog-img" src="" alt="Catalog image">
         </div>
@@ -250,12 +298,11 @@
   </main>
 
   <script>
-    // ===== EDIT THIS LIST LATER =====
     // youtubeId = YouTube video id (from ...watch?v=VIDEO_ID)
-    // catalogImg = image filename you upload into: assets/img/catalog/bartelt/lot01.jpg etc.
+    // catalogImg = image you upload into: assets/img/catalog/bartelt/lot01.jpg etc.
     const lots = [
-      { lot: 1,  title: "Lot 1",  meta: "Bull",   youtubeId: "https://www.youtube.com/watch?v=2Pbm5xh7fuU&list=PL1KXEBhowz_ynrODNluxhzOZncx4GwQCF&index=1", catalogImg: "assets/img/catalog/bartelt/lot01.jpg" },
-      { lot: 2,  title: "Lot 2",  meta: "Bull",   youtubeId: "https://youtu.be/2Pbm5xh7fuU?si=cjuBYYrEPmkRQBPZ", catalogImg: "assets/img/catalog/bartelt/lot02.jpg" },
+      { lot: 1,  title: "Lot 1",  meta: "Bull",   youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot01.jpg" },
+      { lot: 2,  title: "Lot 2",  meta: "Bull",   youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot02.jpg" },
       { lot: 3,  title: "Lot 3",  meta: "Bull",   youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot03.jpg" },
       { lot: 4,  title: "Lot 4",  meta: "Bull",   youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot04.jpg" },
       { lot: 5,  title: "Lot 5",  meta: "Bull",   youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot05.jpg" },
@@ -290,18 +337,41 @@
     const playerFrame = document.getElementById("playerFrame");
     const catalogWrap = document.getElementById("catalogWrap");
     const catalogImg = document.getElementById("catalogImg");
-    const openYoutubeBtn = document.getElementById("openYoutubeBtn");
 
-    function ytUrl(id){
-      return `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const lotCounter = document.getElementById("lotCounter");
+
+    let currentIndex = -1;
+
+    function ytEmbed(id){
+      // Proper YouTube loop requires playlist=id + loop=1
+      return `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&loop=1&playlist=${id}`;
     }
-    function ytWatchUrl(id){
-      return `https://www.youtube.com/watch?v=${id}`;
+
+    function updateNav(){
+      const total = lots.length;
+
+      if(currentIndex < 0){
+        lotCounter.textContent = "Lot — / —";
+        prevBtn.disabled = true;
+        nextBtn.disabled = true;
+        return;
+      }
+
+      const currentLot = lots[currentIndex].lot;
+      lotCounter.textContent = `Lot ${currentLot} / ${total}`;
+
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex === total - 1;
     }
 
     function selectLot(lotNumber){
       const item = lots.find(x => x.lot === lotNumber);
       if(!item) return;
+
+      currentIndex = lots.findIndex(x => x.lot === lotNumber);
+      updateNav();
 
       // Highlight active card
       document.querySelectorAll(".lot-card").forEach(c => c.classList.remove("active-lot"));
@@ -311,17 +381,14 @@
       playerTitle.textContent = `Lot ${item.lot} • ${item.meta}`;
       playerSub.textContent = item.title || "";
 
-      // Video (big)
+      // Video (stays on page, loops this lot)
       if(item.youtubeId && item.youtubeId.trim() !== ""){
-        playerFrame.src = ytUrl(item.youtubeId.trim());
-        openYoutubeBtn.href = ytWatchUrl(item.youtubeId.trim());
-        openYoutubeBtn.style.display = "inline-flex";
+        playerFrame.src = ytEmbed(item.youtubeId.trim());
       }else{
         playerFrame.src = "";
-        openYoutubeBtn.style.display = "none";
       }
 
-      // Catalog image
+      // Catalog image (big)
       if(item.catalogImg && item.catalogImg.trim() !== ""){
         catalogImg.src = item.catalogImg.trim();
         catalogWrap.style.display = "block";
@@ -347,9 +414,15 @@
         <div class="col-12 col-md-6 col-lg-4">
           <div class="lot-card" data-lot="${l.lot}" onclick="selectLot(${l.lot})">
             <div class="lot-top">
-              <div>
-                <div class="lot-num">Lot</div>
-                <div class="lot-big">${l.lot}</div>
+              <div class="lot-left">
+                <div>
+                  <div class="lot-num">Lot</div>
+                  <div class="lot-big">${l.lot}</div>
+                </div>
+                <div class="thumb">
+                  <img src="${l.catalogImg}" alt="Catalog preview for Lot ${l.lot}"
+                       onerror="this.style.display='none'; this.parentElement.style.display='none';">
+                </div>
               </div>
               <div class="play"><i class="fa-solid fa-play"></i></div>
             </div>
@@ -362,12 +435,25 @@
       `).join("");
     }
 
-    // expose for inline onclick
+    // expose for onclick
     window.selectLot = selectLot;
 
     searchInput.addEventListener("input", render);
 
+    prevBtn.addEventListener("click", () => {
+      if(currentIndex > 0){
+        selectLot(lots[currentIndex - 1].lot);
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if(currentIndex < lots.length - 1){
+        selectLot(lots[currentIndex + 1].lot);
+      }
+    });
+
     render();
+    updateNav();
     // Optional: auto-select first lot
     // selectLot(1);
   </script>
