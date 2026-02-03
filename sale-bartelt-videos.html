@@ -80,7 +80,6 @@
       font-size: .95rem;
     }
     .player-sub{ margin: 0; color: rgba(242,242,242,.70); font-size: .92rem; }
-
     .player-frame{ width:100%; height:100%; border:0; background:#000; }
 
     /* Make desktop video a touch smaller (less tall) */
@@ -139,7 +138,6 @@
     }
 
     /* Catalog image */
-    .catalog-wrap{ background: transparent; padding: 0; }
     .catalog-img{
       width: 100%;
       height: auto;
@@ -294,7 +292,6 @@
       outline-offset: 2px;
     }
 
-    /* Stack right panel below video on mobile (already via Bootstrap cols) */
     @media (max-width: 991.98px){
       .side-panel{ border-left: none; border-top: 1px solid rgba(255,255,255,.10); }
     }
@@ -324,7 +321,7 @@
       <div class="player-shell mb-4">
         <div class="player-head">
           <div>
-            <p class="player-title mb-1" id="playerTitle">Select a lot to start</p>
+            <p class="player-title mb-1" id="playerTitle">Loading Lot 1…</p>
             <p class="player-sub" id="playerSub">Video loops until you click Prev/Next.</p>
           </div>
         </div>
@@ -337,8 +334,7 @@
                 src=""
                 title="Lot Video"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen>
-              </iframe>
+                allowfullscreen></iframe>
             </div>
 
             <div class="player-actions">
@@ -357,9 +353,7 @@
           <!-- RIGHT: CATALOG IMAGE + QUICK SALE INFO -->
           <div class="col-12 col-lg-4 order-2 order-lg-2 side-panel">
             <div class="side-block" id="catalogWrap" style="display:none;">
-              <div class="catalog-wrap">
-                <img id="catalogImg" class="catalog-img" src="" alt="Catalog image">
-              </div>
+              <img id="catalogImg" class="catalog-img" src="" alt="Catalog image">
             </div>
 
             <div class="side-block">
@@ -398,10 +392,8 @@
                     <i class="fa-solid fa-globe"></i> Market site
                   </a>
 
-                  <!-- Optional: put Bartelt Angus FB link here when you have it -->
                   <a class="btn-light-outline" target="_blank" rel="noopener"
-                     href="www.facebook.com/barteltangus"
-                     title="Replace # with Bartelt Angus Facebook link">
+                     href="https://www.facebook.com/barteltangus">
                     <i class="fa-brands fa-facebook-f"></i> Facebook
                   </a>
 
@@ -435,34 +427,41 @@
   </main>
 
   <script>
-    // youtubeId = YouTube video id (from ...watch?v=VIDEO_ID)
-    // catalogImg = image you upload into: assets/img/catalog/bartelt/lot01.jpg etc.
+    /*
+      ✅ IMPORTANT (how to make YouTube work)
+      Put ANY of these in the "youtube" field and it will work:
+      - https://youtu.be/VIDEO_ID
+      - https://www.youtube.com/watch?v=VIDEO_ID
+      - https://www.youtube.com/shorts/VIDEO_ID
+      - VIDEO_ID (just the ID)
+    */
+
     const lots = [
-      { lot: 1,  title: "Lot 1",  meta: "Bull",   youtubeId: "https://youtu.be/DhTo_eziwdk", catalogImg: "assets/img/catalog/bartelt/lot01.jpg" },
-      { lot: 2,  title: "Lot 2",  meta: "Bull",   youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot02.jpg" },
-      { lot: 3,  title: "Lot 3",  meta: "Bull",   youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot03.jpg" },
-      { lot: 4,  title: "Lot 4",  meta: "Bull",   youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot04.jpg" },
-      { lot: 5,  title: "Lot 5",  meta: "Bull",   youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot05.jpg" },
-      { lot: 6,  title: "Lot 6",  meta: "Bull",   youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot06.jpg" },
-      { lot: 7,  title: "Lot 7",  meta: "Bull",   youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot07.jpg" },
-      { lot: 8,  title: "Lot 8",  meta: "Bull",   youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot08.jpg" },
-      { lot: 9,  title: "Lot 9",  meta: "Bull",   youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot09.jpg" },
-      { lot: 10, title: "Lot 10", meta: "Bull",   youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot10.jpg" },
-      { lot: 11, title: "Lot 11", meta: "Bull",   youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot11.jpg" },
-      { lot: 12, title: "Lot 12", meta: "Bull",   youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot12.jpg" },
-      { lot: 13, title: "Lot 13", meta: "Bull",   youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot13.jpg" },
-      { lot: 14, title: "Lot 14", meta: "Bull",   youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot14.jpg" },
-      { lot: 15, title: "Lot 15", meta: "Bull",   youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot15.jpg" },
-      { lot: 16, title: "Lot 16", meta: "Heifer", youtubeId: "https://www.youtube.com/watch?v=DhTo_eziwdk", catalogImg: "assets/img/catalog/bartelt/lot16.jpg" },
-      { lot: 17, title: "Lot 17", meta: "Heifer", youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot17.jpg" },
-      { lot: 18, title: "Lot 18", meta: "Heifer", youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot18.jpg" },
-      { lot: 19, title: "Lot 19", meta: "Heifer", youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot19.jpg" },
-      { lot: 20, title: "Lot 20", meta: "Heifer", youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot20.jpg" },
-      { lot: 21, title: "Lot 21", meta: "Heifer", youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot21.jpg" },
-      { lot: 22, title: "Lot 22", meta: "Heifer", youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot22.jpg" },
-      { lot: 23, title: "Lot 23", meta: "Heifer", youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot23.jpg" },
-      { lot: 24, title: "Lot 24", meta: "Heifer", youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot24.jpg" },
-      { lot: 25, title: "Lot 25", meta: "Heifer", youtubeId: "", catalogImg: "assets/img/catalog/bartelt/lot25.jpg" },
+      { lot: 1,  title: "Lot 1",  meta: "Bull",   youtube: "https://youtu.be/DhTo_eziwdk", catalogImg: "assets/img/catalog/bartelt/lot01.jpg" },
+      { lot: 2,  title: "Lot 2",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot02.jpg" },
+      { lot: 3,  title: "Lot 3",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot03.jpg" },
+      { lot: 4,  title: "Lot 4",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot04.jpg" },
+      { lot: 5,  title: "Lot 5",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot05.jpg" },
+      { lot: 6,  title: "Lot 6",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot06.jpg" },
+      { lot: 7,  title: "Lot 7",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot07.jpg" },
+      { lot: 8,  title: "Lot 8",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot08.jpg" },
+      { lot: 9,  title: "Lot 9",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot09.jpg" },
+      { lot: 10, title: "Lot 10", meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot10.jpg" },
+      { lot: 11, title: "Lot 11", meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot11.jpg" },
+      { lot: 12, title: "Lot 12", meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot12.jpg" },
+      { lot: 13, title: "Lot 13", meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot13.jpg" },
+      { lot: 14, title: "Lot 14", meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot14.jpg" },
+      { lot: 15, title: "Lot 15", meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot15.jpg" },
+      { lot: 16, title: "Lot 16", meta: "Heifer", youtube: "https://www.youtube.com/watch?v=DhTo_eziwdk", catalogImg: "assets/img/catalog/bartelt/lot16.jpg" },
+      { lot: 17, title: "Lot 17", meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot17.jpg" },
+      { lot: 18, title: "Lot 18", meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot18.jpg" },
+      { lot: 19, title: "Lot 19", meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot19.jpg" },
+      { lot: 20, title: "Lot 20", meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot20.jpg" },
+      { lot: 21, title: "Lot 21", meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot21.jpg" },
+      { lot: 22, title: "Lot 22", meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot22.jpg" },
+      { lot: 23, title: "Lot 23", meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot23.jpg" },
+      { lot: 24, title: "Lot 24", meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot24.jpg" },
+      { lot: 25, title: "Lot 25", meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot25.jpg" },
     ];
 
     const grid = document.getElementById("grid");
@@ -481,7 +480,44 @@
 
     let currentIndex = -1;
 
-    function ytEmbed(id){
+    function extractYouTubeId(input){
+      if(!input) return "";
+      const s = String(input).trim();
+      // If not a URL, assume it's already an ID
+      if(!s.includes("youtu")) return s;
+
+      try{
+        const url = new URL(s);
+        const host = url.hostname.replace("www.","");
+
+        if(host === "youtu.be"){
+          return url.pathname.split("/").filter(Boolean)[0] || "";
+        }
+
+        if(host === "youtube.com" || host === "m.youtube.com"){
+          const v = url.searchParams.get("v");
+          if(v) return v;
+
+          const parts = url.pathname.split("/").filter(Boolean);
+
+          const embedIndex = parts.indexOf("embed");
+          if(embedIndex !== -1 && parts[embedIndex+1]) return parts[embedIndex+1];
+
+          const shortsIndex = parts.indexOf("shorts");
+          if(shortsIndex !== -1 && parts[shortsIndex+1]) return parts[shortsIndex+1];
+        }
+      }catch(e){
+        // If URL() fails, do a simple fallback parse
+        const match = s.match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([a-zA-Z0-9_-]{6,})/);
+        return match ? match[1] : s;
+      }
+
+      return s;
+    }
+
+    function ytEmbed(fromUrlOrId){
+      const id = extractYouTubeId(fromUrlOrId);
+      if(!id) return "";
       // Loop requires playlist=id + loop=1
       return `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&loop=1&playlist=${id}`;
     }
@@ -507,7 +543,6 @@
       currentIndex = lots.findIndex(x => x.lot === lotNumber);
       updateNav();
 
-      // Highlight active card
       document.querySelectorAll(".lot-card").forEach(c => c.classList.remove("active-lot"));
       const active = document.querySelector(`[data-lot="${lotNumber}"]`);
       if(active) active.classList.add("active-lot");
@@ -515,14 +550,12 @@
       playerTitle.textContent = `Lot ${item.lot} • ${item.meta}`;
       playerSub.textContent = item.title || "";
 
-      // Video (loops this lot)
-      if(item.youtubeId && item.youtubeId.trim() !== ""){
-        playerFrame.src = ytEmbed(item.youtubeId.trim());
+      if(item.youtube && String(item.youtube).trim() !== ""){
+        playerFrame.src = ytEmbed(item.youtube);
       }else{
         playerFrame.src = "";
       }
 
-      // Catalog image (right panel on desktop, below on mobile)
       if(item.catalogImg && item.catalogImg.trim() !== ""){
         catalogImg.src = item.catalogImg.trim();
         catalogWrap.style.display = "block";
@@ -546,7 +579,7 @@
 
       grid.innerHTML = filtered.map(l => `
         <div class="col-12 col-md-6 col-lg-4">
-          <div class="lot-card" data-lot="${l.lot}" onclick="selectLot(${l.lot})">
+          <div class="lot-card" data-lot="${l.lot}">
             <div class="lot-top">
               <div class="lot-left">
                 <div>
@@ -567,9 +600,15 @@
           </div>
         </div>
       `).join("");
-    }
 
-    window.selectLot = selectLot;
+      // Attach clicks (avoids inline onclick issues)
+      document.querySelectorAll(".lot-card").forEach(card => {
+        card.addEventListener("click", () => {
+          const lot = parseInt(card.getAttribute("data-lot"), 10);
+          selectLot(lot);
+        });
+      });
+    }
 
     searchInput.addEventListener("input", render);
 
@@ -583,8 +622,8 @@
 
     render();
     updateNav();
-    // Optional:
-    // selectLot(1);
+    // ✅ Default to Lot 1 on load
+    selectLot(1);
   </script>
 
 </body>
