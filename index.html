@@ -9,7 +9,7 @@
   <!-- Bootstrap (CDN) -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- Icons (optional but nice) -->
+  <!-- Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <!-- Fonts -->
@@ -41,8 +41,8 @@
       background: rgba(11,11,11,.92);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid rgba(255,255,255,.06);
-    padding-top: 18px;
-    padding-bottom: 18px;
+      padding-top: 18px;
+      padding-bottom: 18px;
     }
     .navbar .nav-link{
       font-weight: 800;
@@ -52,16 +52,15 @@
       opacity: .9;
     }
     .navbar .nav-link:hover{ opacity: 1; }
-    .brand-logo{
-  height: 64px;
-  width: auto;
-  filter: drop-shadow(0 3px 8px rgba(0,0,0,.65));
-}
-@media (min-width: 992px){
-  .brand-logo{ height: 112px; }
-}
 
-  
+    .brand-logo{
+      height: 64px;
+      width: auto;
+      filter: drop-shadow(0 3px 8px rgba(0,0,0,.65));
+    }
+    @media (min-width: 992px){
+      .brand-logo{ height: 112px; }
+    }
 
     /* BUTTONS */
     .btn-vam{
@@ -205,6 +204,63 @@
     .service h5{ font-weight: 900; margin-bottom: 8px; }
     .service p{ color: rgba(0,0,0,.62); margin: 0; font-family: "Roboto Slab", Georgia, serif; }
 
+    /* SOCIALS */
+    .social-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.06);
+      border: 1px solid rgba(0,0,0,.10);
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-size: .78rem;
+      text-decoration:none;
+      color:#111;
+    }
+    .social-pill:hover{ background: rgba(0,0,0,.10); color:#111; }
+
+    .social-card{
+      border-radius: 18px;
+      overflow:hidden;
+      background:#fff;
+      border: 1px solid rgba(0,0,0,.08);
+      box-shadow: 0 14px 36px rgba(0,0,0,.12);
+      height: 100%;
+    }
+    .social-card-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding: 14px 16px;
+      background: linear-gradient(135deg, #0b0b0b 0%, #111 55%, #0b0b0b 100%);
+      color:#F2F2F2;
+    }
+    .social-card-title{
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-size: .85rem;
+    }
+    .social-card-link{
+      color: rgba(242,242,242,.85);
+      text-decoration:none;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-size: .78rem;
+      border: 1px solid rgba(255,255,255,.18);
+      padding: 8px 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.06);
+    }
+    .social-card-link:hover{ background: rgba(255,255,255,.10); color:#fff; }
+    .social-embed{ padding: 12px; }
+    .social-video iframe{ width:100%; height:100%; }
+
     /* WORK */
     .work-img{
       border-radius: 18px;
@@ -266,8 +322,21 @@
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item"><a class="nav-link" href="#sales">Sales</a></li>
           <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="#socials">Socials</a></li>
           <li class="nav-item"><a class="nav-link" href="#work">Work</a></li>
           <li class="nav-item"><a class="nav-link" href="#contact">Book</a></li>
+
+          <!-- Social icons -->
+          <li class="nav-item">
+            <a class="nav-link" href="https://www.facebook.com/share/1DLqa2S8AL/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook">
+              <i class="fa-brands fa-facebook-f"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://www.instagram.com/ventureagmarketing?igsh=MW83NmR0ajE2bzNtdQ%3D%3D&utm_source=qr" target="_blank" rel="noopener" aria-label="Instagram">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
@@ -288,7 +357,7 @@
     </div>
   </header>
 
-  <!-- FEATURE STRIP (like the clean “credibility bar”) -->
+  <!-- FEATURE STRIP -->
   <div class="feature-strip">
     <div class="container">
       <span class="feature-pill"><i class="fa-solid fa-bolt"></i> fast turnaround</span>
@@ -298,7 +367,7 @@
     </div>
   </div>
 
-  <!-- SALES (FIRST, like Cattle Club) -->
+  <!-- SALES -->
   <section class="bg-soft anchor-offset" id="sales">
     <div class="container">
       <div class="text-center">
@@ -308,8 +377,7 @@
         </p>
       </div>
 
-        <div class="row g-4 mt-4">
-        <!-- Sale Card 1 -->
+      <div class="row g-4 mt-4">
         <div class="col-12 col-lg-8 mx-auto">
           <div class="sale-card">
             <img src="assets/img/sales/bartelt.jpg" alt="Sale poster">
@@ -320,30 +388,12 @@
             <div class="sale-actions">
               <a class="btn btn-vam btn-sm px-3" href="#" target="_blank" rel="noopener">Catalog</a>
               <a class="btn btn-dark btn-sm px-3 text-uppercase" style="letter-spacing:.08em;font-weight:900;" href="sale-bartelt.html" target="_blank" rel="noopener">Sale Info</a>
-              <a class="btn btn-outline-dark btn-sm px-3 text-uppercase" style="letter-spacing:.08em;font-weight:900;" href="sale-bartelt-videos.html"
- target="_blank" rel="noopener">Videos</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- 
-        Template: copy/paste for more sales 
-        <div class="col-12 col-lg-6">
-          <div class="sale-card">
-            <img src="assets/img/sales/bartelt.jpg" alt="Sale poster placeholder">
-            <div class="sale-meta">
-              <div class="sale-title">Next Sale Name</div>
-              <div class="sale-sub">Date • City, State</div>
-            </div>
-            <div class="sale-actions">
-              <a class="btn btn-vam btn-sm px-3" href="#" target="_blank" rel="noopener">Catalog</a>
-              <a class="btn btn-dark btn-sm px-3 text-uppercase" style="letter-spacing:.08em;font-weight:900;" href="#" target="_blank" rel="noopener">Sale Info</a>
-              <a class="btn btn-outline-dark btn-sm px-3 text-uppercase" style="letter-spacing:.08em;font-weight:900;" href="#" target="_blank" rel="noopener">Videos</a>
+              <a class="btn btn-outline-dark btn-sm px-3 text-uppercase" style="letter-spacing:.08em;font-weight:900;" href="sale-bartelt-videos.html" target="_blank" rel="noopener">Videos</a>
             </div>
           </div>
         </div>
       </div>
-           -->
+
       <div class="text-center mt-5">
         <a class="btn btn-vam btn-lg px-5" href="#contact">Book a Sale</a>
       </div>
@@ -386,8 +436,68 @@
     </div>
   </section>
 
+  <!-- SOCIALS (NEW) -->
+  <section class="bg-soft anchor-offset" id="socials">
+    <div class="container">
+      <div class="text-center">
+        <h2 class="section-title">Socials</h2>
+        <p class="section-sub">Recent posts + reels. Follow for updates and sale-day content.</p>
+
+        <div class="d-flex justify-content-center gap-3 flex-wrap mt-3">
+          <a class="social-pill" href="https://www.facebook.com/share/1DLqa2S8AL/?mibextid=wwXIfr" target="_blank" rel="noopener">
+            <i class="fa-brands fa-facebook-f"></i> Facebook
+          </a>
+          <a class="social-pill" href="https://www.instagram.com/ventureagmarketing?igsh=MW83NmR0ajE2bzNtdQ%3D%3D&utm_source=qr" target="_blank" rel="noopener">
+            <i class="fa-brands fa-instagram"></i> Instagram
+          </a>
+        </div>
+      </div>
+
+      <div class="row g-4 mt-4">
+        <!-- Instagram Reel -->
+        <div class="col-12 col-lg-6">
+          <div class="social-card">
+            <div class="social-card-head">
+              <div class="social-card-title"><i class="fa-brands fa-instagram"></i> Instagram Reel</div>
+              <a class="social-card-link" target="_blank" rel="noopener"
+                 href="https://www.instagram.com/reel/DIca5FeRVpt/?igsh=MWJobzJ4M3FmN2prdQ==">Open</a>
+            </div>
+            <div class="social-embed">
+              <blockquote class="instagram-media"
+                data-instgrm-permalink="https://www.instagram.com/reel/DIca5FeRVpt/?igsh=MWJobzJ4M3FmN2prdQ=="
+                data-instgrm-version="14"
+                style="background:#FFF; border:0; margin:0; padding:0; width:100%;">
+              </blockquote>
+            </div>
+          </div>
+        </div>
+
+        <!-- Facebook Video -->
+        <div class="col-12 col-lg-6">
+          <div class="social-card">
+            <div class="social-card-head">
+              <div class="social-card-title"><i class="fa-brands fa-facebook-f"></i> Facebook Video</div>
+              <a class="social-card-link" target="_blank" rel="noopener"
+                 href="https://www.facebook.com/share/v/1DuNpt1n8Q/?mibextid=wwXIfr">Open</a>
+            </div>
+            <div class="ratio ratio-16x9 social-video">
+              <iframe
+                src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fshare%2Fv%2F1DuNpt1n8Q%2F%3Fmibextid%3DwwXIfr&show_text=0&autoplay=1&mute=1"
+                style="border:none;overflow:hidden"
+                scrolling="no"
+                frameborder="0"
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                allowfullscreen="true">
+              </iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- WORK -->
-  <section class="bg-soft anchor-offset" id="work">
+  <section class="anchor-offset" id="work">
     <div class="container">
       <div class="text-center">
         <h2 class="section-title">Work</h2>
@@ -418,9 +528,7 @@
 
       <div class="row justify-content-center mt-4">
         <div class="col-12 col-lg-8">
-          <!-- Simple mailto form (works instantly, no setup).
-               Later we can swap to Formspree/Google Form if you want. -->
-          <form action="mailto:	austinripp@ventureagmarketing.com" method="post" enctype="text/plain">
+          <form action="mailto:austinripp@ventureagmarketing.com" method="post" enctype="text/plain">
             <div class="row g-3">
               <div class="col-12 col-md-6">
                 <input class="form-control" name="name" placeholder="Your Name" required>
@@ -456,6 +564,7 @@
       <div class="d-flex gap-3">
         <a href="#top">Top</a>
         <a href="#sales">Sales</a>
+        <a href="#socials">Socials</a>
         <a href="#contact">Book</a>
       </div>
     </div>
@@ -463,6 +572,10 @@
 
   <!-- Bootstrap JS (CDN) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Instagram embed script (required) -->
+  <script async src="https://www.instagram.com/embed.js"></script>
+
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
