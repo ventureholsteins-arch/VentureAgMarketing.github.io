@@ -86,17 +86,17 @@
     .video-ratio{
       background:#000;
       border-bottom: 1px solid rgba(255,255,255,.10);
-      position: relative; /* required for yt-shield */
+      position: relative;
     }
     @media (min-width: 992px){
       .video-ratio.ratio-16x9{ --bs-aspect-ratio: 42.5%; } /* default 56.25% */
     }
 
-    /* Click-shield: blocks the top overlay clicks (logo/title) WITHOUT blocking scrub bar */
+    /* Click-shield: blocks the top overlay clicks WITHOUT blocking scrub bar */
     .yt-shield{
       position:absolute;
       top:0; left:0; right:0;
-      height:56px;              /* adjust 44–72 if you want */
+      height:56px;
       z-index:2;
       background: transparent;
     }
@@ -135,7 +135,7 @@
       font-size: .82rem;
     }
 
-    /* Right panel */
+    /* Right panel (catalog) */
     .side-panel{
       background: #0b0b0b;
       border-left: 1px solid rgba(255,255,255,.10);
@@ -157,7 +157,7 @@
       background:#fff;
     }
 
-    /* Sale info box */
+    /* Sale info box (full) */
     .info-card{
       border-radius: 16px;
       background: rgba(255,255,255,.06);
@@ -301,10 +301,62 @@
       outline-offset: 2px;
     }
 
+    /* --- NEW LAYOUT RULES (your request) --- */
+
+    /* Desktop: make right side basically a big catalog viewer; info goes below */
+    @media (min-width: 992px){
+      .catalog-img{
+        max-height: 560px;
+        object-fit: contain;
+        background: #fff;
+        padding: 10px;
+      }
+      .side-panel{
+        display:flex;
+        flex-direction:column;
+      }
+      .side-panel .side-block{
+        border-bottom:none;
+      }
+      .info-mini{ display:none !important; }
+    }
+
+    /* Mobile: stack video > catalog > tiny info strip; hide full info below player */
     @media (max-width: 991.98px){
       .side-panel{ border-left: none; border-top: 1px solid rgba(255,255,255,.10); }
-      .yt-shield{ height: 48px; } /* slightly smaller shield on mobile */
+      .yt-shield{ height: 48px; }
+      .info-desktop{ display:none !important; }
+      .info-mini{ display:block !important; }
+      .catalog-img{
+        background:#fff;
+        padding: 10px;
+        object-fit: contain;
+      }
     }
+
+    /* Mini sale info strip (mobile) */
+    .info-mini{
+      display:none;
+      border-top: 1px solid rgba(255,255,255,.10);
+      background: #0b0b0b;
+      padding: 12px 14px;
+      color: rgba(242,242,242,.85);
+    }
+    .info-mini .line{
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      font-size: .78rem;
+      margin-bottom: 10px;
+      color: rgba(242,242,242,.80);
+    }
+    .info-mini .mini-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .full-info-wrap{ margin-top: 18px; }
   </style>
 </head>
 
@@ -363,57 +415,88 @@
             </div>
           </div>
 
-          <!-- RIGHT: CATALOG + INFO -->
+          <!-- RIGHT: BIG CATALOG + MINI INFO (mobile only) -->
           <div class="col-12 col-lg-4 side-panel">
             <div class="side-block" id="catalogWrap" style="display:none;">
               <img id="catalogImg" class="catalog-img" src="" alt="Catalog image">
             </div>
 
-            <div class="side-block">
-              <div class="info-card">
-                <p class="info-title">Sale info</p>
+            <!-- Mobile mini info strip -->
+            <div class="info-mini">
+              <div class="line">
+                <i class="fa-solid fa-calendar-days" style="color:var(--vam-gold); margin-right:8px;"></i>
+                March 4 • Platte Livestock Market • Platte, SD
+              </div>
 
-                <div class="info-line">
-                  <i class="fa-solid fa-calendar-days"></i>
-                  <div><strong>March 4</strong> • Platte, SD</div>
+              <div class="mini-actions">
+                <a class="btn-gold" target="_blank" rel="noopener"
+                   href="https://www.google.com/maps/search/?api=1&query=Platte%20Livestock%20Market%2C%2036580%20SD-44%2C%20Platte%2C%20SD%2057369">
+                  <i class="fa-solid fa-map-location-dot"></i> Map
+                </a>
+
+                <a class="btn-light-outline" href="tel:6059990147">
+                  <i class="fa-solid fa-phone"></i> Call
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FULL SALE INFO (below player on desktop only) -->
+      <div class="full-info-wrap info-desktop">
+        <div class="player-shell">
+          <div class="player-head">
+            <div>
+              <p class="player-title mb-1">Sale info</p>
+              <p class="player-sub mb-0">March 4 • Platte Livestock Market • Platte, SD</p>
+            </div>
+          </div>
+
+          <div class="p-3" style="background:#0b0b0b;">
+            <div class="info-card">
+              <p class="info-title">Sale info</p>
+
+              <div class="info-line">
+                <i class="fa-solid fa-calendar-days"></i>
+                <div><strong>March 4</strong> • Platte, SD</div>
+              </div>
+
+              <div class="info-line">
+                <i class="fa-solid fa-location-dot"></i>
+                <div>
+                  <div><strong>Platte Livestock Market</strong></div>
+                  <div style="color:rgba(242,242,242,.70);">36580 SD-44, Platte, SD 57369</div>
                 </div>
+              </div>
 
-                <div class="info-line">
-                  <i class="fa-solid fa-location-dot"></i>
-                  <div>
-                    <div><strong>Platte Livestock Market</strong></div>
-                    <div style="color:rgba(242,242,242,.70);">36580 SD-44, Platte, SD 57369</div>
-                  </div>
+              <div class="info-line">
+                <i class="fa-solid fa-phone"></i>
+                <div>
+                  <div><strong>Austin (Owner)</strong></div>
+                  <div style="color:rgba(242,242,242,.70);">605-999-0147</div>
                 </div>
+              </div>
 
-                <div class="info-line">
-                  <i class="fa-solid fa-phone"></i>
-                  <div>
-                    <div><strong>Austin (Owner)</strong></div>
-                    <div style="color:rgba(242,242,242,.70);">605-999-0147</div>
-                  </div>
-                </div>
+              <div class="info-actions">
+                <a class="btn-gold" target="_blank" rel="noopener"
+                   href="https://www.google.com/maps/search/?api=1&query=Platte%20Livestock%20Market%2C%2036580%20SD-44%2C%20Platte%2C%20SD%2057369">
+                  <i class="fa-solid fa-map-location-dot"></i> Map
+                </a>
 
-                <div class="info-actions">
-                  <a class="btn-gold" target="_blank" rel="noopener"
-                     href="https://www.google.com/maps/search/?api=1&query=Platte%20Livestock%20Market%2C%2036580%20SD-44%2C%20Platte%2C%20SD%2057369">
-                    <i class="fa-solid fa-map-location-dot"></i> Map
-                  </a>
+                <a class="btn-light-outline" target="_blank" rel="noopener"
+                   href="http://www.plattelivestockmarket.com">
+                  <i class="fa-solid fa-globe"></i> Market site
+                </a>
 
-                  <a class="btn-light-outline" target="_blank" rel="noopener"
-                     href="http://www.plattelivestockmarket.com">
-                    <i class="fa-solid fa-globe"></i> Market site
-                  </a>
+                <a class="btn-light-outline" target="_blank" rel="noopener"
+                   href="https://www.facebook.com/barteltangus">
+                  <i class="fa-brands fa-facebook-f"></i> Facebook
+                </a>
 
-                  <a class="btn-light-outline" target="_blank" rel="noopener"
-                     href="https://www.facebook.com/barteltangus">
-                    <i class="fa-brands fa-facebook-f"></i> Facebook
-                  </a>
-
-                  <a class="btn-light-outline" href="tel:6059990147">
-                    <i class="fa-solid fa-phone"></i> Call
-                  </a>
-                </div>
+                <a class="btn-light-outline" href="tel:6059990147">
+                  <i class="fa-solid fa-phone"></i> Call
+                </a>
               </div>
             </div>
           </div>
@@ -421,7 +504,7 @@
       </div>
 
       <!-- Controls -->
-      <div class="controls mb-4">
+      <div class="controls mb-4 mt-4">
         <div class="row g-3 align-items-center">
           <div class="col-12 col-lg-6">
             <input id="searchInput" class="form-control search"
@@ -449,31 +532,31 @@
     */
 
     const lots = [
-      { lot: 1,  title: "Lot 16A",  meta: "Heifer",   youtube: "https://youtu.be/DhTo_eziwdk", catalogImg: "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg" },
-      { lot: 2,  title: "Lot 2",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot02.jpg" },
-      { lot: 3,  title: "Lot 3",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot03.jpg" },
-      { lot: 4,  title: "Lot 4",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot04.jpg" },
-      { lot: 5,  title: "Lot 5",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot05.jpg" },
-      { lot: 6,  title: "Lot 6",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot06.jpg" },
-      { lot: 7,  title: "Lot 7",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot07.jpg" },
-      { lot: 8,  title: "Lot 8",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot08.jpg" },
-      { lot: 9,  title: "Lot 9",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot09.jpg" },
-      { lot: 10, title: "Lot 10", meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot10.jpg" },
-      { lot: 11, title: "Lot 11", meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot11.jpg" },
-      { lot: 12, title: "Lot 12", meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot12.jpg" },
-      { lot: 13, title: "Lot 13", meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot13.jpg" },
-      { lot: 14, title: "Lot 14", meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot14.jpg" },
-      { lot: 15, title: "Lot 15", meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot15.jpg" },
-      { lot: 16, title: "Lot 16", meta: "Heifer", youtube: "https://www.youtube.com/watch?v=DhTo_eziwdk", catalogImg: "assets/img/catalog/bartelt/lot16.jpg" },
-      { lot: 17, title: "Lot 17", meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot17.jpg" },
-      { lot: 18, title: "Lot 18", meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot18.jpg" },
-      { lot: 19, title: "Lot 19", meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot19.jpg" },
-      { lot: 20, title: "Lot 20", meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot20.jpg" },
-      { lot: 21, title: "Lot 21", meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot21.jpg" },
-      { lot: 22, title: "Lot 22", meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot22.jpg" },
-      { lot: 23, title: "Lot 23", meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot23.jpg" },
-      { lot: 24, title: "Lot 24", meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot24.jpg" },
-      { lot: 25, title: "Lot 25", meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot25.jpg" },
+      { lot: 1,  title: "Lot 16A", meta: "Heifer", youtube: "https://youtu.be/DhTo_eziwdk", catalogImg: "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg" },
+      { lot: 2,  title: "Lot 2",   meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot02.jpg" },
+      { lot: 3,  title: "Lot 3",   meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot03.jpg" },
+      { lot: 4,  title: "Lot 4",   meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot04.jpg" },
+      { lot: 5,  title: "Lot 5",   meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot05.jpg" },
+      { lot: 6,  title: "Lot 6",   meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot06.jpg" },
+      { lot: 7,  title: "Lot 7",   meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot07.jpg" },
+      { lot: 8,  title: "Lot 8",   meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot08.jpg" },
+      { lot: 9,  title: "Lot 9",   meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot09.jpg" },
+      { lot: 10, title: "Lot 10",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot10.jpg" },
+      { lot: 11, title: "Lot 11",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot11.jpg" },
+      { lot: 12, title: "Lot 12",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot12.jpg" },
+      { lot: 13, title: "Lot 13",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot13.jpg" },
+      { lot: 14, title: "Lot 14",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot14.jpg" },
+      { lot: 15, title: "Lot 15",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot15.jpg" },
+      { lot: 16, title: "Lot 16",  meta: "Heifer", youtube: "https://www.youtube.com/watch?v=DhTo_eziwdk", catalogImg: "assets/img/catalog/bartelt/lot16.jpg" },
+      { lot: 17, title: "Lot 17",  meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot17.jpg" },
+      { lot: 18, title: "Lot 18",  meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot18.jpg" },
+      { lot: 19, title: "Lot 19",  meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot19.jpg" },
+      { lot: 20, title: "Lot 20",  meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot20.jpg" },
+      { lot: 21, title: "Lot 21",  meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot21.jpg" },
+      { lot: 22, title: "Lot 22",  meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot22.jpg" },
+      { lot: 23, title: "Lot 23",  meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot23.jpg" },
+      { lot: 24, title: "Lot 24",  meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot24.jpg" },
+      { lot: 25, title: "Lot 25",  meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot25.jpg" },
     ];
 
     const grid = document.getElementById("grid");
@@ -527,8 +610,7 @@
       const id = extractYouTubeId(fromUrlOrId);
       if(!id) return "";
 
-      // ✅ Controls ON: users can pause + scrub
-      // ✅ Reduced popups: no related, no info cards, minimal branding, no fullscreen button
+      // Controls ON (pause + scrub). Reduced popups/overlays as much as YouTube allows.
       return `https://www.youtube.com/embed/${id}?` +
         `autoplay=1` +
         `&loop=1&playlist=${id}` +
@@ -639,7 +721,7 @@
 
     render();
     updateNav();
-    // ✅ Default start on Lot 1
+    // Default start on Lot 1
     selectLot(1);
   </script>
 
