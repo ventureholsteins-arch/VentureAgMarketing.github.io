@@ -82,23 +82,26 @@
     .player-sub{ margin: 0; color: rgba(242,242,242,.70); font-size: .92rem; }
     .player-frame{ width:100%; height:100%; border:0; background:#000; }
 
-    /* Desktop: make video a bit less tall (still full width) */
+    /* Video ratio: keep clean, not too tall on desktop */
     .video-ratio{
       background:#000;
       border-bottom: 1px solid rgba(255,255,255,.10);
       position: relative;
     }
     @media (min-width: 992px){
-      .video-ratio.ratio-16x9{ --bs-aspect-ratio: 42.5%; } /* default 56.25% */
+      .video-ratio.ratio-16x9{ --bs-aspect-ratio: 46%; } /* slightly shorter than 16:9 */
     }
 
-    /* Click-shield: blocks the top overlay clicks WITHOUT blocking scrub bar */
+    /* YouTube overlay click shield (top area only) */
     .yt-shield{
       position:absolute;
       top:0; left:0; right:0;
       height:56px;
       z-index:2;
       background: transparent;
+    }
+    @media (max-width: 991.98px){
+      .yt-shield{ height: 48px; }
     }
 
     /* Prev/Next */
@@ -135,60 +138,74 @@
       font-size: .82rem;
     }
 
-    /* Right panel (catalog) */
+    /* Right panel */
     .side-panel{
       background: #0b0b0b;
       border-left: 1px solid rgba(255,255,255,.10);
       height: 100%;
+      display:flex;
+      flex-direction:column;
     }
     .side-block{
       padding: 14px;
       border-bottom: 1px solid rgba(255,255,255,.10);
     }
 
-    /* Catalog image */
+    /* CATALOG: make it bigger + readable; still safe for full-page */
+    .catalog-holder{
+      padding: 14px;
+      flex: 1 1 auto;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
     .catalog-img{
       width: 100%;
       height: auto;
       display:block;
-      border-radius: 14px;
+      border-radius: 16px;
       border: 1px solid rgba(255,255,255,.12);
       box-shadow: 0 12px 30px rgba(0,0,0,.35);
       background:#fff;
+      padding: 10px;
+      object-fit: contain;
+      max-height: 560px; /* desktop size bump */
+    }
+    @media (max-width: 991.98px){
+      .side-panel{ border-left: none; border-top: 1px solid rgba(255,255,255,.10); }
+      .catalog-img{ max-height: none; }
     }
 
-    /* Sale info box (full) */
-    .info-card{
-      border-radius: 16px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.12);
-      padding: 14px;
-      color: rgba(242,242,242,.90);
-    }
-    .info-title{
-      font-weight: 900;
-      letter-spacing: .10em;
-      text-transform: uppercase;
-      font-size: .82rem;
-      margin: 0 0 10px;
-      color: rgba(242,242,242,.85);
-    }
-    .info-line{
+    /* Bottom action strip (replaces big sale info section) */
+    .action-strip{
+      background: #0b0b0b;
+      border-top: 1px solid rgba(255,255,255,.10);
+      padding: 12px 14px;
       display:flex;
-      gap:10px;
-      align-items:flex-start;
-      margin-bottom: 10px;
-      color: rgba(242,242,242,.82);
-      font-size: .95rem;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+      flex-wrap:wrap;
+      color: rgba(242,242,242,.84);
     }
-    .info-line i{ color: var(--vam-gold); margin-top: 2px; }
-
-    .info-actions{
+    .action-strip .mini{
+      display:flex;
+      gap: 14px;
+      align-items:center;
+      flex-wrap:wrap;
+      font-weight: 800;
+      letter-spacing: .04em;
+      font-size: .90rem;
+      color: rgba(242,242,242,.78);
+    }
+    .action-strip .mini i{ color: var(--vam-gold); }
+    .action-strip .buttons{
       display:flex;
       gap:10px;
       flex-wrap:wrap;
-      margin-top: 10px;
+      align-items:center;
     }
+
     .btn-gold{
       background: var(--vam-gold);
       border: 1px solid var(--vam-gold);
@@ -202,6 +219,7 @@
       display:inline-flex;
       align-items:center;
       gap:8px;
+      white-space: nowrap;
     }
     .btn-gold:hover{ background: var(--vam-gold-dark); border-color: var(--vam-gold-dark); color:#0B0B0B; }
 
@@ -218,6 +236,7 @@
       display:inline-flex;
       align-items:center;
       gap:8px;
+      white-space: nowrap;
     }
     .btn-light-outline:hover{ background: rgba(255,255,255,.10); color:#fff; }
 
@@ -266,24 +285,30 @@
       align-items:center;
       justify-content:space-between;
       gap: 10px;
-      min-height: 92px;
+      min-height: 128px;
     }
-    .lot-left{ display:flex; align-items:center; gap:12px; }
+    .lot-left{ display:flex; align-items:center; gap:14px; }
     .lot-num{ font-weight:900; letter-spacing:.10em; text-transform:uppercase; font-size:.80rem; color: rgba(242,242,242,.82); }
-    .lot-big{ font-weight:900; letter-spacing:.06em; text-transform:uppercase; font-size: 1.9rem; line-height:1; margin:5px 0 0; color: var(--vam-gold); }
+    .lot-big{ font-weight:900; letter-spacing:.06em; text-transform:uppercase; font-size: 2.15rem; line-height:1; margin:6px 0 0; color: var(--vam-gold); }
 
+    /* BIGGER lot preview thumbnails */
     .thumb{
-      width: 74px; height: 74px;
-      border-radius: 14px;
+      width: 112px; height: 112px;
+      border-radius: 16px;
       overflow:hidden;
       border: 1px solid rgba(255,255,255,.14);
       background: rgba(255,255,255,.06);
       flex: 0 0 auto;
     }
     .thumb img{ width:100%; height:100%; object-fit: cover; display:block; }
+    @media (max-width: 575.98px){
+      .thumb{ width: 92px; height: 92px; }
+      .lot-top{ min-height: 116px; }
+      .lot-big{ font-size: 1.95rem; }
+    }
 
     .play{
-      width: 42px; height: 42px;
+      width: 44px; height: 44px;
       border-radius: 14px;
       background: rgba(255,255,255,.08);
       border: 1px solid rgba(255,255,255,.14);
@@ -300,69 +325,11 @@
       outline: 3px solid rgba(201,164,92,.55);
       outline-offset: 2px;
     }
-
-    /* --- NEW LAYOUT RULES (your request) --- */
-
-    /* Desktop: make right side basically a big catalog viewer; info goes below */
-    @media (min-width: 992px){
-      .catalog-img{
-        max-height: 560px;
-        object-fit: contain;
-        background: #fff;
-        padding: 10px;
-      }
-      .side-panel{
-        display:flex;
-        flex-direction:column;
-      }
-      .side-panel .side-block{
-        border-bottom:none;
-      }
-      .info-mini{ display:none !important; }
-    }
-
-    /* Mobile: stack video > catalog > tiny info strip; hide full info below player */
-    @media (max-width: 991.98px){
-      .side-panel{ border-left: none; border-top: 1px solid rgba(255,255,255,.10); }
-      .yt-shield{ height: 48px; }
-      .info-desktop{ display:none !important; }
-      .info-mini{ display:block !important; }
-      .catalog-img{
-        background:#fff;
-        padding: 10px;
-        object-fit: contain;
-      }
-    }
-
-    /* Mini sale info strip (mobile) */
-    .info-mini{
-      display:none;
-      border-top: 1px solid rgba(255,255,255,.10);
-      background: #0b0b0b;
-      padding: 12px 14px;
-      color: rgba(242,242,242,.85);
-    }
-    .info-mini .line{
-      font-weight: 800;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      font-size: .78rem;
-      margin-bottom: 10px;
-      color: rgba(242,242,242,.80);
-    }
-    .info-mini .mini-actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-
-    .full-info-wrap{ margin-top: 18px; }
   </style>
 </head>
 
 <body>
 
-  <!-- Sticky Top Bar -->
   <div class="topbar">
     <div class="container py-3 d-flex flex-wrap align-items-center justify-content-between gap-2">
       <div>
@@ -379,7 +346,6 @@
   <main class="py-5">
     <div class="container">
 
-      <!-- BIG PLAYER -->
       <div class="player-shell mb-4">
         <div class="player-head">
           <div>
@@ -389,16 +355,14 @@
         </div>
 
         <div class="row g-0">
-          <!-- LEFT: VIDEO + NAV -->
-          <div class="col-12 col-lg-8">
+          <!-- Video -->
+          <div class="col-12 col-lg-7">
             <div class="ratio ratio-16x9 video-ratio">
               <iframe id="playerFrame" class="player-frame"
                 src=""
                 title="Lot Video"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen></iframe>
-
-              <!-- blocks the title/logo area from being clicked -->
               <div class="yt-shield" aria-hidden="true"></div>
             </div>
 
@@ -415,96 +379,48 @@
             </div>
           </div>
 
-          <!-- RIGHT: BIG CATALOG + MINI INFO (mobile only) -->
-          <div class="col-12 col-lg-4 side-panel">
-            <div class="side-block" id="catalogWrap" style="display:none;">
+          <!-- Catalog -->
+          <div class="col-12 col-lg-5 side-panel" id="catalogPanel">
+            <div class="catalog-holder" id="catalogWrap" style="display:none;">
               <img id="catalogImg" class="catalog-img" src="" alt="Catalog image">
             </div>
-
-            <!-- Mobile mini info strip -->
-            <div class="info-mini">
-              <div class="line">
-                <i class="fa-solid fa-calendar-days" style="color:var(--vam-gold); margin-right:8px;"></i>
-                March 4 • Platte Livestock Market • Platte, SD
-              </div>
-
-              <div class="mini-actions">
-                <a class="btn-gold" target="_blank" rel="noopener"
-                   href="https://www.google.com/maps/search/?api=1&query=Platte%20Livestock%20Market%2C%2036580%20SD-44%2C%20Platte%2C%20SD%2057369">
-                  <i class="fa-solid fa-map-location-dot"></i> Map
-                </a>
-
-                <a class="btn-light-outline" href="tel:6059990147">
-                  <i class="fa-solid fa-phone"></i> Call
-                </a>
-              </div>
+            <div class="side-block" id="catalogEmpty" style="display:none; color:rgba(242,242,242,.70);">
+              No catalog image uploaded for this lot yet.
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- FULL SALE INFO (below player on desktop only) -->
-      <div class="full-info-wrap info-desktop">
-        <div class="player-shell">
-          <div class="player-head">
-            <div>
-              <p class="player-title mb-1">Sale info</p>
-              <p class="player-sub mb-0">March 4 • Platte Livestock Market • Platte, SD</p>
-            </div>
+        <!-- Tight sale strip (no huge empty section) -->
+        <div class="action-strip">
+          <div class="mini">
+            <span><i class="fa-solid fa-calendar-days"></i> March 4</span>
+            <span><i class="fa-solid fa-location-dot"></i> Platte Livestock Market • Platte, SD</span>
           </div>
 
-          <div class="p-3" style="background:#0b0b0b;">
-            <div class="info-card">
-              <p class="info-title">Sale info</p>
+          <div class="buttons">
+            <a class="btn-light-outline" href="sale-bartelt.html" title="Full sale info page">
+              <i class="fa-solid fa-circle-info"></i> Sale Info
+            </a>
 
-              <div class="info-line">
-                <i class="fa-solid fa-calendar-days"></i>
-                <div><strong>March 4</strong> • Platte, SD</div>
-              </div>
+            <a class="btn-gold" target="_blank" rel="noopener"
+               href="https://www.google.com/maps/search/?api=1&query=Platte%20Livestock%20Market%2C%2036580%20SD-44%2C%20Platte%2C%20SD%2057369">
+              <i class="fa-solid fa-map-location-dot"></i> Map
+            </a>
 
-              <div class="info-line">
-                <i class="fa-solid fa-location-dot"></i>
-                <div>
-                  <div><strong>Platte Livestock Market</strong></div>
-                  <div style="color:rgba(242,242,242,.70);">36580 SD-44, Platte, SD 57369</div>
-                </div>
-              </div>
+            <a class="btn-light-outline" target="_blank" rel="noopener"
+               href="https://www.facebook.com/barteltangus">
+              <i class="fa-brands fa-facebook-f"></i> Facebook
+            </a>
 
-              <div class="info-line">
-                <i class="fa-solid fa-phone"></i>
-                <div>
-                  <div><strong>Austin (Owner)</strong></div>
-                  <div style="color:rgba(242,242,242,.70);">605-999-0147</div>
-                </div>
-              </div>
-
-              <div class="info-actions">
-                <a class="btn-gold" target="_blank" rel="noopener"
-                   href="https://www.google.com/maps/search/?api=1&query=Platte%20Livestock%20Market%2C%2036580%20SD-44%2C%20Platte%2C%20SD%2057369">
-                  <i class="fa-solid fa-map-location-dot"></i> Map
-                </a>
-
-                <a class="btn-light-outline" target="_blank" rel="noopener"
-                   href="http://www.plattelivestockmarket.com">
-                  <i class="fa-solid fa-globe"></i> Market site
-                </a>
-
-                <a class="btn-light-outline" target="_blank" rel="noopener"
-                   href="https://www.facebook.com/barteltangus">
-                  <i class="fa-brands fa-facebook-f"></i> Facebook
-                </a>
-
-                <a class="btn-light-outline" href="tel:6059990147">
-                  <i class="fa-solid fa-phone"></i> Call
-                </a>
-              </div>
-            </div>
+            <a class="btn-light-outline" href="tel:6059990147">
+              <i class="fa-solid fa-phone"></i> Call
+            </a>
           </div>
         </div>
       </div>
 
       <!-- Controls -->
-      <div class="controls mb-4 mt-4">
+      <div class="controls mb-4">
         <div class="row g-3 align-items-center">
           <div class="col-12 col-lg-6">
             <input id="searchInput" class="form-control search"
@@ -516,21 +432,13 @@
         </div>
       </div>
 
-      <!-- Grid -->
+      <!-- Lot grid -->
       <div class="row g-4" id="grid"></div>
 
     </div>
   </main>
 
   <script>
-    /*
-      ✅ YOUTUBE INPUTS THAT WORK in `youtube`:
-      - https://youtu.be/VIDEO_ID
-      - https://www.youtube.com/watch?v=VIDEO_ID
-      - https://www.youtube.com/shorts/VIDEO_ID
-      - VIDEO_ID (just the ID)
-    */
-
     const lots = [
       { lot: 1,  title: "Lot 16A", meta: "Heifer", youtube: "https://youtu.be/DhTo_eziwdk", catalogImg: "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg" },
       { lot: 2,  title: "Lot 2",   meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot02.jpg" },
@@ -568,6 +476,7 @@
     const playerFrame = document.getElementById("playerFrame");
     const catalogWrap = document.getElementById("catalogWrap");
     const catalogImg = document.getElementById("catalogImg");
+    const catalogEmpty = document.getElementById("catalogEmpty");
 
     const prevBtn = document.getElementById("prevBtn");
     const nextBtn = document.getElementById("nextBtn");
@@ -609,17 +518,7 @@
     function ytEmbed(fromUrlOrId){
       const id = extractYouTubeId(fromUrlOrId);
       if(!id) return "";
-
-      // Controls ON (pause + scrub). Reduced popups/overlays as much as YouTube allows.
-      return `https://www.youtube.com/embed/${id}?` +
-        `autoplay=1` +
-        `&loop=1&playlist=${id}` +
-        `&controls=1` +
-        `&modestbranding=1` +
-        `&rel=0` +
-        `&iv_load_policy=3` +
-        `&playsinline=1` +
-        `&fs=0`;
+      return `https://www.youtube.com/embed/${id}?autoplay=1&loop=1&playlist=${id}&controls=1&modestbranding=1&rel=0&iv_load_policy=3&playsinline=1&fs=0`;
     }
 
     function updateNav(){
@@ -656,11 +555,14 @@
         playerFrame.src = "";
       }
 
-      if(item.catalogImg && item.catalogImg.trim() !== ""){
+      const hasCatalog = item.catalogImg && item.catalogImg.trim() !== "";
+      if(hasCatalog){
         catalogImg.src = item.catalogImg.trim();
-        catalogWrap.style.display = "block";
+        catalogWrap.style.display = "flex";
+        catalogEmpty.style.display = "none";
       }else{
         catalogWrap.style.display = "none";
+        catalogEmpty.style.display = "block";
       }
 
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -721,7 +623,6 @@
 
     render();
     updateNav();
-    // Default start on Lot 1
     selectLot(1);
   </script>
 
