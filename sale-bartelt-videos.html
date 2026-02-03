@@ -82,14 +82,23 @@
     .player-sub{ margin: 0; color: rgba(242,242,242,.70); font-size: .92rem; }
     .player-frame{ width:100%; height:100%; border:0; background:#000; }
 
-    /* Make desktop video a touch smaller (less tall) */
+    /* Desktop: make video a bit less tall (still full width) */
     .video-ratio{
       background:#000;
       border-bottom: 1px solid rgba(255,255,255,.10);
+      position: relative; /* required for yt-shield */
     }
     @media (min-width: 992px){
-      /* 21:9-ish feel without changing width */
       .video-ratio.ratio-16x9{ --bs-aspect-ratio: 42.5%; } /* default 56.25% */
+    }
+
+    /* Click-shield: blocks the top overlay clicks (logo/title) WITHOUT blocking scrub bar */
+    .yt-shield{
+      position:absolute;
+      top:0; left:0; right:0;
+      height:56px;              /* adjust 44–72 if you want */
+      z-index:2;
+      background: transparent;
     }
 
     /* Prev/Next */
@@ -294,6 +303,7 @@
 
     @media (max-width: 991.98px){
       .side-panel{ border-left: none; border-top: 1px solid rgba(255,255,255,.10); }
+      .yt-shield{ height: 48px; } /* slightly smaller shield on mobile */
     }
   </style>
 </head>
@@ -305,7 +315,7 @@
     <div class="container py-3 d-flex flex-wrap align-items-center justify-content-between gap-2">
       <div>
         <p class="title mb-1">Bartelt Angus • Lot Videos</p>
-        <small>Desktop: video + catalog + info side-by-side. Mobile: stacked.</small>
+        <small>Controls: pause + scrub only (YouTube overlay clicks reduced).</small>
       </div>
       <div class="d-flex gap-2 flex-wrap">
         <a class="btn-ghost" href="sale-bartelt.html"><i class="fa-solid fa-arrow-left"></i> Sale Info</a>
@@ -317,24 +327,27 @@
   <main class="py-5">
     <div class="container">
 
-      <!-- BIG PLAYER (RESPONSIVE LAYOUT) -->
+      <!-- BIG PLAYER -->
       <div class="player-shell mb-4">
         <div class="player-head">
           <div>
             <p class="player-title mb-1" id="playerTitle">Loading Lot 1…</p>
-            <p class="player-sub" id="playerSub">Video loops until you click Prev/Next.</p>
+            <p class="player-sub" id="playerSub">Use the scrub bar to move forward/back. Prev/Next changes lots.</p>
           </div>
         </div>
 
         <div class="row g-0">
           <!-- LEFT: VIDEO + NAV -->
-          <div class="col-12 col-lg-8 order-1 order-lg-1">
+          <div class="col-12 col-lg-8">
             <div class="ratio ratio-16x9 video-ratio">
               <iframe id="playerFrame" class="player-frame"
                 src=""
                 title="Lot Video"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen></iframe>
+
+              <!-- blocks the title/logo area from being clicked -->
+              <div class="yt-shield" aria-hidden="true"></div>
             </div>
 
             <div class="player-actions">
@@ -350,8 +363,8 @@
             </div>
           </div>
 
-          <!-- RIGHT: CATALOG IMAGE + QUICK SALE INFO -->
-          <div class="col-12 col-lg-4 order-2 order-lg-2 side-panel">
+          <!-- RIGHT: CATALOG + INFO -->
+          <div class="col-12 col-lg-4 side-panel">
             <div class="side-block" id="catalogWrap" style="display:none;">
               <img id="catalogImg" class="catalog-img" src="" alt="Catalog image">
             </div>
@@ -428,8 +441,7 @@
 
   <script>
     /*
-      ✅ IMPORTANT (how to make YouTube work)
-      Put ANY of these in the "youtube" field and it will work:
+      ✅ YOUTUBE INPUTS THAT WORK in `youtube`:
       - https://youtu.be/VIDEO_ID
       - https://www.youtube.com/watch?v=VIDEO_ID
       - https://www.youtube.com/shorts/VIDEO_ID
@@ -483,7 +495,7 @@
     function extractYouTubeId(input){
       if(!input) return "";
       const s = String(input).trim();
-      // If not a URL, assume it's already an ID
+      if(!s) return "";
       if(!s.includes("youtu")) return s;
 
       try{
@@ -493,13 +505,11 @@
         if(host === "youtu.be"){
           return url.pathname.split("/").filter(Boolean)[0] || "";
         }
-
         if(host === "youtube.com" || host === "m.youtube.com"){
           const v = url.searchParams.get("v");
           if(v) return v;
 
           const parts = url.pathname.split("/").filter(Boolean);
-
           const embedIndex = parts.indexOf("embed");
           if(embedIndex !== -1 && parts[embedIndex+1]) return parts[embedIndex+1];
 
@@ -507,19 +517,27 @@
           if(shortsIndex !== -1 && parts[shortsIndex+1]) return parts[shortsIndex+1];
         }
       }catch(e){
-        // If URL() fails, do a simple fallback parse
         const match = s.match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([a-zA-Z0-9_-]{6,})/);
         return match ? match[1] : s;
       }
-
       return s;
     }
 
     function ytEmbed(fromUrlOrId){
       const id = extractYouTubeId(fromUrlOrId);
       if(!id) return "";
-      // Loop requires playlist=id + loop=1
-      return `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&loop=1&playlist=${id}`;
+
+      // ✅ Controls ON: users can pause + scrub
+      // ✅ Reduced popups: no related, no info cards, minimal branding, no fullscreen button
+      return `https://www.youtube.com/embed/${id}?` +
+        `autoplay=1` +
+        `&loop=1&playlist=${id}` +
+        `&controls=1` +
+        `&modestbranding=1` +
+        `&rel=0` +
+        `&iv_load_policy=3` +
+        `&playsinline=1` +
+        `&fs=0`;
     }
 
     function updateNav(){
@@ -601,7 +619,6 @@
         </div>
       `).join("");
 
-      // Attach clicks (avoids inline onclick issues)
       document.querySelectorAll(".lot-card").forEach(card => {
         card.addEventListener("click", () => {
           const lot = parseInt(card.getAttribute("data-lot"), 10);
@@ -622,7 +639,7 @@
 
     render();
     updateNav();
-    // ✅ Default to Lot 1 on load
+    // ✅ Default start on Lot 1
     selectLot(1);
   </script>
 
