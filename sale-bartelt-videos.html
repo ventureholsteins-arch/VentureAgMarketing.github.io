@@ -35,7 +35,6 @@
       margin: 0;
       font-size: .95rem;
     }
-    .topbar small{ color: var(--vam-muted); }
 
     .btn-ghost{
       border: 1px solid rgba(255,255,255,.22);
@@ -86,13 +85,13 @@
     .video-ratio{
       background:#000;
       border-bottom: 1px solid rgba(255,255,255,.10);
-      position: relative; /* required for yt-shield */
+      position: relative;
     }
     @media (min-width: 992px){
       .video-ratio.ratio-16x9{ --bs-aspect-ratio: 44%; }
     }
 
-    /* Click-shield: blocks the top overlay clicks (logo/title) WITHOUT blocking scrub bar */
+    /* Click-shield: blocks top overlay clicks (logo/title) without blocking scrub bar */
     .yt-shield{
       position:absolute;
       top:0; left:0; right:0;
@@ -135,7 +134,7 @@
       font-size: .82rem;
     }
 
-    /* ===== NEW: Sale info strip under video ===== */
+    /* Sale info strip */
     .sale-strip{
       background: linear-gradient(135deg, rgba(201,164,92,.16), rgba(255,255,255,.04));
       border-top: 1px solid rgba(255,255,255,.10);
@@ -177,7 +176,6 @@
       letter-spacing: .02em;
     }
     .sale-mini i{ color: var(--vam-gold); }
-
     .sale-actions{
       display:flex;
       flex-wrap:wrap;
@@ -185,6 +183,7 @@
       align-items:center;
       justify-content:flex-end;
     }
+
     .btn-gold{
       background: var(--vam-gold);
       border: 1px solid var(--vam-gold);
@@ -219,7 +218,7 @@
     }
     .btn-light-outline:hover{ background: rgba(255,255,255,.10); color:#fff; }
 
-    /* ===== NEW: Catalog panel is ONLY the image, bigger ===== */
+    /* Catalog panel */
     .catalog-panel{
       height:100%;
       background:#0b0b0b;
@@ -240,7 +239,6 @@
       gap:8px;
       margin:0;
     }
-
     .catalog-img{
       width: 100%;
       height: auto;
@@ -360,7 +358,7 @@
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 18px;
+      padding: 0; /* fullscreen stage */
     }
     .img-modal.show{ display:flex; }
 
@@ -379,6 +377,7 @@
       justify-content:center;
       font-size: 18px;
       cursor: pointer;
+      z-index: 3;
     }
     .img-modal-close:hover{ background: rgba(255,255,255,.12); }
 
@@ -391,29 +390,32 @@
       letter-spacing: .08em;
       text-transform: uppercase;
       font-size: .78rem;
+      z-index: 3;
     }
 
-    .zoom-area{
-      max-width: 100%;
-      max-height: 100%;
-      overflow: auto;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow: 0 24px 90px rgba(0,0,0,.55);
-      background: rgba(255,255,255,.02);
-      -webkit-overflow-scrolling: touch;
+    /* Fullscreen pan/zoom stage */
+    .zoom-stage{
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      touch-action: none; /* we handle pan/pinch */
+      cursor: default;
+      z-index: 2;
     }
+
+    .zoom-stage.dragging{ cursor: grabbing; }
 
     .zoom-img{
-      display:block;
-      max-width: none;
-      width: 100%;
-      height: auto;
-      transform-origin: top left;
-      cursor: zoom-in;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform-origin: 0 0;
       user-select: none;
       -webkit-user-drag: none;
-      touch-action: pan-x pan-y;
+      max-width: none;
+      width: auto;
+      height: auto;
+      will-change: transform;
     }
   </style>
 </head>
@@ -441,13 +443,17 @@
         <div class="player-head">
           <div>
             <p class="player-title mb-1" id="playerTitle">Loading Lot 1…</p>
-            <p class="player-sub" id="playerSub">Use the scrub bar to move forward/back. Prev/Next changes lots.</p>
+            <p class="player-sub" id="playerSub">Tap catalog to enlarge. Tap again to zoom. Drag to pan when zoomed. Pinch to zoom on mobile.</p>
           </div>
         </div>
 
+        <!-- ✅ Layout order:
+             Desktop: video (left), catalog (right), sale strip under video
+             Mobile:  video, catalog, sale strip (below catalog)
+        -->
         <div class="row g-0">
-          <!-- LEFT: VIDEO + NAV + SALE STRIP -->
-          <div class="col-12 col-lg-8">
+          <!-- VIDEO -->
+          <div class="col-12 col-lg-8 order-1 order-lg-1">
             <div class="ratio ratio-16x9 video-ratio">
               <iframe id="playerFrame" class="player-frame"
                 src=""
@@ -455,7 +461,6 @@
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen></iframe>
 
-              <!-- blocks the title/logo area from being clicked -->
               <div class="yt-shield" aria-hidden="true"></div>
             </div>
 
@@ -470,8 +475,19 @@
                 Next <i class="fa-solid fa-arrow-right"></i>
               </button>
             </div>
+          </div>
 
-            <!-- ✅ Sale info moved UNDER the video in a tight strip -->
+          <!-- CATALOG -->
+          <div class="col-12 col-lg-4 order-2 order-lg-3">
+            <div class="catalog-panel" id="catalogWrap" style="display:none;">
+              <p class="catalog-title"><i class="fa-solid fa-image"></i> Catalog image</p>
+              <img id="catalogImg" class="catalog-img" src="" alt="Catalog image">
+              <p class="tap-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Tap to enlarge • tap again to zoom • pinch on mobile</p>
+            </div>
+          </div>
+
+          <!-- SALE STRIP (mobile: below catalog) -->
+          <div class="col-12 col-lg-8 order-3 order-lg-2">
             <div class="sale-strip">
               <div class="label"><i class="fa-solid fa-circle-info"></i> Sale</div>
 
@@ -505,15 +521,6 @@
               </div>
             </div>
           </div>
-
-          <!-- RIGHT: BIG CATALOG IMAGE ONLY -->
-          <div class="col-12 col-lg-4">
-            <div class="catalog-panel" id="catalogWrap" style="display:none;">
-              <p class="catalog-title"><i class="fa-solid fa-image"></i> Catalog image</p>
-              <img id="catalogImg" class="catalog-img" src="" alt="Catalog image">
-              <p class="tap-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Click / tap to enlarge • pinch to zoom</p>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -536,14 +543,15 @@
     </div>
   </main>
 
-  <!-- FULLSCREEN IMAGE MODAL (ZOOM + PAN) -->
+  <!-- FULLSCREEN IMAGE MODAL (TAP TO ZOOM, DRAG TO PAN, PINCH TO ZOOM) -->
   <div id="imgModal" class="img-modal" aria-hidden="true">
-    <div class="img-modal-hint">Double tap / double click to zoom • pinch works on mobile</div>
+    <div class="img-modal-hint">Tap to zoom • drag to move • pinch to zoom on mobile • wheel zoom on desktop</div>
+
     <button id="imgModalClose" class="img-modal-close" type="button" aria-label="Close">
       <i class="fa-solid fa-xmark"></i>
     </button>
 
-    <div id="zoomArea" class="zoom-area" role="dialog" aria-label="Catalog image viewer">
+    <div id="stage" class="zoom-stage" role="dialog" aria-label="Catalog image viewer">
       <img id="zoomImg" class="zoom-img" src="" alt="Zoomed catalog image">
     </div>
   </div>
@@ -602,7 +610,7 @@
     // Modal elements
     const imgModal = document.getElementById("imgModal");
     const imgModalClose = document.getElementById("imgModalClose");
-    const zoomArea = document.getElementById("zoomArea");
+    const stage = document.getElementById("stage");
     const zoomImg = document.getElementById("zoomImg");
 
     let currentIndex = -1;
@@ -689,7 +697,7 @@
 
       if(item.catalogImg && item.catalogImg.trim() !== ""){
         catalogImg.src = item.catalogImg.trim();
-        catalogWrap.style.display = "flex"; // show big panel
+        catalogWrap.style.display = "flex";
       }else{
         catalogWrap.style.display = "none";
       }
@@ -734,13 +742,13 @@
 
       // click card -> select lot
       document.querySelectorAll(".lot-card").forEach(card => {
-        card.addEventListener("click", (e) => {
+        card.addEventListener("click", () => {
           const lot = parseInt(card.getAttribute("data-lot"), 10);
           selectLot(lot);
         });
       });
 
-      // click any thumb -> open zoom (without changing lot)
+      // click any thumb -> open zoom modal
       document.querySelectorAll(".thumb").forEach(t => {
         t.addEventListener("click", (e) => {
           e.stopPropagation();
@@ -751,21 +759,47 @@
     }
 
     // -----------------------------
-    // IMAGE MODAL (ZOOM + PAN)
+    // FULLSCREEN IMAGE MODAL:
+    // Tap opens modal.
+    // In modal:
+    //   - Tap toggles zoom in/out
+    //   - Drag pans ONLY when zoomed
+    //   - Pinch zoom works on mobile
+    //   - Wheel zoom works on desktop
     // -----------------------------
-    let zoomLevel = 1;
+    let scale = 1;
+    let minScale = 1;
+    let maxScale = 4;
+
+    let x = 0;
+    let y = 0;
+
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+    let dragStartX = 0;
+    let dragStartY = 0;
+
+    let lastTouchDist = null;
+
+    function applyTransform(){
+      zoomImg.style.transform = `translate(${x}px, ${y}px) scale(${scale}) translate(-50%, -50%)`;
+    }
+
+    function resetView(){
+      scale = 1;
+      x = 0;
+      y = 0;
+      stage.style.cursor = "default";
+      applyTransform();
+    }
 
     function openImageModal(src){
       zoomImg.src = src;
-      zoomLevel = 1;
-      zoomImg.style.transform = `scale(${zoomLevel})`;
-      zoomImg.style.cursor = "zoom-in";
-      zoomArea.scrollTop = 0;
-      zoomArea.scrollLeft = 0;
-
       imgModal.classList.add("show");
       imgModal.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
+      resetView();
     }
 
     function closeImageModal(){
@@ -777,38 +811,126 @@
     imgModal.addEventListener("click", (e) => {
       if(e.target === imgModal) closeImageModal();
     });
-
     imgModalClose.addEventListener("click", closeImageModal);
 
     document.addEventListener("keydown", (e) => {
       if(e.key === "Escape" && imgModal.classList.contains("show")) closeImageModal();
     });
 
+    // Tap to toggle zoom (only if not dragging)
+    let clickSuppress = false;
+
     function toggleZoom(){
-      if(zoomLevel === 1){
-        zoomLevel = 2.25;
-        zoomImg.style.cursor = "zoom-out";
+      if(scale === 1){
+        scale = 2.25;
+        stage.style.cursor = "grab";
       }else{
-        zoomLevel = 1;
-        zoomImg.style.cursor = "zoom-in";
-        zoomArea.scrollTop = 0;
-        zoomArea.scrollLeft = 0;
+        scale = 1;
+        x = 0;
+        y = 0;
+        stage.style.cursor = "default";
       }
-      zoomImg.style.transform = `scale(${zoomLevel})`;
+      applyTransform();
     }
-    zoomImg.addEventListener("dblclick", (e) => {
+
+    // Pointer drag (mouse + touch)
+    stage.addEventListener("pointerdown", (e) => {
       e.preventDefault();
-      toggleZoom();
+      stage.setPointerCapture(e.pointerId);
+
+      isDragging = true;
+      stage.classList.add("dragging");
+
+      startX = e.clientX;
+      startY = e.clientY;
+      dragStartX = x;
+      dragStartY = y;
+
+      clickSuppress = false;
     });
 
-    let lastTap = 0;
-    zoomImg.addEventListener("touchend", (e) => {
-      const now = Date.now();
-      if(now - lastTap < 300){
-        e.preventDefault();
+    stage.addEventListener("pointermove", (e) => {
+      if(!isDragging) return;
+
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+
+      if(Math.abs(dx) > 6 || Math.abs(dy) > 6) clickSuppress = true;
+
+      // Only pan when zoomed
+      if(scale > 1){
+        x = dragStartX + dx;
+        y = dragStartY + dy;
+        applyTransform();
+      }
+    });
+
+    stage.addEventListener("pointerup", () => {
+      isDragging = false;
+      stage.classList.remove("dragging");
+
+      // If it was just a tap (not a drag) -> toggle zoom
+      if(!clickSuppress){
         toggleZoom();
       }
-      lastTap = now;
+    });
+
+    stage.addEventListener("pointercancel", () => {
+      isDragging = false;
+      stage.classList.remove("dragging");
+    });
+
+    // Wheel zoom on desktop
+    stage.addEventListener("wheel", (e) => {
+      e.preventDefault();
+      const delta = -Math.sign(e.deltaY) * 0.15;
+      const next = Math.min(maxScale, Math.max(minScale, scale + delta));
+
+      // If user wheel-zooms from 1, allow zoom in
+      scale = next;
+      if(scale <= 1){
+        scale = 1;
+        x = 0; y = 0;
+        stage.style.cursor = "default";
+      }else{
+        stage.style.cursor = "grab";
+      }
+      applyTransform();
+    }, { passive:false });
+
+    // Pinch zoom on mobile (two-finger)
+    stage.addEventListener("touchmove", (e) => {
+      if(e.touches.length !== 2) {
+        lastTouchDist = null;
+        return;
+      }
+      e.preventDefault();
+
+      const t1 = e.touches[0];
+      const t2 = e.touches[1];
+
+      const dx = t1.clientX - t2.clientX;
+      const dy = t1.clientY - t2.clientY;
+      const dist = Math.hypot(dx, dy);
+
+      if(lastTouchDist == null){
+        lastTouchDist = dist;
+        return;
+      }
+
+      const diff = (dist - lastTouchDist) / 250;
+      scale = Math.min(maxScale, Math.max(minScale, scale + diff));
+      lastTouchDist = dist;
+
+      if(scale <= 1){
+        scale = 1;
+        x = 0; y = 0;
+        stage.style.cursor = "default";
+      }else{
+        stage.style.cursor = "grab";
+      }
+
+      applyTransform();
     }, { passive:false });
 
     // Clicking the main catalog image opens modal
@@ -818,7 +940,7 @@
     });
 
     // -----------------------------
-    // Events
+    // Init
     // -----------------------------
     searchInput.addEventListener("input", render);
 
@@ -830,7 +952,6 @@
       if(currentIndex < lots.length - 1) selectLot(lots[currentIndex + 1].lot);
     });
 
-    // Init
     render();
     updateNav();
     selectLot(1);
