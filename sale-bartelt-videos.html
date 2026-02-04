@@ -358,7 +358,7 @@
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 0; /* fullscreen stage */
+      padding: 0;
     }
     .img-modal.show{ display:flex; }
 
@@ -402,7 +402,6 @@
       cursor: default;
       z-index: 2;
     }
-
     .zoom-stage.dragging{ cursor: grabbing; }
 
     .zoom-img{
@@ -443,13 +442,13 @@
         <div class="player-head">
           <div>
             <p class="player-title mb-1" id="playerTitle">Loading Lot 1…</p>
-            <p class="player-sub" id="playerSub">Tap catalog to enlarge. Tap again to zoom. Drag to pan when zoomed. Pinch to zoom on mobile.</p>
+            <p class="player-sub" id="playerSub">Tap catalog to enlarge. Tap in modal to zoom. Drag to pan when zoomed. Pinch to zoom on mobile.</p>
           </div>
         </div>
 
-        <!-- ✅ Layout order:
-             Desktop: video (left), catalog (right), sale strip under video
-             Mobile:  video, catalog, sale strip (below catalog)
+        <!-- ✅ FIXED DESKTOP ALIGNMENT:
+             Desktop: video left, catalog right (top aligned), sale strip below video.
+             Mobile:  video, catalog, sale strip (below catalog).
         -->
         <div class="row g-0">
           <!-- VIDEO -->
@@ -460,7 +459,6 @@
                 title="Lot Video"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen></iframe>
-
               <div class="yt-shield" aria-hidden="true"></div>
             </div>
 
@@ -477,17 +475,17 @@
             </div>
           </div>
 
-          <!-- CATALOG -->
-          <div class="col-12 col-lg-4 order-2 order-lg-3">
+          <!-- CATALOG (desktop: directly beside video at top) -->
+          <div class="col-12 col-lg-4 order-2 order-lg-2">
             <div class="catalog-panel" id="catalogWrap" style="display:none;">
               <p class="catalog-title"><i class="fa-solid fa-image"></i> Catalog image</p>
               <img id="catalogImg" class="catalog-img" src="" alt="Catalog image">
-              <p class="tap-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Tap to enlarge • tap again to zoom • pinch on mobile</p>
+              <p class="tap-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Tap to enlarge • tap to zoom • pinch on mobile</p>
             </div>
           </div>
 
-          <!-- SALE STRIP (mobile: below catalog) -->
-          <div class="col-12 col-lg-8 order-3 order-lg-2">
+          <!-- SALE STRIP (mobile: below catalog, desktop: under video) -->
+          <div class="col-12 col-lg-8 order-3 order-lg-3">
             <div class="sale-strip">
               <div class="label"><i class="fa-solid fa-circle-info"></i> Sale</div>
 
@@ -521,6 +519,7 @@
               </div>
             </div>
           </div>
+
         </div>
       </div>
 
@@ -543,9 +542,9 @@
     </div>
   </main>
 
-  <!-- FULLSCREEN IMAGE MODAL (TAP TO ZOOM, DRAG TO PAN, PINCH TO ZOOM) -->
+  <!-- FULLSCREEN IMAGE MODAL (FIT TO SCREEN FIRST, TAP TO ZOOM, DRAG TO PAN, PINCH TO ZOOM) -->
   <div id="imgModal" class="img-modal" aria-hidden="true">
-    <div class="img-modal-hint">Tap to zoom • drag to move • pinch to zoom on mobile • wheel zoom on desktop</div>
+    <div class="img-modal-hint">Fits screen • tap to zoom • drag to move • pinch to zoom • wheel zoom</div>
 
     <button id="imgModalClose" class="img-modal-close" type="button" aria-label="Close">
       <i class="fa-solid fa-xmark"></i>
@@ -760,12 +759,11 @@
 
     // -----------------------------
     // FULLSCREEN IMAGE MODAL:
-    // Tap opens modal.
-    // In modal:
-    //   - Tap toggles zoom in/out
-    //   - Drag pans ONLY when zoomed
-    //   - Pinch zoom works on mobile
-    //   - Wheel zoom works on desktop
+    // - On open: AUTO-FIT image to screen (contain)
+    // - In modal: tap toggles zoom in/out (relative to fitted size)
+    // - Drag pans ONLY when zoomed beyond fitted size
+    // - Pinch zoom works on mobile
+    // - Wheel zoom works on desktop
     // -----------------------------
     let scale = 1;
     let minScale = 1;
@@ -786,26 +784,60 @@
       zoomImg.style.transform = `translate(${x}px, ${y}px) scale(${scale}) translate(-50%, -50%)`;
     }
 
-    function resetView(){
-      scale = 1;
+    function setCursor(){
+      if(scale > minScale + 0.01){
+        stage.style.cursor = "grab";
+      }else{
+        stage.style.cursor = "default";
+      }
+    }
+
+    function fitToScreen(){
+      const rect = stage.getBoundingClientRect();
+      const sw = rect.width;
+      const sh = rect.height;
+
+      // use natural size (works even if image not displayed yet)
+      const iw = zoomImg.naturalWidth || zoomImg.width || 1;
+      const ih = zoomImg.naturalHeight || zoomImg.height || 1;
+
+      // add a little padding so it doesn't touch edges
+      const pad = 24;
+      const fitW = Math.max(1, sw - pad * 2);
+      const fitH = Math.max(1, sh - pad * 2);
+
+      const fitScale = Math.min(fitW / iw, fitH / ih, 1); // don't upscale beyond 1 on load
+
+      minScale = fitScale;
+      scale = fitScale;
       x = 0;
       y = 0;
-      stage.style.cursor = "default";
+
+      setCursor();
       applyTransform();
     }
 
     function openImageModal(src){
-      zoomImg.src = src;
       imgModal.classList.add("show");
       imgModal.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
-      resetView();
+
+      zoomImg.onload = () => {
+        fitToScreen();
+      };
+      zoomImg.src = src;
+
+      // in case image is cached and onload doesn't fire consistently
+      setTimeout(() => {
+        if(zoomImg.complete) fitToScreen();
+      }, 0);
     }
 
     function closeImageModal(){
       imgModal.classList.remove("show");
       imgModal.setAttribute("aria-hidden", "true");
       document.body.style.overflow = "";
+      lastTouchDist = null;
     }
 
     imgModal.addEventListener("click", (e) => {
@@ -817,19 +849,21 @@
       if(e.key === "Escape" && imgModal.classList.contains("show")) closeImageModal();
     });
 
-    // Tap to toggle zoom (only if not dragging)
+    // Tap to toggle zoom (tap in modal)
     let clickSuppress = false;
 
     function toggleZoom(){
-      if(scale === 1){
-        scale = 2.25;
-        stage.style.cursor = "grab";
+      // zoom targets are relative to fitted size
+      const zoomInTarget = Math.min(maxScale, minScale * 2.25);
+
+      if(scale <= minScale + 0.01){
+        scale = zoomInTarget;
       }else{
-        scale = 1;
+        scale = minScale;
         x = 0;
         y = 0;
-        stage.style.cursor = "default";
       }
+      setCursor();
       applyTransform();
     }
 
@@ -857,8 +891,8 @@
 
       if(Math.abs(dx) > 6 || Math.abs(dy) > 6) clickSuppress = true;
 
-      // Only pan when zoomed
-      if(scale > 1){
+      // Only pan when zoomed beyond fitted size
+      if(scale > minScale + 0.01){
         x = dragStartX + dx;
         y = dragStartY + dy;
         applyTransform();
@@ -880,21 +914,18 @@
       stage.classList.remove("dragging");
     });
 
-    // Wheel zoom on desktop
+    // Wheel zoom on desktop (relative to fitted)
     stage.addEventListener("wheel", (e) => {
       e.preventDefault();
       const delta = -Math.sign(e.deltaY) * 0.15;
       const next = Math.min(maxScale, Math.max(minScale, scale + delta));
 
-      // If user wheel-zooms from 1, allow zoom in
       scale = next;
-      if(scale <= 1){
-        scale = 1;
+      if(scale <= minScale + 0.01){
+        scale = minScale;
         x = 0; y = 0;
-        stage.style.cursor = "default";
-      }else{
-        stage.style.cursor = "grab";
       }
+      setCursor();
       applyTransform();
     }, { passive:false });
 
@@ -922,16 +953,21 @@
       scale = Math.min(maxScale, Math.max(minScale, scale + diff));
       lastTouchDist = dist;
 
-      if(scale <= 1){
-        scale = 1;
+      if(scale <= minScale + 0.01){
+        scale = minScale;
         x = 0; y = 0;
-        stage.style.cursor = "default";
-      }else{
-        stage.style.cursor = "grab";
       }
 
+      setCursor();
       applyTransform();
     }, { passive:false });
+
+    // Re-fit if user rotates phone / resizes window while modal open
+    window.addEventListener("resize", () => {
+      if(imgModal.classList.contains("show")){
+        fitToScreen();
+      }
+    });
 
     // Clicking the main catalog image opens modal
     catalogImg.addEventListener("click", () => {
