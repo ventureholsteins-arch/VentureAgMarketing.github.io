@@ -6,9 +6,6 @@
   <meta name="description" content="Venture Ag Marketing - Bull sale marketing, photo, video, and design." />
   <title>Venture Ag Marketing</title>
 
-  <!-- ✅ HERO VIDEO PATH (CHANGE THIS ONLY) -->
-  <meta name="hero-video" content="assets/video/hero-dairy/26596feac117c13130ac5c3c8a930eea.mp4">
-
   <!-- Bootstrap (CDN) -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -91,50 +88,26 @@
       color: #0B0B0B;
     }
 
-    /* HERO (UPDATED FOR MP4 BACKGROUND) */
+    /* HERO */
     .hero{
       min-height: 84vh;
       display: flex;
       align-items: center;
       color: var(--vam-text);
-      position: relative;
-      overflow: hidden;
-
-      /* fallback image (also used on mobile) */
       background:
         linear-gradient(90deg, rgba(11,11,11,.92) 0%, rgba(11,11,11,.60) 55%, rgba(11,11,11,.18) 100%),
         url("assets/img/SouthernNational2025-38.jpg");
       background-size: cover;
       background-position: center;
+      position: relative;
     }
-
-    /* video layer */
-    .hero-video{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      z-index:0;
-    }
-
-    /* keep your existing overlay look */
     .hero:after{
       content:"";
       position:absolute; inset:0;
-      background:
-        linear-gradient(90deg, rgba(11,11,11,.92) 0%, rgba(11,11,11,.60) 55%, rgba(11,11,11,.18) 100%),
-        radial-gradient(circle at 70% 40%, rgba(0,0,0,0) 0%, rgba(0,0,0,.35) 60%, rgba(0,0,0,.55) 100%);
+      background: radial-gradient(circle at 70% 40%, rgba(0,0,0,0) 0%, rgba(0,0,0,.35) 60%, rgba(0,0,0,.55) 100%);
       pointer-events:none;
-      z-index:1;
     }
     .hero .container{ position: relative; z-index: 2; }
-
-    /* Mobile fallback: hide video for speed/reliability */
-    @media (max-width: 768px){
-      .hero-video{ display:none; }
-    }
-
     .kicker{
       letter-spacing: .18em;
       text-transform: uppercase;
@@ -371,9 +344,6 @@
 
   <!-- HERO -->
   <header class="hero" id="top">
-    <!-- ✅ MP4 background (autoplay muted loop). On mobile it hides via CSS and uses fallback image. -->
-    <video id="heroVideo" class="hero-video" autoplay muted loop playsinline preload="metadata"></video>
-
     <div class="container py-5">
       <div class="kicker">Bull sales • photo • video • design</div>
       <h1 class="display-4">Marketing Built for Sale Day</h1>
@@ -466,7 +436,7 @@
     </div>
   </section>
 
-  <!-- SOCIALS -->
+  <!-- SOCIALS (NEW) -->
   <section class="bg-soft anchor-offset" id="socials">
     <div class="container">
       <div class="text-center">
@@ -502,17 +472,17 @@
           </div>
         </div>
 
-        <!-- Facebook Video (NOTE: some FB vids refuse embedding depending on privacy/rights) -->
+        <!-- Facebook Video -->
         <div class="col-12 col-lg-6">
           <div class="social-card">
             <div class="social-card-head">
               <div class="social-card-title"><i class="fa-brands fa-facebook-f"></i> Facebook Video</div>
               <a class="social-card-link" target="_blank" rel="noopener"
-                 href="https://www.facebook.com/watch/?v=1392682255252347">Open</a>
+                 href="https://www.facebook.com/share/v/1DuNpt1n8Q/?mibextid=wwXIfr">Open</a>
             </div>
             <div class="ratio ratio-16x9 social-video">
               <iframe
-                src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fwatch%2F%3Fv%3D1392682255252347&show_text=0&autoplay=1&mute=1"
+                src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fshare%2Fv%2F1DuNpt1n8Q%2F%3Fmibextid%3DwwXIfr&show_text=0&autoplay=1&mute=1"
                 style="border:none;overflow:hidden"
                 scrolling="no"
                 frameborder="0"
@@ -538,3 +508,76 @@
         <div class="col-12 col-lg-4">
           <div class="work-img"><img src="assets/img/work/1.jpg" alt="Work example 1"></div>
         </div>
+        <div class="col-12 col-lg-4">
+          <div class="work-img"><img src="assets/img/work/2.jpg" alt="Work example 2"></div>
+        </div>
+        <div class="col-12 col-lg-4">
+          <div class="work-img"><img src="assets/img/work/3.jpg" alt="Work example 3"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-wrap anchor-offset" id="contact">
+    <div class="container">
+      <div class="text-center">
+        <h2 class="section-title">Book a Sale</h2>
+        <p class="section-sub">Send your sale date + what you need. I’ll respond with a plan and pricing.</p>
+      </div>
+
+      <div class="row justify-content-center mt-4">
+        <div class="col-12 col-lg-8">
+          <form action="mailto:austinripp@ventureagmarketing.com" method="post" enctype="text/plain">
+            <div class="row g-3">
+              <div class="col-12 col-md-6">
+                <input class="form-control" name="name" placeholder="Your Name" required>
+              </div>
+              <div class="col-12 col-md-6">
+                <input class="form-control" name="email" type="email" placeholder="Your Email" required>
+              </div>
+              <div class="col-12">
+                <input class="form-control" name="phone" placeholder="Phone (optional)">
+              </div>
+              <div class="col-12">
+                <textarea class="form-control" name="message" rows="5" placeholder="Sale date + what you need" required></textarea>
+              </div>
+              <div class="col-12 d-flex gap-2 flex-wrap justify-content-center">
+                <button class="btn btn-vam btn-lg px-5" type="submit">Send</button>
+                <a class="btn btn-vam-outline btn-lg px-5" href="#sales">View Sales</a>
+              </div>
+            </div>
+          </form>
+
+          <p class="text-center mt-3" style="color: rgba(242,242,242,.62); font-size:.92rem;">
+            <strong>austinripp@ventureagmarketing.com</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
+      <div>© <span id="year"></span> Venture Ag Marketing</div>
+      <div class="d-flex gap-3">
+        <a href="#top">Top</a>
+        <a href="#sales">Sales</a>
+        <a href="#socials">Socials</a>
+        <a href="#contact">Book</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Instagram embed script (required) -->
+  <script async src="https://www.instagram.com/embed.js"></script>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
