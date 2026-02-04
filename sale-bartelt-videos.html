@@ -82,14 +82,14 @@
     .player-sub{ margin: 0; color: rgba(242,242,242,.70); font-size: .92rem; }
     .player-frame{ width:100%; height:100%; border:0; background:#000; }
 
-    /* Desktop: make video a bit less tall (still full width) */
+    /* Desktop: slightly shorter video */
     .video-ratio{
       background:#000;
       border-bottom: 1px solid rgba(255,255,255,.10);
       position: relative; /* required for yt-shield */
     }
     @media (min-width: 992px){
-      .video-ratio.ratio-16x9{ --bs-aspect-ratio: 42.5%; } /* default 56.25% */
+      .video-ratio.ratio-16x9{ --bs-aspect-ratio: 44%; }
     }
 
     /* Click-shield: blocks the top overlay clicks (logo/title) WITHOUT blocking scrub bar */
@@ -135,70 +135,55 @@
       font-size: .82rem;
     }
 
-    /* Right panel */
-    .side-panel{
-      background: #0b0b0b;
-      border-left: 1px solid rgba(255,255,255,.10);
-      height: 100%;
+    /* ===== NEW: Sale info strip under video ===== */
+    .sale-strip{
+      background: linear-gradient(135deg, rgba(201,164,92,.16), rgba(255,255,255,.04));
+      border-top: 1px solid rgba(255,255,255,.10);
+      padding: 12px 14px;
+      color: rgba(242,242,242,.92);
     }
-    .side-block{
-      padding: 14px;
-      border-bottom: 1px solid rgba(255,255,255,.10);
-    }
-
-    /* Catalog image */
-    .catalog-img{
-      width: 100%;
-      height: auto;
-      display:block;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow: 0 12px 30px rgba(0,0,0,.35);
-      background:#fff;
-      cursor: zoom-in;
-    }
-
-    /* Small hint under catalog */
-    .tap-hint{
-      margin-top: 10px;
-      color: rgba(242,242,242,.70);
-      font-size: .90rem;
-      font-weight: 800;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-    }
-
-    /* Sale info box */
-    .info-card{
-      border-radius: 16px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.12);
-      padding: 14px;
-      color: rgba(242,242,242,.90);
-    }
-    .info-title{
+    .sale-strip .label{
       font-weight: 900;
       letter-spacing: .10em;
       text-transform: uppercase;
-      font-size: .82rem;
-      margin: 0 0 10px;
-      color: rgba(242,242,242,.85);
-    }
-    .info-line{
+      font-size: .78rem;
+      color: rgba(242,242,242,.80);
+      margin-bottom: 8px;
       display:flex;
-      gap:10px;
-      align-items:flex-start;
-      margin-bottom: 10px;
-      color: rgba(242,242,242,.82);
-      font-size: .95rem;
+      align-items:center;
+      gap:8px;
     }
-    .info-line i{ color: var(--vam-gold); margin-top: 2px; }
-
-    .info-actions{
+    .sale-row{
       display:flex;
-      gap:10px;
       flex-wrap:wrap;
-      margin-top: 10px;
+      align-items:center;
+      gap:12px 18px;
+      justify-content:space-between;
+    }
+    .sale-mini{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px 16px;
+      align-items:center;
+      color: rgba(242,242,242,.88);
+      font-weight: 800;
+    }
+    .sale-mini span{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      color: rgba(242,242,242,.84);
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+    .sale-mini i{ color: var(--vam-gold); }
+
+    .sale-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      justify-content:flex-end;
     }
     .btn-gold{
       background: var(--vam-gold);
@@ -213,6 +198,7 @@
       display:inline-flex;
       align-items:center;
       gap:8px;
+      white-space: nowrap;
     }
     .btn-gold:hover{ background: var(--vam-gold-dark); border-color: var(--vam-gold-dark); color:#0B0B0B; }
 
@@ -229,8 +215,50 @@
       display:inline-flex;
       align-items:center;
       gap:8px;
+      white-space: nowrap;
     }
     .btn-light-outline:hover{ background: rgba(255,255,255,.10); color:#fff; }
+
+    /* ===== NEW: Catalog panel is ONLY the image, bigger ===== */
+    .catalog-panel{
+      height:100%;
+      background:#0b0b0b;
+      border-left: 1px solid rgba(255,255,255,.10);
+      padding: 14px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .catalog-title{
+      font-weight: 900;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      font-size: .78rem;
+      color: rgba(242,242,242,.82);
+      display:flex;
+      align-items:center;
+      gap:8px;
+      margin:0;
+    }
+
+    .catalog-img{
+      width: 100%;
+      height: auto;
+      display:block;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 16px 44px rgba(0,0,0,.45);
+      background:#fff;
+      cursor: zoom-in;
+    }
+    .tap-hint{
+      color: rgba(242,242,242,.70);
+      font-size: .86rem;
+      font-weight: 900;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin:0;
+    }
 
     /* Controls */
     .controls{
@@ -283,7 +311,6 @@
     .lot-num{ font-weight:900; letter-spacing:.10em; text-transform:uppercase; font-size:.80rem; color: rgba(242,242,242,.82); }
     .lot-big{ font-weight:900; letter-spacing:.06em; text-transform:uppercase; font-size: 1.9rem; line-height:1; margin:5px 0 0; color: var(--vam-gold); }
 
-    /* BIGGER thumbnail previews */
     .thumb{
       width: 96px; height: 96px;
       border-radius: 14px;
@@ -315,9 +342,11 @@
     }
 
     @media (max-width: 991.98px){
-      .side-panel{ border-left: none; border-top: 1px solid rgba(255,255,255,.10); }
       .yt-shield{ height: 48px; }
-      .thumb{ width: 110px; height: 110px; } /* even easier on mobile */
+      .thumb{ width: 110px; height: 110px; }
+      .catalog-panel{ border-left:none; border-top: 1px solid rgba(255,255,255,.10); }
+      .sale-row{ justify-content:flex-start; }
+      .sale-actions{ justify-content:flex-start; }
     }
 
     /* =========================
@@ -364,7 +393,6 @@
       font-size: .78rem;
     }
 
-    /* The zoom/pan area */
     .zoom-area{
       max-width: 100%;
       max-height: 100%;
@@ -376,14 +404,9 @@
       -webkit-overflow-scrolling: touch;
     }
 
-    /*
-      Mobile-friendly zoom:
-      - pinch-zoom works in most mobile browsers when user-scalable is allowed (default).
-      - We also allow "double click/tap" zoom toggle via JS.
-    */
     .zoom-img{
       display:block;
-      max-width: none; /* allows zoom/pan inside container */
+      max-width: none;
       width: 100%;
       height: auto;
       transform-origin: top left;
@@ -423,7 +446,7 @@
         </div>
 
         <div class="row g-0">
-          <!-- LEFT: VIDEO + NAV -->
+          <!-- LEFT: VIDEO + NAV + SALE STRIP -->
           <div class="col-12 col-lg-8">
             <div class="ratio ratio-16x9 video-ratio">
               <iframe id="playerFrame" class="player-frame"
@@ -447,41 +470,19 @@
                 Next <i class="fa-solid fa-arrow-right"></i>
               </button>
             </div>
-          </div>
 
-          <!-- RIGHT: CATALOG + INFO -->
-          <div class="col-12 col-lg-4 side-panel">
-            <div class="side-block" id="catalogWrap" style="display:none;">
-              <img id="catalogImg" class="catalog-img" src="" alt="Catalog image">
-              <div class="tap-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Tap to enlarge</div>
-            </div>
+            <!-- ✅ Sale info moved UNDER the video in a tight strip -->
+            <div class="sale-strip">
+              <div class="label"><i class="fa-solid fa-circle-info"></i> Sale</div>
 
-            <div class="side-block">
-              <div class="info-card">
-                <p class="info-title">Sale info</p>
-
-                <div class="info-line">
-                  <i class="fa-solid fa-calendar-days"></i>
-                  <div><strong>March 4</strong> • Platte, SD</div>
+              <div class="sale-row">
+                <div class="sale-mini">
+                  <span><i class="fa-solid fa-calendar-days"></i> March 4 • Platte, SD</span>
+                  <span><i class="fa-solid fa-location-dot"></i> Platte Livestock Market</span>
+                  <span><i class="fa-solid fa-phone"></i> 605-999-0147</span>
                 </div>
 
-                <div class="info-line">
-                  <i class="fa-solid fa-location-dot"></i>
-                  <div>
-                    <div><strong>Platte Livestock Market</strong></div>
-                    <div style="color:rgba(242,242,242,.70);">36580 SD-44, Platte, SD 57369</div>
-                  </div>
-                </div>
-
-                <div class="info-line">
-                  <i class="fa-solid fa-phone"></i>
-                  <div>
-                    <div><strong>Austin (Owner)</strong></div>
-                    <div style="color:rgba(242,242,242,.70);">605-999-0147</div>
-                  </div>
-                </div>
-
-                <div class="info-actions">
+                <div class="sale-actions">
                   <a class="btn-gold" target="_blank" rel="noopener"
                      href="https://www.google.com/maps/search/?api=1&query=Platte%20Livestock%20Market%2C%2036580%20SD-44%2C%20Platte%2C%20SD%2057369">
                     <i class="fa-solid fa-map-location-dot"></i> Map
@@ -489,7 +490,7 @@
 
                   <a class="btn-light-outline" target="_blank" rel="noopener"
                      href="http://www.plattelivestockmarket.com">
-                    <i class="fa-solid fa-globe"></i> Market site
+                    <i class="fa-solid fa-globe"></i> Market
                   </a>
 
                   <a class="btn-light-outline" target="_blank" rel="noopener"
@@ -502,6 +503,15 @@
                   </a>
                 </div>
               </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: BIG CATALOG IMAGE ONLY -->
+          <div class="col-12 col-lg-4">
+            <div class="catalog-panel" id="catalogWrap" style="display:none;">
+              <p class="catalog-title"><i class="fa-solid fa-image"></i> Catalog image</p>
+              <img id="catalogImg" class="catalog-img" src="" alt="Catalog image">
+              <p class="tap-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Click / tap to enlarge • pinch to zoom</p>
             </div>
           </div>
         </div>
@@ -679,7 +689,7 @@
 
       if(item.catalogImg && item.catalogImg.trim() !== ""){
         catalogImg.src = item.catalogImg.trim();
-        catalogWrap.style.display = "block";
+        catalogWrap.style.display = "flex"; // show big panel
       }else{
         catalogWrap.style.display = "none";
       }
@@ -725,7 +735,6 @@
       // click card -> select lot
       document.querySelectorAll(".lot-card").forEach(card => {
         card.addEventListener("click", (e) => {
-          // If user clicked the thumbnail, we may open zoom instead (handled below).
           const lot = parseInt(card.getAttribute("data-lot"), 10);
           selectLot(lot);
         });
@@ -756,7 +765,7 @@
 
       imgModal.classList.add("show");
       imgModal.setAttribute("aria-hidden", "false");
-      document.body.style.overflow = "hidden"; // prevent background scroll
+      document.body.style.overflow = "hidden";
     }
 
     function closeImageModal(){
@@ -765,19 +774,16 @@
       document.body.style.overflow = "";
     }
 
-    // Tap/click outside closes
     imgModal.addEventListener("click", (e) => {
       if(e.target === imgModal) closeImageModal();
     });
 
     imgModalClose.addEventListener("click", closeImageModal);
 
-    // Esc closes on desktop
     document.addEventListener("keydown", (e) => {
       if(e.key === "Escape" && imgModal.classList.contains("show")) closeImageModal();
     });
 
-    // Double click / double tap to toggle zoom
     function toggleZoom(){
       if(zoomLevel === 1){
         zoomLevel = 2.25;
@@ -795,7 +801,6 @@
       toggleZoom();
     });
 
-    // Mobile double-tap detector
     let lastTap = 0;
     zoomImg.addEventListener("touchend", (e) => {
       const now = Date.now();
