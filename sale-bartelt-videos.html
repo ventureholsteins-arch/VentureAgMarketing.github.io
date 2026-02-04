@@ -82,26 +82,23 @@
     .player-sub{ margin: 0; color: rgba(242,242,242,.70); font-size: .92rem; }
     .player-frame{ width:100%; height:100%; border:0; background:#000; }
 
-    /* Video ratio: keep clean, not too tall on desktop */
+    /* Desktop: make video a bit less tall (still full width) */
     .video-ratio{
       background:#000;
       border-bottom: 1px solid rgba(255,255,255,.10);
-      position: relative;
+      position: relative; /* required for yt-shield */
     }
     @media (min-width: 992px){
-      .video-ratio.ratio-16x9{ --bs-aspect-ratio: 46%; } /* slightly shorter than 16:9 */
+      .video-ratio.ratio-16x9{ --bs-aspect-ratio: 42.5%; } /* default 56.25% */
     }
 
-    /* YouTube overlay click shield (top area only) */
+    /* Click-shield: blocks the top overlay clicks (logo/title) WITHOUT blocking scrub bar */
     .yt-shield{
       position:absolute;
       top:0; left:0; right:0;
       height:56px;
       z-index:2;
       background: transparent;
-    }
-    @media (max-width: 991.98px){
-      .yt-shield{ height: 48px; }
     }
 
     /* Prev/Next */
@@ -143,69 +140,66 @@
       background: #0b0b0b;
       border-left: 1px solid rgba(255,255,255,.10);
       height: 100%;
-      display:flex;
-      flex-direction:column;
     }
     .side-block{
       padding: 14px;
       border-bottom: 1px solid rgba(255,255,255,.10);
     }
 
-    /* CATALOG: make it bigger + readable; still safe for full-page */
-    .catalog-holder{
-      padding: 14px;
-      flex: 1 1 auto;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
+    /* Catalog image */
     .catalog-img{
       width: 100%;
       height: auto;
       display:block;
-      border-radius: 16px;
+      border-radius: 14px;
       border: 1px solid rgba(255,255,255,.12);
       box-shadow: 0 12px 30px rgba(0,0,0,.35);
       background:#fff;
-      padding: 10px;
-      object-fit: contain;
-      max-height: 560px; /* desktop size bump */
-    }
-    @media (max-width: 991.98px){
-      .side-panel{ border-left: none; border-top: 1px solid rgba(255,255,255,.10); }
-      .catalog-img{ max-height: none; }
+      cursor: zoom-in;
     }
 
-    /* Bottom action strip (replaces big sale info section) */
-    .action-strip{
-      background: #0b0b0b;
-      border-top: 1px solid rgba(255,255,255,.10);
-      padding: 12px 14px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 14px;
-      flex-wrap:wrap;
-      color: rgba(242,242,242,.84);
-    }
-    .action-strip .mini{
-      display:flex;
-      gap: 14px;
-      align-items:center;
-      flex-wrap:wrap;
-      font-weight: 800;
-      letter-spacing: .04em;
+    /* Small hint under catalog */
+    .tap-hint{
+      margin-top: 10px;
+      color: rgba(242,242,242,.70);
       font-size: .90rem;
-      color: rgba(242,242,242,.78);
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
     }
-    .action-strip .mini i{ color: var(--vam-gold); }
-    .action-strip .buttons{
+
+    /* Sale info box */
+    .info-card{
+      border-radius: 16px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      padding: 14px;
+      color: rgba(242,242,242,.90);
+    }
+    .info-title{
+      font-weight: 900;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      font-size: .82rem;
+      margin: 0 0 10px;
+      color: rgba(242,242,242,.85);
+    }
+    .info-line{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      margin-bottom: 10px;
+      color: rgba(242,242,242,.82);
+      font-size: .95rem;
+    }
+    .info-line i{ color: var(--vam-gold); margin-top: 2px; }
+
+    .info-actions{
       display:flex;
       gap:10px;
       flex-wrap:wrap;
-      align-items:center;
+      margin-top: 10px;
     }
-
     .btn-gold{
       background: var(--vam-gold);
       border: 1px solid var(--vam-gold);
@@ -219,7 +213,6 @@
       display:inline-flex;
       align-items:center;
       gap:8px;
-      white-space: nowrap;
     }
     .btn-gold:hover{ background: var(--vam-gold-dark); border-color: var(--vam-gold-dark); color:#0B0B0B; }
 
@@ -236,7 +229,6 @@
       display:inline-flex;
       align-items:center;
       gap:8px;
-      white-space: nowrap;
     }
     .btn-light-outline:hover{ background: rgba(255,255,255,.10); color:#fff; }
 
@@ -285,30 +277,26 @@
       align-items:center;
       justify-content:space-between;
       gap: 10px;
-      min-height: 128px;
+      min-height: 92px;
     }
-    .lot-left{ display:flex; align-items:center; gap:14px; }
+    .lot-left{ display:flex; align-items:center; gap:12px; }
     .lot-num{ font-weight:900; letter-spacing:.10em; text-transform:uppercase; font-size:.80rem; color: rgba(242,242,242,.82); }
-    .lot-big{ font-weight:900; letter-spacing:.06em; text-transform:uppercase; font-size: 2.15rem; line-height:1; margin:6px 0 0; color: var(--vam-gold); }
+    .lot-big{ font-weight:900; letter-spacing:.06em; text-transform:uppercase; font-size: 1.9rem; line-height:1; margin:5px 0 0; color: var(--vam-gold); }
 
-    /* BIGGER lot preview thumbnails */
+    /* BIGGER thumbnail previews */
     .thumb{
-      width: 112px; height: 112px;
-      border-radius: 16px;
+      width: 96px; height: 96px;
+      border-radius: 14px;
       overflow:hidden;
       border: 1px solid rgba(255,255,255,.14);
       background: rgba(255,255,255,.06);
       flex: 0 0 auto;
+      cursor: zoom-in;
     }
     .thumb img{ width:100%; height:100%; object-fit: cover; display:block; }
-    @media (max-width: 575.98px){
-      .thumb{ width: 92px; height: 92px; }
-      .lot-top{ min-height: 116px; }
-      .lot-big{ font-size: 1.95rem; }
-    }
 
     .play{
-      width: 44px; height: 44px;
+      width: 42px; height: 42px;
       border-radius: 14px;
       background: rgba(255,255,255,.08);
       border: 1px solid rgba(255,255,255,.14);
@@ -325,15 +313,96 @@
       outline: 3px solid rgba(201,164,92,.55);
       outline-offset: 2px;
     }
+
+    @media (max-width: 991.98px){
+      .side-panel{ border-left: none; border-top: 1px solid rgba(255,255,255,.10); }
+      .yt-shield{ height: 48px; }
+      .thumb{ width: 110px; height: 110px; } /* even easier on mobile */
+    }
+
+    /* =========================
+       FULLSCREEN IMAGE VIEWER
+       ========================= */
+    .img-modal{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.92);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+    }
+    .img-modal.show{ display:flex; }
+
+    .img-modal-close{
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.08);
+      color: #fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    .img-modal-close:hover{ background: rgba(255,255,255,.12); }
+
+    .img-modal-hint{
+      position: absolute;
+      left: 14px;
+      top: 14px;
+      color: rgba(255,255,255,.75);
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-size: .78rem;
+    }
+
+    /* The zoom/pan area */
+    .zoom-area{
+      max-width: 100%;
+      max-height: 100%;
+      overflow: auto;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 24px 90px rgba(0,0,0,.55);
+      background: rgba(255,255,255,.02);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /*
+      Mobile-friendly zoom:
+      - pinch-zoom works in most mobile browsers when user-scalable is allowed (default).
+      - We also allow "double click/tap" zoom toggle via JS.
+    */
+    .zoom-img{
+      display:block;
+      max-width: none; /* allows zoom/pan inside container */
+      width: 100%;
+      height: auto;
+      transform-origin: top left;
+      cursor: zoom-in;
+      user-select: none;
+      -webkit-user-drag: none;
+      touch-action: pan-x pan-y;
+    }
   </style>
 </head>
 
 <body>
 
+  <!-- Sticky Top Bar -->
   <div class="topbar">
     <div class="container py-3 d-flex flex-wrap align-items-center justify-content-between gap-2">
       <div>
         <p class="title mb-1">Bartelt Angus • Lot Videos</p>
+        <small>Tip: tap the catalog image to enlarge + zoom.</small>
       </div>
       <div class="d-flex gap-2 flex-wrap">
         <a class="btn-ghost" href="sale-bartelt.html"><i class="fa-solid fa-arrow-left"></i> Sale Info</a>
@@ -345,6 +414,7 @@
   <main class="py-5">
     <div class="container">
 
+      <!-- BIG PLAYER -->
       <div class="player-shell mb-4">
         <div class="player-head">
           <div>
@@ -354,14 +424,16 @@
         </div>
 
         <div class="row g-0">
-          <!-- Video -->
-          <div class="col-12 col-lg-7">
+          <!-- LEFT: VIDEO + NAV -->
+          <div class="col-12 col-lg-8">
             <div class="ratio ratio-16x9 video-ratio">
               <iframe id="playerFrame" class="player-frame"
                 src=""
                 title="Lot Video"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen></iframe>
+
+              <!-- blocks the title/logo area from being clicked -->
               <div class="yt-shield" aria-hidden="true"></div>
             </div>
 
@@ -378,42 +450,60 @@
             </div>
           </div>
 
-          <!-- Catalog -->
-          <div class="col-12 col-lg-5 side-panel" id="catalogPanel">
-            <div class="catalog-holder" id="catalogWrap" style="display:none;">
+          <!-- RIGHT: CATALOG + INFO -->
+          <div class="col-12 col-lg-4 side-panel">
+            <div class="side-block" id="catalogWrap" style="display:none;">
               <img id="catalogImg" class="catalog-img" src="" alt="Catalog image">
+              <div class="tap-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Tap to enlarge</div>
             </div>
-            <div class="side-block" id="catalogEmpty" style="display:none; color:rgba(242,242,242,.70);">
-              No catalog image uploaded for this lot yet.
+
+            <div class="side-block">
+              <div class="info-card">
+                <p class="info-title">Sale info</p>
+
+                <div class="info-line">
+                  <i class="fa-solid fa-calendar-days"></i>
+                  <div><strong>March 4</strong> • Platte, SD</div>
+                </div>
+
+                <div class="info-line">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <div>
+                    <div><strong>Platte Livestock Market</strong></div>
+                    <div style="color:rgba(242,242,242,.70);">36580 SD-44, Platte, SD 57369</div>
+                  </div>
+                </div>
+
+                <div class="info-line">
+                  <i class="fa-solid fa-phone"></i>
+                  <div>
+                    <div><strong>Austin (Owner)</strong></div>
+                    <div style="color:rgba(242,242,242,.70);">605-999-0147</div>
+                  </div>
+                </div>
+
+                <div class="info-actions">
+                  <a class="btn-gold" target="_blank" rel="noopener"
+                     href="https://www.google.com/maps/search/?api=1&query=Platte%20Livestock%20Market%2C%2036580%20SD-44%2C%20Platte%2C%20SD%2057369">
+                    <i class="fa-solid fa-map-location-dot"></i> Map
+                  </a>
+
+                  <a class="btn-light-outline" target="_blank" rel="noopener"
+                     href="http://www.plattelivestockmarket.com">
+                    <i class="fa-solid fa-globe"></i> Market site
+                  </a>
+
+                  <a class="btn-light-outline" target="_blank" rel="noopener"
+                     href="https://www.facebook.com/barteltangus">
+                    <i class="fa-brands fa-facebook-f"></i> Facebook
+                  </a>
+
+                  <a class="btn-light-outline" href="tel:6059990147">
+                    <i class="fa-solid fa-phone"></i> Call
+                  </a>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-
-        <!-- Tight sale strip (no huge empty section) -->
-        <div class="action-strip">
-          <div class="mini">
-            <span><i class="fa-solid fa-calendar-days"></i> March 4</span>
-            <span><i class="fa-solid fa-location-dot"></i> Platte Livestock Market • Platte, SD</span>
-          </div>
-
-          <div class="buttons">
-            <a class="btn-light-outline" href="sale-bartelt.html" title="Full sale info page">
-              <i class="fa-solid fa-circle-info"></i> Sale Info
-            </a>
-
-            <a class="btn-gold" target="_blank" rel="noopener"
-               href="https://www.google.com/maps/search/?api=1&query=Platte%20Livestock%20Market%2C%2036580%20SD-44%2C%20Platte%2C%20SD%2057369">
-              <i class="fa-solid fa-map-location-dot"></i> Map
-            </a>
-
-            <a class="btn-light-outline" target="_blank" rel="noopener"
-               href="https://www.facebook.com/barteltangus">
-              <i class="fa-brands fa-facebook-f"></i> Facebook
-            </a>
-
-            <a class="btn-light-outline" href="tel:6059990147">
-              <i class="fa-solid fa-phone"></i> Call
-            </a>
           </div>
         </div>
       </div>
@@ -431,39 +521,59 @@
         </div>
       </div>
 
-      <!-- Lot grid -->
+      <!-- Grid -->
       <div class="row g-4" id="grid"></div>
 
     </div>
   </main>
 
+  <!-- FULLSCREEN IMAGE MODAL (ZOOM + PAN) -->
+  <div id="imgModal" class="img-modal" aria-hidden="true">
+    <div class="img-modal-hint">Double tap / double click to zoom • pinch works on mobile</div>
+    <button id="imgModalClose" class="img-modal-close" type="button" aria-label="Close">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <div id="zoomArea" class="zoom-area" role="dialog" aria-label="Catalog image viewer">
+      <img id="zoomImg" class="zoom-img" src="" alt="Zoomed catalog image">
+    </div>
+  </div>
+
   <script>
+    /*
+      ✅ YOUTUBE INPUTS THAT WORK in `youtube`:
+      - https://youtu.be/VIDEO_ID
+      - https://www.youtube.com/watch?v=VIDEO_ID
+      - https://www.youtube.com/shorts/VIDEO_ID
+      - VIDEO_ID (just the ID)
+    */
+
     const lots = [
       { lot: 1,  title: "Lot 16A", meta: "Heifer", youtube: "https://youtu.be/DhTo_eziwdk", catalogImg: "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg" },
-      { lot: 2,  title: "Lot 2",   meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot02.jpg" },
-      { lot: 3,  title: "Lot 3",   meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot03.jpg" },
-      { lot: 4,  title: "Lot 4",   meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot04.jpg" },
-      { lot: 5,  title: "Lot 5",   meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot05.jpg" },
-      { lot: 6,  title: "Lot 6",   meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot06.jpg" },
-      { lot: 7,  title: "Lot 7",   meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot07.jpg" },
-      { lot: 8,  title: "Lot 8",   meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot08.jpg" },
-      { lot: 9,  title: "Lot 9",   meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot09.jpg" },
-      { lot: 10, title: "Lot 10",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot10.jpg" },
-      { lot: 11, title: "Lot 11",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot11.jpg" },
-      { lot: 12, title: "Lot 12",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot12.jpg" },
-      { lot: 13, title: "Lot 13",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot13.jpg" },
-      { lot: 14, title: "Lot 14",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot14.jpg" },
-      { lot: 15, title: "Lot 15",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot15.jpg" },
-      { lot: 16, title: "Lot 16",  meta: "Heifer", youtube: "https://www.youtube.com/watch?v=DhTo_eziwdk", catalogImg: "assets/img/catalog/bartelt/lot16.jpg" },
-      { lot: 17, title: "Lot 17",  meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot17.jpg" },
-      { lot: 18, title: "Lot 18",  meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot18.jpg" },
-      { lot: 19, title: "Lot 19",  meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot19.jpg" },
-      { lot: 20, title: "Lot 20",  meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot20.jpg" },
-      { lot: 21, title: "Lot 21",  meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot21.jpg" },
-      { lot: 22, title: "Lot 22",  meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot22.jpg" },
-      { lot: 23, title: "Lot 23",  meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot23.jpg" },
-      { lot: 24, title: "Lot 24",  meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot24.jpg" },
-      { lot: 25, title: "Lot 25",  meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot25.jpg" },
+      { lot: 2,  title: "Lot 2",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot02.jpg" },
+      { lot: 3,  title: "Lot 3",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot03.jpg" },
+      { lot: 4,  title: "Lot 4",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot04.jpg" },
+      { lot: 5,  title: "Lot 5",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot05.jpg" },
+      { lot: 6,  title: "Lot 6",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot06.jpg" },
+      { lot: 7,  title: "Lot 7",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot07.jpg" },
+      { lot: 8,  title: "Lot 8",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot08.jpg" },
+      { lot: 9,  title: "Lot 9",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot09.jpg" },
+      { lot: 10, title: "Lot 10", meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot10.jpg" },
+      { lot: 11, title: "Lot 11", meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot11.jpg" },
+      { lot: 12, title: "Lot 12", meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot12.jpg" },
+      { lot: 13, title: "Lot 13", meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot13.jpg" },
+      { lot: 14, title: "Lot 14", meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot14.jpg" },
+      { lot: 15, title: "Lot 15", meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot15.jpg" },
+      { lot: 16, title: "Lot 16", meta: "Heifer", youtube: "https://www.youtube.com/watch?v=DhTo_eziwdk", catalogImg: "assets/img/catalog/bartelt/lot16.jpg" },
+      { lot: 17, title: "Lot 17", meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot17.jpg" },
+      { lot: 18, title: "Lot 18", meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot18.jpg" },
+      { lot: 19, title: "Lot 19", meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot19.jpg" },
+      { lot: 20, title: "Lot 20", meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot20.jpg" },
+      { lot: 21, title: "Lot 21", meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot21.jpg" },
+      { lot: 22, title: "Lot 22", meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot22.jpg" },
+      { lot: 23, title: "Lot 23", meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot23.jpg" },
+      { lot: 24, title: "Lot 24", meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot24.jpg" },
+      { lot: 25, title: "Lot 25", meta: "Heifer", youtube: "", catalogImg: "assets/img/catalog/bartelt/lot25.jpg" },
     ];
 
     const grid = document.getElementById("grid");
@@ -475,11 +585,16 @@
     const playerFrame = document.getElementById("playerFrame");
     const catalogWrap = document.getElementById("catalogWrap");
     const catalogImg = document.getElementById("catalogImg");
-    const catalogEmpty = document.getElementById("catalogEmpty");
 
     const prevBtn = document.getElementById("prevBtn");
     const nextBtn = document.getElementById("nextBtn");
     const lotCounter = document.getElementById("lotCounter");
+
+    // Modal elements
+    const imgModal = document.getElementById("imgModal");
+    const imgModalClose = document.getElementById("imgModalClose");
+    const zoomArea = document.getElementById("zoomArea");
+    const zoomImg = document.getElementById("zoomImg");
 
     let currentIndex = -1;
 
@@ -517,7 +632,16 @@
     function ytEmbed(fromUrlOrId){
       const id = extractYouTubeId(fromUrlOrId);
       if(!id) return "";
-      return `https://www.youtube.com/embed/${id}?autoplay=1&loop=1&playlist=${id}&controls=1&modestbranding=1&rel=0&iv_load_policy=3&playsinline=1&fs=0`;
+
+      return `https://www.youtube.com/embed/${id}?` +
+        `autoplay=1` +
+        `&loop=1&playlist=${id}` +
+        `&controls=1` +
+        `&modestbranding=1` +
+        `&rel=0` +
+        `&iv_load_policy=3` +
+        `&playsinline=1` +
+        `&fs=0`;
     }
 
     function updateNav(){
@@ -554,14 +678,11 @@
         playerFrame.src = "";
       }
 
-      const hasCatalog = item.catalogImg && item.catalogImg.trim() !== "";
-      if(hasCatalog){
+      if(item.catalogImg && item.catalogImg.trim() !== ""){
         catalogImg.src = item.catalogImg.trim();
-        catalogWrap.style.display = "flex";
-        catalogEmpty.style.display = "none";
+        catalogWrap.style.display = "block";
       }else{
         catalogWrap.style.display = "none";
-        catalogEmpty.style.display = "block";
       }
 
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -587,7 +708,7 @@
                   <div class="lot-num">Lot</div>
                   <div class="lot-big">${l.lot}</div>
                 </div>
-                <div class="thumb">
+                <div class="thumb" data-zoom="${l.catalogImg || ""}">
                   <img src="${l.catalogImg}" alt="Catalog preview for Lot ${l.lot}"
                        onerror="this.style.display='none'; this.parentElement.style.display='none';">
                 </div>
@@ -602,14 +723,99 @@
         </div>
       `).join("");
 
+      // click card -> select lot
       document.querySelectorAll(".lot-card").forEach(card => {
-        card.addEventListener("click", () => {
+        card.addEventListener("click", (e) => {
+          // If user clicked the thumbnail, we may open zoom instead (handled below).
           const lot = parseInt(card.getAttribute("data-lot"), 10);
           selectLot(lot);
         });
       });
+
+      // click any thumb -> open zoom (without changing lot)
+      document.querySelectorAll(".thumb").forEach(t => {
+        t.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const src = t.getAttribute("data-zoom");
+          if(src) openImageModal(src);
+        });
+      });
     }
 
+    // -----------------------------
+    // IMAGE MODAL (ZOOM + PAN)
+    // -----------------------------
+    let zoomLevel = 1;
+
+    function openImageModal(src){
+      zoomImg.src = src;
+      zoomLevel = 1;
+      zoomImg.style.transform = `scale(${zoomLevel})`;
+      zoomImg.style.cursor = "zoom-in";
+      zoomArea.scrollTop = 0;
+      zoomArea.scrollLeft = 0;
+
+      imgModal.classList.add("show");
+      imgModal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden"; // prevent background scroll
+    }
+
+    function closeImageModal(){
+      imgModal.classList.remove("show");
+      imgModal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    // Tap/click outside closes
+    imgModal.addEventListener("click", (e) => {
+      if(e.target === imgModal) closeImageModal();
+    });
+
+    imgModalClose.addEventListener("click", closeImageModal);
+
+    // Esc closes on desktop
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "Escape" && imgModal.classList.contains("show")) closeImageModal();
+    });
+
+    // Double click / double tap to toggle zoom
+    function toggleZoom(){
+      if(zoomLevel === 1){
+        zoomLevel = 2.25;
+        zoomImg.style.cursor = "zoom-out";
+      }else{
+        zoomLevel = 1;
+        zoomImg.style.cursor = "zoom-in";
+        zoomArea.scrollTop = 0;
+        zoomArea.scrollLeft = 0;
+      }
+      zoomImg.style.transform = `scale(${zoomLevel})`;
+    }
+    zoomImg.addEventListener("dblclick", (e) => {
+      e.preventDefault();
+      toggleZoom();
+    });
+
+    // Mobile double-tap detector
+    let lastTap = 0;
+    zoomImg.addEventListener("touchend", (e) => {
+      const now = Date.now();
+      if(now - lastTap < 300){
+        e.preventDefault();
+        toggleZoom();
+      }
+      lastTap = now;
+    }, { passive:false });
+
+    // Clicking the main catalog image opens modal
+    catalogImg.addEventListener("click", () => {
+      const src = catalogImg.getAttribute("src");
+      if(src) openImageModal(src);
+    });
+
+    // -----------------------------
+    // Events
+    // -----------------------------
     searchInput.addEventListener("input", render);
 
     prevBtn.addEventListener("click", () => {
@@ -620,6 +826,7 @@
       if(currentIndex < lots.length - 1) selectLot(lots[currentIndex + 1].lot);
     });
 
+    // Init
     render();
     updateNav();
     selectLot(1);
