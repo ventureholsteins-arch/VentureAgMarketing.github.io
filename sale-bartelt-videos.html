@@ -650,14 +650,15 @@
       if(!id) return "";
 
       return `https://www.youtube.com/embed/${id}?` +
-        `autoplay=1` +
-        `&loop=1&playlist=${id}` +
-        `&controls=1` +
-        `&modestbranding=1` +
-        `&rel=0` +
-        `&iv_load_policy=3` +
-        `&playsinline=1` +
-        `&fs=0`;
+     `autoplay=1` +
+    `&mute=1` +                 // ✅ key for autoplay
+    `&loop=1&playlist=${id}` +
+    `&controls=1` +
+    `&modestbranding=1` +
+    `&rel=0` +
+    `&iv_load_policy=3` +
+    `&playsinline=1` +
+    `&enablejsapi=1`;
     }
 
     function updateNav(){
