@@ -82,23 +82,14 @@
     .player-sub{ margin: 0; color: rgba(242,242,242,.70); font-size: .92rem; }
     .player-frame{ width:100%; height:100%; border:0; background:#000; }
 
-    /* Desktop: make video a bit less tall (still full width) */
+    /* Make desktop video a touch smaller (less tall) */
     .video-ratio{
       background:#000;
       border-bottom: 1px solid rgba(255,255,255,.10);
-      position: relative; /* required for yt-shield */
     }
     @media (min-width: 992px){
+      /* 21:9-ish feel without changing width */
       .video-ratio.ratio-16x9{ --bs-aspect-ratio: 42.5%; } /* default 56.25% */
-    }
-
-    /* Click-shield: blocks the top overlay clicks (logo/title) WITHOUT blocking scrub bar */
-    .yt-shield{
-      position:absolute;
-      top:0; left:0; right:0;
-      height:56px;
-      z-index:2;
-      background: transparent;
     }
 
     /* Prev/Next */
@@ -155,17 +146,6 @@
       border: 1px solid rgba(255,255,255,.12);
       box-shadow: 0 12px 30px rgba(0,0,0,.35);
       background:#fff;
-      cursor: zoom-in;
-    }
-
-    /* Small hint under catalog */
-    .tap-hint{
-      margin-top: 10px;
-      color: rgba(242,242,242,.70);
-      font-size: .90rem;
-      font-weight: 800;
-      letter-spacing: .06em;
-      text-transform: uppercase;
     }
 
     /* Sale info box */
@@ -283,15 +263,13 @@
     .lot-num{ font-weight:900; letter-spacing:.10em; text-transform:uppercase; font-size:.80rem; color: rgba(242,242,242,.82); }
     .lot-big{ font-weight:900; letter-spacing:.06em; text-transform:uppercase; font-size: 1.9rem; line-height:1; margin:5px 0 0; color: var(--vam-gold); }
 
-    /* BIGGER thumbnail previews */
     .thumb{
-      width: 96px; height: 96px;
+      width: 74px; height: 74px;
       border-radius: 14px;
       overflow:hidden;
       border: 1px solid rgba(255,255,255,.14);
       background: rgba(255,255,255,.06);
       flex: 0 0 auto;
-      cursor: zoom-in;
     }
     .thumb img{ width:100%; height:100%; object-fit: cover; display:block; }
 
@@ -316,81 +294,6 @@
 
     @media (max-width: 991.98px){
       .side-panel{ border-left: none; border-top: 1px solid rgba(255,255,255,.10); }
-      .yt-shield{ height: 48px; }
-      .thumb{ width: 110px; height: 110px; } /* even easier on mobile */
-    }
-
-    /* =========================
-       FULLSCREEN IMAGE VIEWER
-       ========================= */
-    .img-modal{
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.92);
-      z-index: 9999;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
-    }
-    .img-modal.show{ display:flex; }
-
-    .img-modal-close{
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.18);
-      background: rgba(255,255,255,.08);
-      color: #fff;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size: 18px;
-      cursor: pointer;
-    }
-    .img-modal-close:hover{ background: rgba(255,255,255,.12); }
-
-    .img-modal-hint{
-      position: absolute;
-      left: 14px;
-      top: 14px;
-      color: rgba(255,255,255,.75);
-      font-weight: 900;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      font-size: .78rem;
-    }
-
-    /* The zoom/pan area */
-    .zoom-area{
-      max-width: 100%;
-      max-height: 100%;
-      overflow: auto;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow: 0 24px 90px rgba(0,0,0,.55);
-      background: rgba(255,255,255,.02);
-      -webkit-overflow-scrolling: touch;
-    }
-
-    /*
-      Mobile-friendly zoom:
-      - pinch-zoom works in most mobile browsers when user-scalable is allowed (default).
-      - We also allow "double click/tap" zoom toggle via JS.
-    */
-    .zoom-img{
-      display:block;
-      max-width: none; /* allows zoom/pan inside container */
-      width: 100%;
-      height: auto;
-      transform-origin: top left;
-      cursor: zoom-in;
-      user-select: none;
-      -webkit-user-drag: none;
-      touch-action: pan-x pan-y;
     }
   </style>
 </head>
@@ -402,6 +305,7 @@
     <div class="container py-3 d-flex flex-wrap align-items-center justify-content-between gap-2">
       <div>
         <p class="title mb-1">Bartelt Angus • Lot Videos</p>
+        <small>Desktop: video + catalog + info side-by-side. Mobile: stacked.</small>
       </div>
       <div class="d-flex gap-2 flex-wrap">
         <a class="btn-ghost" href="sale-bartelt.html"><i class="fa-solid fa-arrow-left"></i> Sale Info</a>
@@ -413,27 +317,24 @@
   <main class="py-5">
     <div class="container">
 
-      <!-- BIG PLAYER -->
+      <!-- BIG PLAYER (RESPONSIVE LAYOUT) -->
       <div class="player-shell mb-4">
         <div class="player-head">
           <div>
             <p class="player-title mb-1" id="playerTitle">Loading Lot 1…</p>
-            <p class="player-sub" id="playerSub">Use the scrub bar to move forward/back. Prev/Next changes lots.</p>
+            <p class="player-sub" id="playerSub">Video loops until you click Prev/Next.</p>
           </div>
         </div>
 
         <div class="row g-0">
           <!-- LEFT: VIDEO + NAV -->
-          <div class="col-12 col-lg-8">
+          <div class="col-12 col-lg-8 order-1 order-lg-1">
             <div class="ratio ratio-16x9 video-ratio">
               <iframe id="playerFrame" class="player-frame"
                 src=""
                 title="Lot Video"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen></iframe>
-
-              <!-- blocks the title/logo area from being clicked -->
-              <div class="yt-shield" aria-hidden="true"></div>
             </div>
 
             <div class="player-actions">
@@ -449,11 +350,10 @@
             </div>
           </div>
 
-          <!-- RIGHT: CATALOG + INFO -->
-          <div class="col-12 col-lg-4 side-panel">
+          <!-- RIGHT: CATALOG IMAGE + QUICK SALE INFO -->
+          <div class="col-12 col-lg-4 order-2 order-lg-2 side-panel">
             <div class="side-block" id="catalogWrap" style="display:none;">
               <img id="catalogImg" class="catalog-img" src="" alt="Catalog image">
-              <div class="tap-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Tap to enlarge</div>
             </div>
 
             <div class="side-block">
@@ -526,21 +426,10 @@
     </div>
   </main>
 
-  <!-- FULLSCREEN IMAGE MODAL (ZOOM + PAN) -->
-  <div id="imgModal" class="img-modal" aria-hidden="true">
-    <div class="img-modal-hint">Double tap / double click to zoom • pinch works on mobile</div>
-    <button id="imgModalClose" class="img-modal-close" type="button" aria-label="Close">
-      <i class="fa-solid fa-xmark"></i>
-    </button>
-
-    <div id="zoomArea" class="zoom-area" role="dialog" aria-label="Catalog image viewer">
-      <img id="zoomImg" class="zoom-img" src="" alt="Zoomed catalog image">
-    </div>
-  </div>
-
   <script>
     /*
-      ✅ YOUTUBE INPUTS THAT WORK in `youtube`:
+      ✅ IMPORTANT (how to make YouTube work)
+      Put ANY of these in the "youtube" field and it will work:
       - https://youtu.be/VIDEO_ID
       - https://www.youtube.com/watch?v=VIDEO_ID
       - https://www.youtube.com/shorts/VIDEO_ID
@@ -548,7 +437,7 @@
     */
 
     const lots = [
-      { lot: 1,  title: "Lot 16A", meta: "Heifer", youtube: "https://youtu.be/DhTo_eziwdk", catalogImg: "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg" },
+      { lot: 1,  title: "Lot 1",  meta: "Bull",   youtube: "https://youtu.be/DhTo_eziwdk", catalogImg: "assets/img/catalog/bartelt/lot01.jpg" },
       { lot: 2,  title: "Lot 2",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot02.jpg" },
       { lot: 3,  title: "Lot 3",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot03.jpg" },
       { lot: 4,  title: "Lot 4",  meta: "Bull",   youtube: "", catalogImg: "assets/img/catalog/bartelt/lot04.jpg" },
@@ -589,18 +478,12 @@
     const nextBtn = document.getElementById("nextBtn");
     const lotCounter = document.getElementById("lotCounter");
 
-    // Modal elements
-    const imgModal = document.getElementById("imgModal");
-    const imgModalClose = document.getElementById("imgModalClose");
-    const zoomArea = document.getElementById("zoomArea");
-    const zoomImg = document.getElementById("zoomImg");
-
     let currentIndex = -1;
 
     function extractYouTubeId(input){
       if(!input) return "";
       const s = String(input).trim();
-      if(!s) return "";
+      // If not a URL, assume it's already an ID
       if(!s.includes("youtu")) return s;
 
       try{
@@ -610,11 +493,13 @@
         if(host === "youtu.be"){
           return url.pathname.split("/").filter(Boolean)[0] || "";
         }
+
         if(host === "youtube.com" || host === "m.youtube.com"){
           const v = url.searchParams.get("v");
           if(v) return v;
 
           const parts = url.pathname.split("/").filter(Boolean);
+
           const embedIndex = parts.indexOf("embed");
           if(embedIndex !== -1 && parts[embedIndex+1]) return parts[embedIndex+1];
 
@@ -622,25 +507,19 @@
           if(shortsIndex !== -1 && parts[shortsIndex+1]) return parts[shortsIndex+1];
         }
       }catch(e){
+        // If URL() fails, do a simple fallback parse
         const match = s.match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([a-zA-Z0-9_-]{6,})/);
         return match ? match[1] : s;
       }
+
       return s;
     }
 
     function ytEmbed(fromUrlOrId){
       const id = extractYouTubeId(fromUrlOrId);
       if(!id) return "";
-
-      return `https://www.youtube.com/embed/${id}?` +
-        `autoplay=1` +
-        `&loop=1&playlist=${id}` +
-        `&controls=1` +
-        `&modestbranding=1` +
-        `&rel=0` +
-        `&iv_load_policy=3` +
-        `&playsinline=1` +
-        `&fs=0`;
+      // Loop requires playlist=id + loop=1
+      return `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&loop=1&playlist=${id}`;
     }
 
     function updateNav(){
@@ -707,7 +586,7 @@
                   <div class="lot-num">Lot</div>
                   <div class="lot-big">${l.lot}</div>
                 </div>
-                <div class="thumb" data-zoom="${l.catalogImg || ""}">
+                <div class="thumb">
                   <img src="${l.catalogImg}" alt="Catalog preview for Lot ${l.lot}"
                        onerror="this.style.display='none'; this.parentElement.style.display='none';">
                 </div>
@@ -722,99 +601,15 @@
         </div>
       `).join("");
 
-      // click card -> select lot
+      // Attach clicks (avoids inline onclick issues)
       document.querySelectorAll(".lot-card").forEach(card => {
-        card.addEventListener("click", (e) => {
-          // If user clicked the thumbnail, we may open zoom instead (handled below).
+        card.addEventListener("click", () => {
           const lot = parseInt(card.getAttribute("data-lot"), 10);
           selectLot(lot);
         });
       });
-
-      // click any thumb -> open zoom (without changing lot)
-      document.querySelectorAll(".thumb").forEach(t => {
-        t.addEventListener("click", (e) => {
-          e.stopPropagation();
-          const src = t.getAttribute("data-zoom");
-          if(src) openImageModal(src);
-        });
-      });
     }
 
-    // -----------------------------
-    // IMAGE MODAL (ZOOM + PAN)
-    // -----------------------------
-    let zoomLevel = 1;
-
-    function openImageModal(src){
-      zoomImg.src = src;
-      zoomLevel = 1;
-      zoomImg.style.transform = `scale(${zoomLevel})`;
-      zoomImg.style.cursor = "zoom-in";
-      zoomArea.scrollTop = 0;
-      zoomArea.scrollLeft = 0;
-
-      imgModal.classList.add("show");
-      imgModal.setAttribute("aria-hidden", "false");
-      document.body.style.overflow = "hidden"; // prevent background scroll
-    }
-
-    function closeImageModal(){
-      imgModal.classList.remove("show");
-      imgModal.setAttribute("aria-hidden", "true");
-      document.body.style.overflow = "";
-    }
-
-    // Tap/click outside closes
-    imgModal.addEventListener("click", (e) => {
-      if(e.target === imgModal) closeImageModal();
-    });
-
-    imgModalClose.addEventListener("click", closeImageModal);
-
-    // Esc closes on desktop
-    document.addEventListener("keydown", (e) => {
-      if(e.key === "Escape" && imgModal.classList.contains("show")) closeImageModal();
-    });
-
-    // Double click / double tap to toggle zoom
-    function toggleZoom(){
-      if(zoomLevel === 1){
-        zoomLevel = 2.25;
-        zoomImg.style.cursor = "zoom-out";
-      }else{
-        zoomLevel = 1;
-        zoomImg.style.cursor = "zoom-in";
-        zoomArea.scrollTop = 0;
-        zoomArea.scrollLeft = 0;
-      }
-      zoomImg.style.transform = `scale(${zoomLevel})`;
-    }
-    zoomImg.addEventListener("dblclick", (e) => {
-      e.preventDefault();
-      toggleZoom();
-    });
-
-    // Mobile double-tap detector
-    let lastTap = 0;
-    zoomImg.addEventListener("touchend", (e) => {
-      const now = Date.now();
-      if(now - lastTap < 300){
-        e.preventDefault();
-        toggleZoom();
-      }
-      lastTap = now;
-    }, { passive:false });
-
-    // Clicking the main catalog image opens modal
-    catalogImg.addEventListener("click", () => {
-      const src = catalogImg.getAttribute("src");
-      if(src) openImageModal(src);
-    });
-
-    // -----------------------------
-    // Events
-    // -----------------------------
     searchInput.addEventListener("input", render);
 
     prevBtn.addEventListener("click", () => {
@@ -825,9 +620,9 @@
       if(currentIndex < lots.length - 1) selectLot(lots[currentIndex + 1].lot);
     });
 
-    // Init
     render();
     updateNav();
+    // ✅ Default to Lot 1 on load
     selectLot(1);
   </script>
 
