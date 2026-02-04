@@ -6,7 +6,7 @@
   <meta name="description" content="Venture Ag Marketing - Bull sale marketing, photo, video, and design." />
   <title>Venture Ag Marketing</title>
 
-  <!-- Bootstrap (CDN) -->
+  <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Icons -->
@@ -19,554 +19,227 @@
 
   <style>
     :root{
-      --vam-bg: #0B0B0B;
-      --vam-bg-2: #101010;
-      --vam-text: #F2F2F2;
-      --vam-muted: rgba(242,242,242,.72);
-      --vam-gold: #C9A45C;
-      --vam-gold-dark: #9F7C3B;
-      --vam-card: #FFFFFF;
-      --vam-shadow: 0 14px 36px rgba(0,0,0,.14);
+      --vam-bg:#0B0B0B;
+      --vam-bg-2:#101010;
+      --vam-text:#F2F2F2;
+      --vam-muted:rgba(242,242,242,.72);
+      --vam-gold:#C9A45C;
+      --vam-gold-dark:#9F7C3B;
+      --vam-shadow:0 14px 36px rgba(0,0,0,.14);
     }
 
     body{
-      font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: #fff;
-      color: #111;
+      font-family:"Montserrat",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:#fff;
+      color:#111;
     }
-    .text-slab{ font-family: "Roboto Slab", Georgia, serif; }
 
     /* NAV */
     .navbar{
-      background: rgba(11,11,11,.92);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255,255,255,.06);
-      padding-top: 18px;
-      padding-bottom: 18px;
+      background:rgba(11,11,11,.92);
+      backdrop-filter:blur(10px);
+      padding:18px 0;
     }
     .navbar .nav-link{
-      font-weight: 800;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      font-size: .85rem;
-      opacity: .9;
+      font-weight:800;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      font-size:.85rem;
+      opacity:.9;
     }
-    .navbar .nav-link:hover{ opacity: 1; }
+    .navbar .nav-link:hover{opacity:1;}
 
     .brand-logo{
-      height: 64px;
-      width: auto;
-      filter: drop-shadow(0 3px 8px rgba(0,0,0,.65));
+      height:64px;
+      filter:drop-shadow(0 3px 8px rgba(0,0,0,.65));
     }
-    @media (min-width: 992px){
-      .brand-logo{ height: 112px; }
-    }
-
-    /* BUTTONS */
-    .btn-vam{
-      background: var(--vam-gold);
-      border: 1px solid var(--vam-gold);
-      color: #0B0B0B;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-    }
-    .btn-vam:hover{
-      background: var(--vam-gold-dark);
-      border-color: var(--vam-gold-dark);
-      color: #0B0B0B;
-    }
-    .btn-vam-outline{
-      border: 2px solid rgba(255,255,255,.9);
-      color: #fff;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-    }
-    .btn-vam-outline:hover{
-      background: #fff;
-      color: #0B0B0B;
+    @media (min-width:992px){
+      .brand-logo{height:112px;}
     }
 
     /* HERO */
     .hero{
-      min-height: 84vh;
-      display: flex;
-      align-items: center;
-      color: var(--vam-text);
-      background:
-        linear-gradient(90deg, rgba(11,11,11,.92) 0%, rgba(11,11,11,.60) 55%, rgba(11,11,11,.18) 100%),
-        url("assets/img/SouthernNational2025-38.jpg");
-      background-size: cover;
-      background-position: center;
-      position: relative;
-    }
-    .hero:after{
-      content:"";
-      position:absolute; inset:0;
-      background: radial-gradient(circle at 70% 40%, rgba(0,0,0,0) 0%, rgba(0,0,0,.35) 60%, rgba(0,0,0,.55) 100%);
-      pointer-events:none;
-    }
-    .hero .container{ position: relative; z-index: 2; }
-    .kicker{
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      font-weight: 800;
-      opacity: .92;
-      font-size: .9rem;
-    }
-    .hero h1{
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: .06em;
-      margin: .4rem 0 .8rem;
-    }
-    .hero p.lead{
-      color: var(--vam-muted);
-      max-width: 780px;
-    }
-
-    /* SECTIONS */
-    section{ padding: 84px 0; }
-    .section-title{
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: .10em;
-    }
-    .section-sub{
-      color: rgba(0,0,0,.60);
-      max-width: 880px;
-      margin: 12px auto 0;
-      font-family: "Roboto Slab", Georgia, serif;
-    }
-    .bg-soft{ background: #F7F7F7; }
-
-    /* SALES */
-    .sale-card{
-      border-radius: 18px;
-      overflow: hidden;
-      background: var(--vam-card);
-      box-shadow: var(--vam-shadow);
-      border: 1px solid rgba(0,0,0,.06);
-      height: 100%;
-    }
-    .sale-card img{ width: 100%; height: auto; display:block; }
-    .sale-meta{ padding: 18px 18px 12px; }
-    .sale-title{ font-weight: 900; font-size: 1.05rem; }
-    .sale-sub{ color: rgba(0,0,0,.55); margin-top: 4px; }
-    .sale-actions{ padding: 0 18px 18px; display:flex; gap:10px; flex-wrap:wrap; }
-    .sale-actions .btn{ font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
-
-    /* FEATURE STRIP */
-    .feature-strip{
-      background: var(--vam-bg-2);
-      color: var(--vam-text);
-      border-top: 1px solid rgba(255,255,255,.06);
-      border-bottom: 1px solid rgba(255,255,255,.06);
-      padding: 26px 0;
-    }
-    .feature-pill{
-      display:inline-flex;
+      min-height:84vh;
+      display:flex;
       align-items:center;
-      gap:10px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
-      color: rgba(242,242,242,.90);
-      font-weight: 800;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      font-size: .78rem;
-      margin: 6px 8px 0 0;
-      white-space: nowrap;
+      color:#fff;
+      background:
+        linear-gradient(90deg,rgba(11,11,11,.92),rgba(11,11,11,.4)),
+        url("assets/img/SouthernNational2025-38.jpg") center/cover;
     }
-    .feature-pill i{ color: var(--vam-gold); }
 
-    /* SERVICES */
-    .service{
-      background: #fff;
-      border: 1px solid rgba(0,0,0,.06);
-      border-radius: 18px;
-      box-shadow: 0 10px 26px rgba(0,0,0,.08);
-      padding: 22px;
-      height: 100%;
+    section{padding:84px 0;}
+
+    .section-title{
+      font-weight:900;
+      letter-spacing:.1em;
+      text-transform:uppercase;
     }
-    .service .icon{
-      width: 54px; height: 54px;
-      border-radius: 14px;
-      display:flex; align-items:center; justify-content:center;
-      background: rgba(201,164,92,.14);
-      border: 1px solid rgba(201,164,92,.35);
-      margin-bottom: 14px;
+
+    .section-sub{
+      color:#666;
+      font-family:"Roboto Slab",serif;
     }
-    .service .icon i{ color: var(--vam-gold-dark); font-size: 1.2rem; }
-    .service h5{ font-weight: 900; margin-bottom: 8px; }
-    .service p{ color: rgba(0,0,0,.62); margin: 0; font-family: "Roboto Slab", Georgia, serif; }
 
     /* SOCIALS */
     .social-pill{
       display:inline-flex;
-      align-items:center;
       gap:10px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: rgba(0,0,0,.06);
-      border: 1px solid rgba(0,0,0,.10);
-      font-weight: 900;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      font-size: .78rem;
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(0,0,0,.06);
+      border:1px solid rgba(0,0,0,.1);
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      font-size:.78rem;
       text-decoration:none;
       color:#111;
     }
-    .social-pill:hover{ background: rgba(0,0,0,.10); color:#111; }
 
     .social-card{
-      border-radius: 18px;
-      overflow:hidden;
       background:#fff;
-      border: 1px solid rgba(0,0,0,.08);
-      box-shadow: 0 14px 36px rgba(0,0,0,.12);
-      height: 100%;
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow:0 14px 36px rgba(0,0,0,.12);
     }
+
     .social-card-head{
       display:flex;
-      align-items:center;
       justify-content:space-between;
-      gap:12px;
-      padding: 14px 16px;
-      background: linear-gradient(135deg, #0b0b0b 0%, #111 55%, #0b0b0b 100%);
-      color:#F2F2F2;
+      padding:14px 16px;
+      background:#0b0b0b;
+      color:#fff;
     }
+
     .social-card-title{
-      font-weight: 900;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      font-size: .85rem;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      font-size:.85rem;
     }
+
     .social-card-link{
-      color: rgba(242,242,242,.85);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.35);
+      padding:6px 10px;
+      border-radius:10px;
+      font-size:.75rem;
+      text-transform:uppercase;
       text-decoration:none;
-      font-weight: 900;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      font-size: .78rem;
-      border: 1px solid rgba(255,255,255,.18);
-      padding: 8px 12px;
-      border-radius: 12px;
-      background: rgba(255,255,255,.06);
     }
-    .social-card-link:hover{ background: rgba(255,255,255,.10); color:#fff; }
-    .social-embed{ padding: 12px; }
 
-    /* WORK */
-    .work-img{
-      border-radius: 18px;
-      overflow:hidden;
-      box-shadow: var(--vam-shadow);
-      border: 1px solid rgba(0,0,0,.06);
-      background:#fff;
-    }
-    .work-img img{ width:100%; height:auto; display:block; }
+    .social-embed{padding:12px;}
 
-    /* CONTACT */
-    .contact-wrap{
-      background: var(--vam-bg);
-      color: var(--vam-text);
-    }
-    .contact-wrap .section-sub{ color: rgba(242,242,242,.70); }
-    .form-control{
-      border-radius: 14px;
-      padding: 14px 14px;
-      border: 1px solid rgba(0,0,0,.12);
-    }
-    .contact-wrap .form-control{
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.12);
-      color: var(--vam-text);
-    }
-    .contact-wrap .form-control::placeholder{ color: rgba(242,242,242,.55); }
-
-    /* FOOTER */
     footer{
-      background: #070707;
-      color: rgba(242,242,242,.82);
-      border-top: 1px solid rgba(255,255,255,.08);
-      padding: 22px 0;
+      background:#070707;
+      color:#ccc;
+      padding:22px 0;
     }
-    footer a{ color: rgba(242,242,242,.82); text-decoration:none; }
-    footer a:hover{ color: #fff; }
 
-    /* anchor offset for fixed nav */
-    .anchor-offset{ scroll-margin-top: 90px; }
+    .anchor-offset{scroll-margin-top:90px;}
   </style>
 </head>
 
 <body>
 
-  <!-- NAV -->
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-    <div class="container">
-      <a class="navbar-brand d-flex align-items-center gap-2" href="#top">
-        <img class="brand-logo" src="assets/img/venture-logo.PNG" alt="Venture Ag Marketing logo">
-      </a>
+<!-- NAV -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#top">
+      <img class="brand-logo" src="assets/img/venture-logo.PNG" alt="Venture Ag Marketing">
+    </a>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav"
-        aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-      <div class="collapse navbar-collapse" id="nav">
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link" href="#sales">Sales</a></li>
-          <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-          <li class="nav-item"><a class="nav-link" href="#socials">Socials</a></li>
-          <li class="nav-item"><a class="nav-link" href="#work">Work</a></li>
-          <li class="nav-item"><a class="nav-link" href="#contact">Book</a></li>
-
-          <!-- Social icons -->
-          <li class="nav-item">
-            <a class="nav-link" href="https://www.facebook.com/share/1DLqa2S8AL/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook">
-              <i class="fa-brands fa-facebook-f"></i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://www.instagram.com/ventureagmarketing?igsh=MW83NmR0ajE2bzNtdQ%3D%3D&utm_source=qr" target="_blank" rel="noopener" aria-label="Instagram">
-              <i class="fa-brands fa-instagram"></i>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- HERO -->
-  <header class="hero" id="top">
-    <div class="container py-5">
-      <div class="kicker">Bull sales • photo • video • design</div>
-      <h1 class="display-4">Marketing Built for Sale Day</h1>
-      <p class="lead text-slab mb-4">
-        Posters, catalogs, social content, and sale-day deliverables—built premium and delivered organized.
-      </p>
-      <div class="d-flex gap-2 flex-wrap">
-        <a class="btn btn-vam btn-lg px-4" href="#sales">View Sales</a>
-        <a class="btn btn-vam-outline btn-lg px-4" href="#contact">Book a Sale</a>
-      </div>
-    </div>
-  </header>
-
-  <!-- FEATURE STRIP -->
-  <div class="feature-strip">
-    <div class="container">
-      <span class="feature-pill"><i class="fa-solid fa-bolt"></i> fast turnaround</span>
-      <span class="feature-pill"><i class="fa-solid fa-layer-group"></i> organized delivery</span>
-      <span class="feature-pill"><i class="fa-solid fa-bullhorn"></i> social + print</span>
-      <span class="feature-pill"><i class="fa-solid fa-camera"></i> photo/video</span>
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#sales">Sales</a></li>
+        <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+        <li class="nav-item"><a class="nav-link" href="#socials">Socials</a></li>
+        <li class="nav-item"><a class="nav-link" href="#work">Work</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Book</a></li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.facebook.com/share/1DLqa2S8AL/?mibextid=wwXIfr" target="_blank">
+            <i class="fa-brands fa-facebook-f"></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.instagram.com/ventureagmarketing/" target="_blank">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
+</nav>
 
-  <!-- SALES -->
-  <section class="bg-soft anchor-offset" id="sales">
-    <div class="container">
-      <div class="text-center">
-        <h2 class="section-title">Sales</h2>
-        <p class="section-sub">
-          Click into a sale for quick links to catalogs, sale info, and videos.
-        </p>
-      </div>
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="container">
+    <h1 class="display-4 fw-bold">Marketing Built for Sale Day</h1>
+    <p class="lead">Posters, catalogs, social content, and sale-day deliverables.</p>
+  </div>
+</header>
 
-      <div class="row g-4 mt-4">
-        <div class="col-12 col-lg-8 mx-auto">
-          <div class="sale-card">
-            <img src="assets/img/sales/bartelt.jpg" alt="Sale poster">
-            <div class="sale-meta">
-              <div class="sale-title">Bartelt Angus</div>
-              <div class="sale-sub">March 4 • Platte, SD</div>
-            </div>
-            <div class="sale-actions">
-              <a class="btn btn-vam btn-sm px-3" href="#" target="_blank" rel="noopener">Catalog</a>
-              <a class="btn btn-dark btn-sm px-3 text-uppercase" style="letter-spacing:.08em;font-weight:900;" href="sale-bartelt.html" target="_blank" rel="noopener">Sale Info</a>
-              <a class="btn btn-outline-dark btn-sm px-3 text-uppercase" style="letter-spacing:.08em;font-weight:900;" href="sale-bartelt-videos.html" target="_blank" rel="noopener">Videos</a>
-            </div>
-          </div>
-        </div>
-      </div>
+<!-- SOCIALS -->
+<section class="bg-light anchor-offset" id="socials">
+  <div class="container">
+    <div class="text-center mb-4">
+      <h2 class="section-title">Socials</h2>
+      <p class="section-sub">Recent reel — follow for updates.</p>
 
-      <div class="text-center mt-5">
-        <a class="btn btn-vam btn-lg px-5" href="#contact">Book a Sale</a>
+      <div class="d-flex justify-content-center gap-3 flex-wrap mt-3">
+        <a class="social-pill" href="https://www.facebook.com/share/1DLqa2S8AL/?mibextid=wwXIfr" target="_blank">
+          <i class="fa-brands fa-facebook-f"></i> Facebook
+        </a>
+        <a class="social-pill" href="https://www.instagram.com/ventureagmarketing/" target="_blank">
+          <i class="fa-brands fa-instagram"></i> Instagram
+        </a>
       </div>
     </div>
-  </section>
 
-  <!-- SERVICES -->
-  <section class="anchor-offset" id="services">
-    <div class="container">
-      <div class="text-center">
-        <h2 class="section-title">Services</h2>
-        <p class="section-sub">Everything you need to market a sale—done right and delivered organized.</p>
-      </div>
-
-      <div class="row g-4 mt-4">
-        <div class="col-12 col-lg-4">
-          <div class="service">
-            <div class="icon"><i class="fa-solid fa-bullhorn"></i></div>
-            <h5>Bull Sale Marketing</h5>
-            <p>Posters, catalogs, schedules, sale-day graphics, and ad sets—consistent across print + social.</p>
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-7">
+        <div class="social-card">
+          <div class="social-card-head">
+            <div class="social-card-title">
+              <i class="fa-brands fa-instagram"></i> Instagram Reel
+            </div>
+            <a class="social-card-link"
+               href="https://www.instagram.com/reel/DJCLZQdxjZ5/"
+               target="_blank">Open</a>
           </div>
-        </div>
 
-        <div class="col-12 col-lg-4">
-          <div class="service">
-            <div class="icon"><i class="fa-solid fa-camera"></i></div>
-            <h5>Photo & Video</h5>
-            <p>Production photos and short promos built to stop the scroll and drive buyers to sale day.</p>
-          </div>
-        </div>
-
-        <div class="col-12 col-lg-4">
-          <div class="service">
-            <div class="icon"><i class="fa-solid fa-pen-nib"></i></div>
-            <h5>Design & Branding</h5>
-            <p>Logos, ads, tags, banners, and reusable templates so your operation looks premium everywhere.</p>
+          <div class="social-embed">
+            <blockquote class="instagram-media"
+              data-instgrm-permalink="https://www.instagram.com/reel/DJCLZQdxjZ5/"
+              data-instgrm-version="14"
+              style="background:#FFF;border:0;margin:0;padding:0;width:100%;">
+            </blockquote>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- SOCIALS -->
-  <section class="bg-soft anchor-offset" id="socials">
-    <div class="container">
-      <div class="text-center">
-        <h2 class="section-title">Socials</h2>
-        <p class="section-sub">Recent reel. Follow for updates and sale-day content.</p>
+<footer>
+  <div class="container text-center">
+    © <span id="year"></span> Venture Ag Marketing
+  </div>
+</footer>
 
-        <div class="d-flex justify-content-center gap-3 flex-wrap mt-3">
-          <a class="social-pill" href="https://www.facebook.com/share/1DLqa2S8AL/?mibextid=wwXIfr" target="_blank" rel="noopener">
-            <i class="fa-brands fa-facebook-f"></i> Facebook
-          </a>
-          <a class="social-pill" href="https://www.instagram.com/ventureagmarketing?igsh=MW83NmR0ajE2bzNtdQ%3D%3D&utm_source=qr" target="_blank" rel="noopener">
-            <i class="fa-brands fa-instagram"></i> Instagram
-          </a>
-        </div>
-      </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script async src="https://www.instagram.com/embed.js"></script>
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+  window.addEventListener("load", () => {
+    if (window.instgrm?.Embeds?.process) instgrm.Embeds.process();
+  });
+</script>
 
-      <div class="row g-4 mt-4 justify-content-center">
-        <!-- Instagram Reel (single) -->
-        <div class="col-12 col-lg-7">
-          <div class="social-card">
-            <div class="social-card-head">
-              <div class="social-card-title"><i class="fa-brands fa-instagram"></i> Instagram Reel</div>
-              <a class="social-card-link" target="_blank" rel="noopener"
-                 href="https://www.instagram.com/reel/DJCLZQdxjZ5/?utm_source=ig_web_copy_link">Open</a>
-            </div>
-            <div class="social-embed">
-              <blockquote class="instagram-media"
-                data-instgrm-permalink="https://www.instagram.com/reel/DJCLZQdxjZ5/?utm_source=ig_web_copy_link"
-                data-instgrm-version="14"
-                style="background:#FFF; border:0; margin:0; padding:0; width:100%;">
-              </blockquote>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- WORK -->
-  <section class="anchor-offset" id="work">
-    <div class="container">
-      <div class="text-center">
-        <h2 class="section-title">Work</h2>
-        <p class="section-sub">Posters, social graphics, catalog spreads, and photo/video deliverables.</p>
-      </div>
-
-      <div class="row g-4 mt-4">
-        <div class="col-12 col-md-6 col-lg-3">
-          <div class="work-img"><img src="assets/img/work/IMG_9313.JPG" alt="Work example 1"></div>
-        </div>
-        <div class="col-12 col-md-6 col-lg-3">
-          <div class="work-img"><img src="assets/img/work/IMG_9312.JPG" alt="Work example 2"></div>
-        </div>
-        <div class="col-12 col-md-6 col-lg-3">
-          <div class="work-img"><img src="assets/img/work/IMG_9311.PNG" alt="Work example 3"></div>
-        </div>
-        <div class="col-12 col-md-6 col-lg-3">
-          <div class="work-img"><img src="assets/img/work/IMG_9310.JPG" alt="Work example 4"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section class="contact-wrap anchor-offset" id="contact">
-    <div class="container">
-      <div class="text-center">
-        <h2 class="section-title">Book a Sale</h2>
-        <p class="section-sub">Send your sale date + what you need. I’ll respond with a plan and pricing.</p>
-      </div>
-
-      <div class="row justify-content-center mt-4">
-        <div class="col-12 col-lg-8">
-          <form action="mailto:austinripp@ventureagmarketing.com" method="post" enctype="text/plain">
-            <div class="row g-3">
-              <div class="col-12 col-md-6">
-                <input class="form-control" name="name" placeholder="Your Name" required>
-              </div>
-              <div class="col-12 col-md-6">
-                <input class="form-control" name="email" type="email" placeholder="Your Email" required>
-              </div>
-              <div class="col-12">
-                <input class="form-control" name="phone" placeholder="Phone (optional)">
-              </div>
-              <div class="col-12">
-                <textarea class="form-control" name="message" rows="5" placeholder="Sale date + what you need" required></textarea>
-              </div>
-              <div class="col-12 d-flex gap-2 flex-wrap justify-content-center">
-                <button class="btn btn-vam btn-lg px-5" type="submit">Send</button>
-                <a class="btn btn-vam-outline btn-lg px-5" href="#sales">View Sales</a>
-              </div>
-            </div>
-          </form>
-
-          <p class="text-center mt-3" style="color: rgba(242,242,242,.62); font-size:.92rem;">
-            <strong>austinripp@ventureagmarketing.com</strong>
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
-      <div>© <span id="year"></span> Venture Ag Marketing</div>
-      <div class="d-flex gap-3">
-        <a href="#top">Top</a>
-        <a href="#sales">Sales</a>
-        <a href="#socials">Socials</a>
-        <a href="#contact">Book</a>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Bootstrap JS (CDN) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Instagram embed script (required) -->
-  <script async src="https://www.instagram.com/embed.js"></script>
-
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    // Improves reliability: re-process embeds after load (helps when IG is slow)
-    window.addEventListener("load", () => {
-      if (window.instgrm && window.instgrm.Embeds && typeof window.instgrm.Embeds.process === "function") {
-        window.instgrm.Embeds.process();
-      }
-    });
-  </script>
 </body>
 </html>
