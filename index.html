@@ -88,7 +88,7 @@
       color: #0B0B0B;
     }
 
-    /* HERO (VIDEO BACKGROUND) */
+    /* HERO (VIDEO) */
     .hero{
       min-height: 84vh;
       display: flex;
@@ -105,7 +105,7 @@
       height: 100%;
       object-fit: cover;
       z-index: 0;
-      transform: scale(1.02); /* hide edges */
+      transform: scale(1.02);
       filter: contrast(1.05) saturate(1.05);
     }
     .hero:after{
@@ -193,7 +193,7 @@
     }
     .feature-pill i{ color: var(--vam-gold); }
 
-    /* SERVICES (OLD HERO IMAGE BACKGROUND) */
+    /* SERVICES (IMAGE BG) */
     .services-bg{
       position: relative;
       background:
@@ -348,6 +348,7 @@
           <li class="nav-item"><a class="nav-link" href="#work">Work</a></li>
           <li class="nav-item"><a class="nav-link" href="#contact">Book</a></li>
 
+          <!-- Social icons -->
           <li class="nav-item">
             <a class="nav-link" href="https://www.facebook.com/share/1DLqa2S8AL/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook">
               <i class="fa-brands fa-facebook-f"></i>
@@ -363,9 +364,17 @@
     </div>
   </nav>
 
-  <!-- HERO -->
+  <!-- HERO (VIDEO) -->
   <header class="hero" id="top">
-    <video class="hero-video" autoplay muted loop playsinline preload="metadata">
+    <video
+      class="hero-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      poster="assets/img/SouthernNational2025-38.jpg"
+    >
       <source src="assets/img/hero-dairy/background-video.mp4" type="video/mp4">
     </video>
 
@@ -478,8 +487,9 @@
         </div>
       </div>
 
-      <div class="row g-4 mt-4 justify-content-center">
-        <div class="col-12 col-lg-7">
+      <div class="row g-4 mt-4">
+        <!-- Instagram Reel -->
+        <div class="col-12 col-lg-6 mx-auto">
           <div class="social-card">
             <div class="social-card-head">
               <div class="social-card-title"><i class="fa-brands fa-instagram"></i> Instagram Reel</div>
@@ -496,11 +506,10 @@
           </div>
         </div>
       </div>
-
     </div>
   </section>
 
-  <!-- WORK (4 per row desktop) -->
+  <!-- WORK -->
   <section class="anchor-offset" id="work">
     <div class="container">
       <div class="text-center">
@@ -592,6 +601,14 @@
         window.instgrm.Embeds.process();
       }
     });
+
+    // iOS/mobile autoplay nudge: play on first touch (silent)
+    document.addEventListener("touchstart", function () {
+      const video = document.querySelector(".hero-video");
+      if (video && video.paused) {
+        video.play().catch(() => {});
+      }
+    }, { once: true });
   </script>
 </body>
 </html>
