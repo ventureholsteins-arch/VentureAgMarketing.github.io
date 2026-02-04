@@ -482,12 +482,15 @@
             </div>
             <div class="ratio ratio-16x9 social-video">
               <iframe
-                src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fshare%2Fv%2F1DuNpt1n8Q%2F%3Fmibextid%3DwwXIfr&show_text=0&autoplay=1&mute=1"
-                style="border:none;overflow:hidden"
-                scrolling="no"
-                frameborder="0"
-                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                allowfullscreen="true">
+                <iframe
+  src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fwatch%2F%3Fv%3D1392682255252347&show_text=0&autoplay=1&mute=1"
+  style="border:none;overflow:hidden"
+  scrolling="no"
+  frameborder="0"
+  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+  allowfullscreen="true">
+</iframe>
+
               </iframe>
             </div>
           </div>
@@ -575,6 +578,28 @@
 
   <!-- Instagram embed script (required) -->
   <script async src="https://www.instagram.com/embed.js"></script>
+
+    <script>
+  // Make IG embeds load more reliably (re-process after initial load)
+  function processInstagramEmbeds(){
+    try{
+      if(window.instgrm && instgrm.Embeds && typeof instgrm.Embeds.process === "function"){
+        instgrm.Embeds.process();
+      }
+    }catch(e){}
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    processInstagramEmbeds();
+    setTimeout(processInstagramEmbeds, 800);
+    setTimeout(processInstagramEmbeds, 1800);
+  });
+
+  window.addEventListener("load", () => {
+    processInstagramEmbeds();
+    setTimeout(processInstagramEmbeds, 600);
+  });
+</script>
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
