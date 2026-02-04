@@ -69,7 +69,7 @@
       font-family:"Roboto Slab",serif;
     }
 
-    /* SOCIAL CARDS */
+    /* SOCIAL CARD */
     .social-card{
       background:#fff;
       border-radius:18px;
@@ -106,25 +106,9 @@
 
     .social-embed{ padding:12px; }
 
-    /* FORCE IG EMBEDS TO MATCH */
-    .ig-frame{
-      height:520px;
-      overflow:hidden;
-      border-radius:14px;
-      background:#fff;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-
-    .ig-frame .instagram-media{
-      margin:0 !important;
-      width:100% !important;
-      max-width:540px !important;
-    }
-
-    @media (max-width:991.98px){
-      .ig-frame{ height:460px; }
+    .social-video iframe{
+      width:100%;
+      height:100%;
     }
 
     footer{
@@ -154,8 +138,8 @@
       <ul class="navbar-nav ms-auto">
         <li class="nav-item"><a class="nav-link" href="#socials">Socials</a></li>
         <li class="nav-item">
-          <a class="nav-link" href="https://www.instagram.com/ventureagmarketing/" target="_blank">
-            <i class="fa-brands fa-instagram"></i>
+          <a class="nav-link" href="https://www.facebook.com/ventureagmarketing" target="_blank">
+            <i class="fa-brands fa-facebook-f"></i>
           </a>
         </li>
       </ul>
@@ -176,42 +160,42 @@
   <div class="container">
     <div class="text-center mb-4">
       <h2 class="section-title">Socials</h2>
-      <p class="section-sub">Recent reels and sale-day content.</p>
+      <p class="section-sub">Recent sale-day video</p>
     </div>
 
-    <div class="row g-4">
-      <!-- Reel 1 -->
-      <div class="col-12 col-lg-6">
+    <div class="row g-4 justify-content-center">
+      <div class="col-12 col-lg-8">
         <div class="social-card">
           <div class="social-card-head">
-            <div class="social-card-title"><i class="fa-brands fa-instagram"></i> Instagram Reel</div>
-            <a class="social-card-link" href="https://www.instagram.com/reel/DIca5FeRVpt/" target="_blank">Open</a>
-          </div>
-          <div class="social-embed">
-            <div class="ig-frame">
-              <blockquote class="instagram-media"
-                data-instgrm-permalink="https://www.instagram.com/reel/DIca5FeRVpt/"
-                data-instgrm-version="14">
-              </blockquote>
+            <div class="social-card-title">
+              <i class="fa-brands fa-facebook-f"></i> Facebook Video
             </div>
+            <a class="social-card-link"
+               href="https://www.facebook.com/61573283609440/videos/1392682255252347/"
+               target="_blank" rel="noopener">
+              Open
+            </a>
           </div>
-        </div>
-      </div>
 
-      <!-- Reel 2 -->
-      <div class="col-12 col-lg-6">
-        <div class="social-card">
-          <div class="social-card-head">
-            <div class="social-card-title"><i class="fa-brands fa-instagram"></i> Instagram Reel</div>
-            <a class="social-card-link" href="https://www.instagram.com/reel/DJCLZQdxjZ5/" target="_blank">Open</a>
-          </div>
           <div class="social-embed">
-            <div class="ig-frame">
-              <blockquote class="instagram-media"
-                data-instgrm-permalink="https://www.instagram.com/reel/DJCLZQdxjZ5/"
-                data-instgrm-version="14">
-              </blockquote>
+            <div class="ratio ratio-16x9 social-video">
+              <iframe
+                src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2F61573283609440%2Fvideos%2F1392682255252347%2F&show_text=false&autoplay=0&mute=1"
+                style="border:none;overflow:hidden"
+                scrolling="no"
+                frameborder="0"
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                allowfullscreen="true">
+              </iframe>
             </div>
+
+            <!-- Fallback -->
+            <a class="btn btn-dark w-100 mt-3 text-uppercase"
+               style="font-weight:900; letter-spacing:.08em; border-radius:14px;"
+               href="https://www.facebook.com/61573283609440/videos/1392682255252347/"
+               target="_blank" rel="noopener">
+              If video doesn’t load, tap to watch on Facebook
+            </a>
           </div>
         </div>
       </div>
@@ -226,7 +210,6 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script async src="https://www.instagram.com/embed.js"></script>
 <script>
   document.getElementById("year").textContent = new Date().getFullYear();
 </script>
