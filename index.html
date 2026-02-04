@@ -1,262 +1,286 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Venture Ag Marketing - Bull sale marketing, photo, video, and design." />
-  <title>Venture Ag Marketing</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Venture Ag Marketing - Bull sale marketing, photo, video, and design." />
+<title>Venture Ag Marketing</title>
 
-  <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-  <!-- Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Roboto+Slab:wght@300;400;700&display=swap" rel="stylesheet">
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Roboto+Slab:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --vam-bg:#0B0B0B;
+  --vam-bg-2:#101010;
+  --vam-text:#F2F2F2;
+  --vam-muted:rgba(242,242,242,.72);
+  --vam-gold:#C9A45C;
+  --vam-gold-dark:#9F7C3B;
+  --vam-shadow:0 14px 36px rgba(0,0,0,.14);
+}
+body{
+  font-family:"Montserrat",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:#fff;
+  color:#111;
+}
+.text-slab{font-family:"Roboto Slab",Georgia,serif;}
 
-  <style>
-    :root{
-      --vam-bg:#0B0B0B;
-      --vam-bg-2:#101010;
-      --vam-text:#F2F2F2;
-      --vam-muted:rgba(242,242,242,.72);
-      --vam-gold:#C9A45C;
-      --vam-gold-dark:#9F7C3B;
-      --vam-card:#FFFFFF;
-      --vam-shadow:0 14px 36px rgba(0,0,0,.14);
-    }
+/* NAV */
+.navbar{
+  background:rgba(11,11,11,.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  padding:18px 0;
+}
+.navbar .nav-link{
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  font-size:.85rem;
+}
+.brand-logo{height:64px;}
+@media(min-width:992px){.brand-logo{height:112px;}}
 
-    body{
-      font-family:"Montserrat",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      background:#fff;
-      color:#111;
-    }
-    .text-slab{font-family:"Roboto Slab",Georgia,serif;}
+/* HERO VIDEO */
+.hero{
+  min-height:84vh;
+  position:relative;
+  display:flex;
+  align-items:center;
+  color:var(--vam-text);
+  overflow:hidden;
+}
+.hero video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:0;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg,rgba(11,11,11,.9),rgba(11,11,11,.5),rgba(11,11,11,.2));
+  z-index:1;
+}
+.hero .container{position:relative;z-index:2;}
+.kicker{
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  font-weight:800;
+  font-size:.9rem;
+}
+.hero h1{
+  font-weight:900;
+  letter-spacing:.06em;
+}
+.hero p{color:var(--vam-muted);max-width:760px;}
 
-    /* NAV */
-    .navbar{
-      background:rgba(11,11,11,.92);
-      backdrop-filter:blur(10px);
-      border-bottom:1px solid rgba(255,255,255,.06);
-      padding:18px 0;
-    }
-    .navbar .nav-link{
-      font-weight:800;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      font-size:.85rem;
-      opacity:.9;
-    }
+section{padding:84px 0;}
+.section-title{
+  font-weight:900;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+.section-sub{
+  color:rgba(0,0,0,.6);
+  max-width:860px;
+  margin:12px auto 0;
+  font-family:"Roboto Slab",Georgia,serif;
+}
 
-    .brand-logo{
-      height:64px;
-      filter:drop-shadow(0 3px 8px rgba(0,0,0,.65));
-    }
-    @media(min-width:992px){.brand-logo{height:112px;}}
+/* FEATURE STRIP */
+.feature-strip{
+  background:var(--vam-bg-2);
+  color:var(--vam-text);
+  padding:26px 0;
+}
 
-    /* HERO */
-    .hero{
-      min-height:84vh;
-      display:flex;
-      align-items:center;
-      color:var(--vam-text);
-      background:
-        linear-gradient(90deg,rgba(11,11,11,.92) 0%,rgba(11,11,11,.6) 55%,rgba(11,11,11,.18) 100%),
-        url("assets/img/SouthernNational2025-38.jpg") center/cover no-repeat;
-      position:relative;
-    }
+/* SALES */
+.sale-card{
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:var(--vam-shadow);
+  background:#fff;
+}
+.sale-card img{width:100%;}
+.sale-meta{padding:18px;}
+.sale-title{font-weight:900;}
+.sale-actions{padding:0 18px 18px;display:flex;gap:10px;flex-wrap:wrap;}
 
-    section{padding:84px 0;}
-    .section-title{
-      font-weight:900;
-      text-transform:uppercase;
-      letter-spacing:.10em;
-    }
-    .section-sub{
-      color:rgba(0,0,0,.6);
-      max-width:880px;
-      margin:12px auto 0;
-      font-family:"Roboto Slab",Georgia,serif;
-    }
+/* SERVICES IMAGE BACKGROUND */
+.services-bg{
+  background:url("assets/img/SouthernNational2025-38.jpg") center/cover no-repeat;
+  position:relative;
+  color:#fff;
+}
+.services-bg::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(11,11,11,.82);
+}
+.services-bg .container{position:relative;z-index:1;}
+.service{
+  background:rgba(255,255,255,.08);
+  border-radius:18px;
+  padding:22px;
+  backdrop-filter:blur(6px);
+}
+.service h5{font-weight:900;color:#fff;}
+.service p{color:rgba(242,242,242,.8);}
 
-    /* FEATURE STRIP */
-    .feature-strip{
-      background:var(--vam-bg-2);
-      color:var(--vam-text);
-      border-top:1px solid rgba(255,255,255,.06);
-      border-bottom:1px solid rgba(255,255,255,.06);
-      padding:26px 0;
-    }
+/* SOCIALS */
+.social-card{
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:var(--vam-shadow);
+  background:#fff;
+}
+.social-card-head{
+  background:#0b0b0b;
+  color:#fff;
+  padding:14px 16px;
+  display:flex;
+  justify-content:space-between;
+}
+.social-embed{padding:12px;}
 
-    /* =========================
-       SERVICES VIDEO SECTION
-       ========================= */
-    .services-video{
-      position:relative;
-      overflow:hidden;
-      color:#fff;
-    }
+/* WORK */
+.work-img{
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:var(--vam-shadow);
+}
+.work-img img{width:100%;}
 
-    .services-video video{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      z-index:1;
-    }
+/* CONTACT */
+.contact-wrap{
+  background:var(--vam-bg);
+  color:var(--vam-text);
+}
 
-    .services-video::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:linear-gradient(
-        rgba(11,11,11,.75),
-        rgba(11,11,11,.85)
-      );
-      z-index:2;
-    }
-
-    .services-video .container{
-      position:relative;
-      z-index:3;
-    }
-
-    .services-video .section-sub,
-    .services-video h5,
-    .services-video p{
-      color:rgba(242,242,242,.9);
-    }
-
-    .service{
-      background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.18);
-      border-radius:18px;
-      padding:22px;
-      height:100%;
-      backdrop-filter:blur(6px);
-    }
-
-    .service .icon{
-      width:54px;height:54px;
-      border-radius:14px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:rgba(201,164,92,.2);
-      border:1px solid rgba(201,164,92,.4);
-      margin-bottom:14px;
-    }
-    .service h5{font-weight:900;}
-    .service p{font-family:"Roboto Slab",Georgia,serif;}
-
-    /* WORK */
-    .work-img{
-      border-radius:18px;
-      overflow:hidden;
-      box-shadow:var(--vam-shadow);
-      border:1px solid rgba(0,0,0,.06);
-    }
-    .work-img img{width:100%;display:block;}
-
-    /* CONTACT */
-    .contact-wrap{
-      background:var(--vam-bg);
-      color:var(--vam-text);
-    }
-
-    footer{
-      background:#070707;
-      color:rgba(242,242,242,.82);
-      border-top:1px solid rgba(255,255,255,.08);
-      padding:22px 0;
-    }
-
-    .anchor-offset{scroll-margin-top:90px;}
-  </style>
+/* FOOTER */
+footer{
+  background:#070707;
+  color:rgba(242,242,242,.8);
+  padding:22px 0;
+}
+.anchor-offset{scroll-margin-top:90px;}
+</style>
 </head>
 
 <body>
 
-<!-- NAV -->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-  <div class="container">
-    <a class="navbar-brand" href="#top">
-      <img class="brand-logo" src="assets/img/venture-logo.PNG" alt="Venture Ag Marketing">
-    </a>
-  </div>
+<div class="container">
+<a class="navbar-brand" href="#top">
+<img src="assets/img/venture-logo.PNG" class="brand-logo">
+</a>
+</div>
 </nav>
 
-<!-- HERO -->
 <header class="hero" id="top">
-  <div class="container">
-    <h1 class="display-4">Marketing Built for Sale Day</h1>
-    <p class="lead text-slab">Premium sale marketing delivered organized.</p>
-  </div>
+<video autoplay muted loop playsinline>
+<source src="assets/img/hero-dairy/background-video.mp4" type="video/mp4">
+</video>
+<div class="container">
+<div class="kicker">Bull sales • photo • video • design</div>
+<h1 class="display-4">Marketing Built for Sale Day</h1>
+<p class="lead text-slab">Posters, catalogs, social content, and sale-day deliverables.</p>
+</div>
 </header>
 
-<!-- FEATURE STRIP -->
-<div class="feature-strip">
-  <div class="container text-center text-uppercase fw-bold">
-    Fast turnaround • Organized delivery • Photo + Video
-  </div>
+<div class="feature-strip text-center">
+Fast turnaround • Organized delivery • Photo + Video
 </div>
 
-<!-- SERVICES WITH VIDEO BACKGROUND -->
-<section class="services-video anchor-offset" id="services">
-
-  <!-- Background Video -->
-  <video autoplay muted loop playsinline>
-    <source src="assets/img/hero-dairy/background-video.mp4" type="video/mp4">
-  </video>
-
-  <div class="container">
-    <div class="text-center mb-5">
-      <h2 class="section-title">Services</h2>
-      <p class="section-sub">Everything you need to market a sale—done right.</p>
-    </div>
-
-    <div class="row g-4">
-      <div class="col-12 col-lg-4">
-        <div class="service">
-          <div class="icon"><i class="fa-solid fa-bullhorn"></i></div>
-          <h5>Bull Sale Marketing</h5>
-          <p>Posters, catalogs, sale-day graphics, and ads.</p>
-        </div>
-      </div>
-
-      <div class="col-12 col-lg-4">
-        <div class="service">
-          <div class="icon"><i class="fa-solid fa-camera"></i></div>
-          <h5>Photo & Video</h5>
-          <p>Scroll-stopping visuals built for buyers.</p>
-        </div>
-      </div>
-
-      <div class="col-12 col-lg-4">
-        <div class="service">
-          <div class="icon"><i class="fa-solid fa-pen-nib"></i></div>
-          <h5>Design & Branding</h5>
-          <p>Logos, ads, tags, and banners.</p>
-        </div>
-      </div>
-    </div>
-  </div>
+<section id="sales" class="anchor-offset bg-light">
+<div class="container text-center">
+<h2 class="section-title">Sales</h2>
+<div class="sale-card mt-4">
+<img src="assets/img/sales/bartelt.jpg">
+<div class="sale-meta">
+<div class="sale-title">Bartelt Angus</div>
+<div>March 4 • Platte, SD</div>
+</div>
+<div class="sale-actions justify-content-center">
+<a class="btn btn-dark" href="sale-bartelt.html">Sale Info</a>
+<a class="btn btn-outline-dark" href="sale-bartelt-videos.html">Videos</a>
+</div>
+</div>
+</div>
 </section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="container text-center">
-    © <span id="year"></span> Venture Ag Marketing
-  </div>
+<section id="services" class="services-bg anchor-offset">
+<div class="container text-center">
+<h2 class="section-title">Services</h2>
+<p class="section-sub">Everything you need to market a sale—done right.</p>
+<div class="row g-4 mt-4">
+<div class="col-lg-4"><div class="service"><h5>Bull Sale Marketing</h5><p>Posters, catalogs, ads.</p></div></div>
+<div class="col-lg-4"><div class="service"><h5>Photo & Video</h5><p>Scroll-stopping visuals.</p></div></div>
+<div class="col-lg-4"><div class="service"><h5>Design & Branding</h5><p>Logos, tags, banners.</p></div></div>
+</div>
+</div>
+</section>
+
+<section id="socials" class="bg-light anchor-offset">
+<div class="container text-center">
+<h2 class="section-title">Socials</h2>
+<div class="row justify-content-center mt-4">
+<div class="col-lg-7">
+<div class="social-card">
+<div class="social-card-head">
+Instagram Reel
+<a href="https://www.instagram.com/reel/DIca5FeRVpt/?utm_source=ig_web_copy_link" target="_blank">Open</a>
+</div>
+<div class="social-embed">
+<blockquote class="instagram-media"
+data-instgrm-permalink="https://www.instagram.com/reel/DIca5FeRVpt/?utm_source=ig_web_copy_link"
+data-instgrm-version="14"></blockquote>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="work" class="anchor-offset">
+<div class="container text-center">
+<h2 class="section-title">Work</h2>
+<div class="row g-4 mt-4">
+<div class="col-lg-3 col-md-6"><div class="work-img"><img src="assets/img/work/IMG_9313.JPG"></div></div>
+<div class="col-lg-3 col-md-6"><div class="work-img"><img src="assets/img/work/IMG_9312.JPG"></div></div>
+<div class="col-lg-3 col-md-6"><div class="work-img"><img src="assets/img/work/IMG_9311.PNG"></div></div>
+<div class="col-lg-3 col-md-6"><div class="work-img"><img src="assets/img/work/IMG_9310.JPG"></div></div>
+</div>
+</div>
+</section>
+
+<section id="contact" class="contact-wrap anchor-offset">
+<div class="container text-center">
+<h2 class="section-title">Book a Sale</h2>
+<p class="section-sub">Send your sale date + what you need.</p>
+<p class="mt-3"><strong>austinripp@ventureagmarketing.com</strong></p>
+</div>
+</section>
+
+<footer class="text-center">
+© <span id="year"></span> Venture Ag Marketing
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script async src="https://www.instagram.com/embed.js"></script>
 <script>
-  document.getElementById("year").textContent = new Date().getFullYear();
+document.getElementById("year").textContent=new Date().getFullYear();
+window.addEventListener("load",()=>{if(window.instgrm){instgrm.Embeds.process();}});
 </script>
 
 </body>
