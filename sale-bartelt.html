@@ -16,23 +16,81 @@
       --gold:#C9A45C;
       --gold2:#9F7C3B;
       --ink:#111;
-      --soft:#F7F7F7;
+      --muted:rgba(0,0,0,.62);
       --cardShadow: 0 14px 36px rgba(0,0,0,.12);
     }
 
     body{ font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; background:#fff; color:#111; }
 
+    /* Topbar (simple) */
     .topbar{
       background: rgba(11,11,11,.92);
       color: var(--text);
-      padding: 18px 0;
-      border-bottom: 1px solid rgba(255,255,255,.06);
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255,255,255,.08);
       position: sticky;
       top: 0;
       z-index: 10;
       backdrop-filter: blur(10px);
     }
+    .title{
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin: 0;
+      font-size: .95rem;
+    }
+    .sub{
+      color: rgba(242,242,242,.70);
+      margin: 4px 0 0;
+      font-weight: 700;
+      font-size: .92rem;
+    }
+    .top-links{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+    }
+    .top-link{
+      color: rgba(242,242,242,.82);
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-size: .78rem;
+      text-decoration:none;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 2px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      white-space: nowrap;
+    }
+    .top-link:hover{ color:#fff; border-bottom-color: rgba(201,164,92,.55); }
 
+    /* Coming soon chips (not buttons) */
+    .soon{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.14);
+      color: rgba(242,242,242,.86);
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-size: .72rem;
+      white-space: nowrap;
+    }
+    .soon b{
+      color: rgba(201,164,92,.95);
+      font-weight: 900;
+    }
+
+    /* One primary CTA button */
     .btn-gold{
       background: var(--gold);
       border: 1px solid var(--gold);
@@ -46,40 +104,11 @@
       align-items:center;
       gap:8px;
       white-space: nowrap;
+      text-decoration:none;
     }
     .btn-gold:hover{ background: var(--gold2); border-color: var(--gold2); color:#0B0B0B; }
 
-    .btn-darkish{
-      background: #111;
-      border: 1px solid #111;
-      color:#fff;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      border-radius: 14px;
-      padding: 10px 14px;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      white-space: nowrap;
-    }
-    .btn-darkish:hover{ background:#0b0b0b; border-color:#0b0b0b; color:#fff; }
-
-    .btn-outline-darkish{
-      border: 2px solid #111;
-      color:#111;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      border-radius: 14px;
-      padding: 10px 14px;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      white-space: nowrap;
-    }
-    .btn-outline-darkish:hover{ background:#111; color:#fff; }
-
+    /* Cards */
     .card-soft{
       border-radius: 18px;
       border: 1px solid rgba(0,0,0,.08);
@@ -88,78 +117,54 @@
       background:#fff;
     }
     .poster img{ width:100%; height:auto; display:block; }
-    .muted{ color: rgba(0,0,0,.62); }
+    .muted{ color: var(--muted); }
 
-    .chip{
-      display:inline-flex; align-items:center; gap:10px;
-      padding: 10px 14px; border-radius: 999px;
-      background: rgba(0,0,0,.05);
-      border: 1px solid rgba(0,0,0,.10);
-      font-weight: 800;
+    /* Simple detail list */
+    .detail-list{
+      display:grid;
+      gap:10px;
+      margin-top: 10px;
+    }
+    .detail-row{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      color: rgba(0,0,0,.80);
+      font-weight: 700;
+    }
+    .detail-row i{
+      width: 18px;
+      margin-top: 2px;
+      color: rgba(159,124,59,.95);
+    }
+
+    /* Links inside details (not buttons) */
+    .link-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(0,0,0,.08);
+    }
+    .mini-link{
+      color:#111;
+      font-weight: 900;
       letter-spacing: .06em;
       text-transform: uppercase;
       font-size: .78rem;
-      margin: 6px 8px 0 0;
-      white-space: nowrap;
-    }
-    .chip i{ color: var(--gold2); }
-
-    /* Professional CTA panel (lighter, not “all black”) */
-    .cta-panel{
-      border-radius: 18px;
-      overflow: hidden;
-      border: 1px solid rgba(0,0,0,.10);
-      box-shadow: var(--cardShadow);
-      background:
-        radial-gradient(circle at 15% 25%, rgba(201,164,92,.22), rgba(255,255,255,0) 55%),
-        linear-gradient(135deg, #ffffff 0%, #fbfbfb 55%, #ffffff 100%);
-    }
-    .cta-inner{
-      padding: 18px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-      flex-wrap:wrap;
-    }
-    .cta-title{
-      margin:0;
-      font-weight: 900;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      font-size: 1rem;
-      color:#111;
-    }
-    .cta-sub{
-      margin: 6px 0 0;
-      color: rgba(0,0,0,.62);
-      font-weight: 700;
-    }
-    .cta-badges{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:flex-end;
-    }
-    .mini-badge{
+      text-decoration:none;
+      border-bottom: 1px solid rgba(0,0,0,.22);
+      padding-bottom: 2px;
       display:inline-flex;
-      align-items:center;
       gap:8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(0,0,0,.10);
-      background: rgba(0,0,0,.04);
-      color: rgba(0,0,0,.78);
-      font-weight: 900;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      font-size: .72rem;
-      white-space: nowrap;
+      align-items:center;
     }
-    .mini-badge i{ color: var(--gold2); }
+    .mini-link:hover{
+      border-bottom-color: rgba(201,164,92,.85);
+    }
 
-    /* Modal theme: light + clean */
+    /* Modal (light + clean) */
     .modal-content.form-theme{
       background:#fff;
       border: 1px solid rgba(0,0,0,.12);
@@ -170,7 +175,7 @@
     .form-head{
       padding: 16px 16px 12px;
       background:
-        radial-gradient(circle at 20% 35%, rgba(201,164,92,.24), rgba(255,255,255,0) 55%),
+        radial-gradient(circle at 20% 35%, rgba(201,164,92,.20), rgba(255,255,255,0) 55%),
         linear-gradient(135deg, #ffffff 0%, #fbfbfb 60%, #ffffff 100%);
       border-bottom: 1px solid rgba(0,0,0,.08);
     }
@@ -188,7 +193,6 @@
       font-weight: 700;
       font-size: .92rem;
     }
-
     .form-body{ padding: 16px; }
     .form-label.form-label-theme{
       color: rgba(0,0,0,.70);
@@ -205,62 +209,39 @@
       color: #111;
     }
     .form-control.form-control-theme:focus{
-      background: rgba(0,0,0,.02);
       border-color: rgba(201,164,92,.85);
       box-shadow: 0 0 0 .2rem rgba(201,164,92,.20);
-      color:#111;
     }
-
     .form-footer{
       padding: 12px 16px 16px;
       border-top: 1px solid rgba(0,0,0,.08);
       display:flex;
-      gap:10px;
       justify-content:flex-end;
-      align-items:center;
-      flex-wrap:wrap;
     }
-
-    .success-box{
+    .success-box, .error-box{
       display:none;
       margin-top: 12px;
       padding: 12px 14px;
       border-radius: 14px;
+      font-weight: 900;
+      align-items:center;
+      gap:10px;
+      color: rgba(0,0,0,.78);
+    }
+    .success-box{
       border: 1px solid rgba(46, 204, 113, .28);
       background: rgba(46, 204, 113, .10);
-      color: rgba(0,0,0,.78);
-      font-weight: 900;
-      letter-spacing: .02em;
-      align-items:center;
-      gap:10px;
     }
-
     .error-box{
-      display:none;
-      margin-top: 12px;
-      padding: 12px 14px;
-      border-radius: 14px;
       border: 1px solid rgba(231,76,60,.28);
       background: rgba(231,76,60,.08);
-      color: rgba(0,0,0,.78);
-      font-weight: 900;
-      letter-spacing: .02em;
-      align-items:center;
-      gap:10px;
     }
-
     .invalid-feedback{ color: rgba(231,76,60,.95); font-weight: 800; }
+    .req-star{ color: rgba(231,76,60,.95); font-weight: 900; margin-left: 4px; }
 
-    .req-star{
-      color: rgba(231,76,60,.95);
-      font-weight: 900;
-      margin-left: 4px;
-    }
-    .optional-note{
-      color: rgba(0,0,0,.55);
-      font-weight: 800;
-      font-size: .86rem;
-      margin-top: 4px;
+    @media (max-width: 575.98px){
+      .top-links{ justify-content:flex-start; }
+      .btn-gold{ width:100%; justify-content:center; }
     }
   </style>
 </head>
@@ -269,28 +250,18 @@
   <div class="topbar">
     <div class="container d-flex flex-wrap justify-content-between align-items-center gap-3">
       <div>
-        <div style="font-weight:900; letter-spacing:.08em; text-transform:uppercase;">
-          Bartelt Angus • Sale Info
-        </div>
-        <div style="color:rgba(242,242,242,.72);">
-          March 4 • Platte Livestock Market • Platte, SD
-        </div>
+        <p class="title">Bartelt Angus • Sale Info</p>
+        <p class="sub">March 4 • Platte Livestock Market • Platte, SD</p>
       </div>
 
-      <div class="d-flex gap-2 flex-wrap">
-        <a class="btn btn-outline-light" href="./index.html#sales">
-          <i class="fa-solid fa-arrow-left"></i> Back
-        </a>
+      <div class="top-links">
+        <a class="top-link" href="./index.html#sales"><i class="fa-solid fa-arrow-left"></i> Back</a>
 
-        <a class="btn btn-darkish" href="#" target="_blank" rel="noopener">
-          <i class="fa-solid fa-book"></i> Catalog
-        </a>
+        <span class="soon"><i class="fa-solid fa-book"></i> Catalog <b>Coming Soon</b></span>
+        <span class="soon"><i class="fa-solid fa-video"></i> Videos <b>Coming Soon</b></span>
 
-        <a class="btn btn-gold" href="">
-          <i class="fa-solid fa-video"></i> Videos
-        </a>
-
-        <button class="btn btn-gold" type="button" data-bs-toggle="modal" data-bs-target="#requestModal">
+        <!-- ✅ only primary button -->
+        <button class="btn-gold" type="button" data-bs-toggle="modal" data-bs-target="#requestModal">
           <i class="fa-solid fa-clipboard-list"></i> Request Catalog
         </button>
       </div>
@@ -300,91 +271,54 @@
   <main class="py-5">
     <div class="container">
 
-      <div class="cta-panel mb-4">
-        <div class="cta-inner">
-          <div>
-            <p class="cta-title mb-0">Request a catalog / buyer follow-up</p>
-            <p class="cta-sub mb-0">Submit your mailing info and we’ll send you a catalog!</p>
-          </div>
-
-          <div class="cta-badges">
-            <span class="mini-badge"><i class="fa-solid fa-envelope"></i> Catalog Request</span>
-            <button class="btn btn-gold" type="button" data-bs-toggle="modal" data-bs-target="#requestModal">
-              <i class="fa-solid fa-pen-to-square"></i> Fill Out Form
-            </button>
-          </div>
-        </div>
-      </div>
-
       <div class="row g-4">
+        <!-- Poster -->
         <div class="col-12 col-lg-6">
           <div class="card-soft poster">
             <img src="assets/img/sales/bartelt.jpg" alt="Bartelt Angus Sale Poster">
           </div>
         </div>
 
+        <!-- Details -->
         <div class="col-12 col-lg-6">
           <div class="card-soft p-4">
             <h1 class="h3 mb-2" style="font-weight:900;">
               Bartelt Angus • Elite Bull & Heifer Sale
             </h1>
-            <p class="muted mb-4">
-              Location, links, and contact info for sale day.
+            <p class="muted mb-3">
+              Sale day information and contact details.
             </p>
 
-            <div class="d-flex flex-wrap gap-2 mb-3">
-              <a class="btn btn-gold" target="_blank" rel="noopener"
+            <div class="detail-list">
+              <div class="detail-row"><i class="fa-solid fa-calendar-days"></i> March 4 • Start Time 12:30 PM</div>
+              <div class="detail-row"><i class="fa-solid fa-location-dot"></i> Platte Livestock Market</div>
+              <div class="detail-row"><i class="fa-solid fa-road"></i> 36580 SD-44 • Platte, SD 57369</div>
+              <div class="detail-row"><i class="fa-solid fa-phone"></i> Austin • <a href="tel:+16059990147" style="color:#111; font-weight:900; text-decoration:none; border-bottom:1px solid rgba(0,0,0,.22);">605-999-0147</a></div>
+            </div>
+
+            <!-- links, not buttons -->
+            <div class="link-row">
+              <a class="mini-link" target="_blank" rel="noopener"
                  href="https://www.google.com/maps/search/?api=1&query=Platte%20Livestock%20Market%2C%2036580%20SD-44%2C%20Platte%2C%20SD%2057369">
                 <i class="fa-solid fa-map-location-dot"></i> Maps
               </a>
 
-              <a class="btn btn-darkish" target="_blank" rel="noopener"
+              <a class="mini-link" target="_blank" rel="noopener"
                  href="http://www.plattelivestockmarket.com">
                 <i class="fa-solid fa-globe"></i> Venue Site
               </a>
 
-              <a class="btn btn-outline-darkish" target="_blank" rel="noopener"
+              <a class="mini-link" target="_blank" rel="noopener"
                  href="https://www.facebook.com/barteltangus">
-                <i class="fa-brands fa-facebook-f"></i> Bartelt Angus
+                <i class="fa-brands fa-facebook-f"></i> Facebook
               </a>
-
-              <a class="btn btn-outline-darkish" href="tel:+16059990147">
-                <i class="fa-solid fa-phone"></i> Call Austin
-              </a>
-
-              <button class="btn btn-gold" type="button" data-bs-toggle="modal" data-bs-target="#requestModal">
-                <i class="fa-solid fa-clipboard-list"></i> Request Catalog
-              </button>
-            </div>
-
-            <div class="mb-3">
-              <span class="chip"><i class="fa-solid fa-location-dot"></i> Platte Livestock Market</span>
-              <span class="chip"><i class="fa-solid fa-road"></i> 36580 SD-44</span>
-              <span class="chip"><i class="fa-solid fa-city"></i> Platte, SD 57369</span>
-            </div>
-
-            <hr class="my-4">
-
-            <div class="row g-3">
-              <div class="col-12">
-                <div style="font-weight:900; text-transform:uppercase; letter-spacing:.08em;">
-                  Sale Contact
-                </div>
-                <div class="muted">
-                  Austin • <a href="tel:+16059990147">605-999-0147</a>
-                </div>
-              </div>
-              <div class="col-12">
-                <div style="font-weight:900; text-transform:uppercase; letter-spacing:.08em;">
-                  Start Time – 12:30 PM
-                </div>
-              </div>
             </div>
 
           </div>
         </div>
       </div>
 
+      <!-- Map -->
       <div class="row mt-4">
         <div class="col-12">
           <div class="card-soft" style="height: 420px;">
@@ -408,7 +342,7 @@
 
         <div class="form-head d-flex align-items-start justify-content-between gap-3">
           <div>
-            <p class="form-title">Catalog Request Form</p>
+            <p class="form-title">Catalog Request</p>
             <p class="form-sub mb-0">Fields marked with <span class="req-star">*</span> are required.</p>
           </div>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -449,34 +383,22 @@
 
             <div class="col-6 col-md-3">
               <label class="form-label form-label-theme" for="zip">Zip Code<span class="req-star">*</span></label>
-              <input
-  class="form-control form-control-theme"
-  id="zip"
-  name="zip"
-  inputmode="numeric"
-  autocomplete="postal-code"
-  pattern="^\d{5}(-\d{4})?$"
-  placeholder="57369"
-  required
->
+              <input class="form-control form-control-theme" id="zip" name="zip" inputmode="numeric" autocomplete="postal-code"
+                     pattern="^\\d{5}(-\\d{4})?$" placeholder="57369" required maxlength="10">
               <div class="invalid-feedback">Enter a valid zip code.</div>
             </div>
 
             <div class="col-12 col-md-6">
               <label class="form-label form-label-theme" for="phone">Phone (optional)</label>
-              <input class="form-control form-control-theme" id="phone" name="phone" inputmode="tel" placeholder="(605) 555-1234">
+              <input class="form-control form-control-theme" id="phone" name="phone" inputmode="tel">
             </div>
 
             <div class="col-12 col-md-6">
               <label class="form-label form-label-theme" for="email">Email (optional)</label>
-              <input class="form-control form-control-theme" id="email" name="email" type="email" placeholder="name@email.com">
+              <input class="form-control form-control-theme" id="email" name="email" type="email">
             </div>
 
             <div class="col-12">
-              <div class="optional-note">
-                You can also call/text <strong>605-999-0147</strong> if you prefer.
-              </div>
-
               <div id="formSuccess" class="success-box">
                 <i class="fa-solid fa-circle-check"></i>
                 Submission received. Thank you.
@@ -491,8 +413,8 @@
           </div>
 
           <div class="form-footer">
-            <button class="btn btn-gold" id="submitBtn" type="submit">
-              <i class="fa-solid fa-paper-plane"></i> Submit Request
+            <button class="btn-gold" id="submitBtn" type="submit">
+              <i class="fa-solid fa-paper-plane"></i> Submit
             </button>
           </div>
         </form>
@@ -504,7 +426,6 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    // ✅ Your Apps Script Web App URL (live)
     const GOOGLE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzTlpV6KO9bAlkaPGVF53ylAQBbaz6WY2eUH4EEbC0MvO-4BU5BWlr0Vw5GdW7XPxIy3g/exec";
 
     (function () {
@@ -519,14 +440,13 @@
         submitBtn.disabled = on;
         submitBtn.innerHTML = on
           ? `<i class="fa-solid fa-spinner fa-spin"></i> Sending...`
-          : `<i class="fa-solid fa-paper-plane"></i> Submit Request`;
+          : `<i class="fa-solid fa-paper-plane"></i> Submit`;
       }
 
       form.addEventListener("submit", async function (e) {
         e.preventDefault();
         e.stopPropagation();
 
-        // normalize state to uppercase
         const state = document.getElementById("state");
         if(state && state.value) state.value = state.value.toUpperCase().trim();
 
