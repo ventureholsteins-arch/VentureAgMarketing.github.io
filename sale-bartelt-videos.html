@@ -1,373 +1,1007 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bartelt Angus • Lot Videos | Venture Ag Marketing</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bartelt Angus • Lot Videos | Venture Ag Marketing</title>
+  <meta name="description" content="Bartelt Angus lot videos with catalog images." />
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-<style>
-:root{
-  --bg:#0B0B0B;
-  --text:#F2F2F2;
-  --gold:#C9A45C;
-  --gold-dark:#9F7C3B;
-}
-body{
-  background:#F7F7F7;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  color:#111;
-}
+  <style>
+    :root{
+      --vam-bg:#0B0B0B;
+      --vam-text:#F2F2F2;
+      --vam-muted:rgba(242,242,242,.72);
+      --vam-gold:#C9A45C;
+      --vam-gold-dark:#9F7C3B;
+      --vam-shadow:0 18px 54px rgba(0,0,0,.22);
+    }
+    body{ font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; background:#F7F7F7; color:#111; }
 
-/* ================= TOP BAR ================= */
-.topbar{
-  background:#0B0B0B;
-  color:#fff;
-  position:sticky;
-  top:0;
-  z-index:20;
-  border-bottom:1px solid rgba(255,255,255,.08);
-}
-.btn-ghost{
-  border:1px solid rgba(255,255,255,.22);
-  background:rgba(255,255,255,.06);
-  color:#fff;
-  border-radius:14px;
-  padding:10px 14px;
-  font-weight:900;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  text-decoration:none;
-}
+    /* Top Bar */
+    .topbar{
+      background: rgba(11,11,11,.94);
+      color: var(--vam-text);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      position: sticky; top: 0; z-index: 10;
+    }
+    .topbar .title{
+      font-weight: 900;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      margin: 0;
+      font-size: .95rem;
+    }
 
-/* ================= PLAYER ================= */
-.player-shell{
-  background:#000;
-  border-radius:18px;
-  overflow:hidden;
-  box-shadow:0 18px 54px rgba(0,0,0,.35);
-}
-.player-head{
-  padding:14px 16px;
-  border-bottom:1px solid rgba(255,255,255,.1);
-  color:#fff;
-}
-.player-title{
-  font-weight:900;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-}
+    .btn-ghost{
+      border: 1px solid rgba(255,255,255,.22);
+      color: #fff;
+      background: rgba(255,255,255,.06);
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      border-radius: 14px;
+      padding: 10px 14px;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      white-space:nowrap;
+    }
+    .btn-ghost:hover{ background: rgba(255,255,255,.10); color:#fff; }
 
-/* iOS SAFE VIDEO */
-.video-ratio{
-  position:relative;
-  width:100%;
-  padding-top:56.25%;
-  background:#000;
-  overflow:hidden;
-}
-.video-ratio iframe{
-  position:absolute !important;
-  inset:0 !important;
-  width:100% !important;
-  height:100% !important;
-  border:0;
-  display:block;
-  pointer-events:none; /* stop iOS native controls */
-}
+    /* Player Shell */
+    .player-shell{
+      border-radius: 18px;
+      overflow: hidden;
+      background: #0b0b0b;
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: var(--vam-shadow);
+    }
+    .player-head{
+      padding: 14px 16px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      background: linear-gradient(135deg, #0b0b0b 0%, #111 55%, #0b0b0b 100%);
+      color: var(--vam-text);
+    }
+    .player-title{
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin: 0;
+      font-size: .95rem;
+    }
+    .player-sub{ margin: 0; color: rgba(242,242,242,.70); font-size: .92rem; }
 
-/* ================= CONTROLS ================= */
-.player-actions{
-  padding:12px 14px;
-  background:#0B0B0B;
-  border-top:1px solid rgba(255,255,255,.1);
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-.scrub-wrap{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-.btn-play{
-  width:44px;height:44px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.2);
-  background:rgba(255,255,255,.08);
-  color:#fff;
-}
-.scrub{
-  flex:1;
-  accent-color:var(--gold);
-}
-.timecode{
-  min-width:90px;
-  font-size:.78rem;
-  font-weight:900;
-  color:rgba(255,255,255,.7);
-  text-align:right;
-}
-.nav-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-}
-.btn-nav{
-  padding:10px 14px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.2);
-  background:rgba(255,255,255,.06);
-  color:#fff;
-  font-weight:900;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-}
-.lot-counter{
-  font-weight:900;
-  letter-spacing:.1em;
-  color:rgba(255,255,255,.75);
-}
+    /* ✅ iOS-safe video box */
+    .video-ratio{
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* 16:9 */
+      background:#000;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      overflow:hidden;
+    }
+    /* Force iframe to fill box */
+    .video-ratio iframe{
+      position:absolute !important;
+      inset:0 !important;
+      width:100% !important;
+      height:100% !important;
+      border:0 !important;
+      display:block;
+      background:#000;
+      /* ✅ prevents iOS native controls overlay */
+      pointer-events:none;
+    }
 
-/* ================= SALE STRIP ================= */
-.sale-strip{
-  background:linear-gradient(135deg, rgba(201,164,92,.18), rgba(255,255,255,.04));
-  padding:14px;
-  border-top:1px solid rgba(255,255,255,.12);
-  color:#fff;
-}
-.sale-row{
-  display:flex;
-  flex-wrap:wrap;
-  gap:14px;
-  justify-content:space-between;
-  align-items:center;
-}
-.sale-mini span{
-  font-weight:800;
-  margin-right:14px;
-}
-.sale-mini i{ color:var(--gold); }
+    /* Player actions */
+    .player-actions{
+      padding: 12px 14px;
+      background: #0b0b0b;
+      border-top: 1px solid rgba(255,255,255,.10);
+      display:flex;
+      flex-direction:column; /* ✅ clean stacking */
+      gap:12px;
+    }
 
-/* ================= CATALOG ================= */
-.catalog-panel{
-  background:#0B0B0B;
-  padding:14px;
-  border-radius:18px;
-  box-shadow:0 18px 44px rgba(0,0,0,.4);
-}
-.catalog-img{
-  width:100%;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.14);
-}
+    /* Scrub row */
+    .scrub-wrap{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      width:100%;
+    }
+    .btn-play{
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      flex: 0 0 auto;
+    }
+    .btn-play:hover{ background: rgba(255,255,255,.10); }
 
-/* ================= GRID ================= */
-.controls{
-  background:#fff;
-  border-radius:18px;
-  padding:14px;
-  box-shadow:0 14px 36px rgba(0,0,0,.12);
-}
-.lot-card{
-  background:#fff;
-  border-radius:18px;
-  overflow:hidden;
-  border:1px solid rgba(0,0,0,.08);
-  box-shadow:0 14px 36px rgba(0,0,0,.12);
-  cursor:pointer;
-}
-.lot-top{
-  background:#0B0B0B;
-  color:#fff;
-  padding:14px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.lot-big{
-  color:var(--gold);
-  font-weight:900;
-  font-size:1.6rem;
-}
-.lot-body{ padding:14px; }
-.active-lot{ outline:3px solid rgba(201,164,92,.55); }
+    .scrub{
+      width: 100%;
+      accent-color: var(--vam-gold);
+      height: 6px;
+      cursor: pointer;
+    }
+    .timecode{
+      color: rgba(242,242,242,.70);
+      font-weight: 900;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      font-size: .78rem;
+      white-space:nowrap;
+      min-width: 100px;
+      text-align:right;
+      flex: 0 0 auto;
+    }
 
-@media(max-width:991.98px){
-  .player-actions{ gap:10px; }
-}
-</style>
+    /* Nav row */
+    .nav-row{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:nowrap;
+    }
+    .btn-nav{
+      border-radius: 14px;
+      padding: 10px 14px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+      color: #fff;
+      white-space:nowrap;
+    }
+    .btn-nav:hover{ background: rgba(255,255,255,.10); }
+    .btn-nav:disabled{ opacity: .45; cursor: not-allowed; }
+
+    .lot-counter{
+      color: rgba(242,242,242,.75);
+      font-weight: 900;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      font-size: .82rem;
+      white-space:nowrap;
+      text-align:center;
+      flex: 0 0 auto;
+    }
+
+    /* Sale info strip */
+    .sale-strip{
+      background: linear-gradient(135deg, rgba(201,164,92,.16), rgba(255,255,255,.04));
+      border-top: 1px solid rgba(255,255,255,.10);
+      padding: 12px 14px;
+      color: rgba(242,242,242,.92);
+    }
+    .sale-strip .label{
+      font-weight: 900;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      font-size: .78rem;
+      color: rgba(242,242,242,.80);
+      margin-bottom: 8px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .sale-row{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:12px 18px;
+      justify-content:space-between;
+    }
+    .sale-mini{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px 16px;
+      align-items:center;
+      color: rgba(242,242,242,.88);
+      font-weight: 800;
+    }
+    .sale-mini span{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      color: rgba(242,242,242,.84);
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+    .sale-mini i{ color: var(--vam-gold); }
+    .sale-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      justify-content:flex-end;
+    }
+
+    .btn-gold{
+      background: var(--vam-gold);
+      border: 1px solid var(--vam-gold);
+      color:#0B0B0B;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      border-radius: 14px;
+      padding: 10px 14px;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      white-space: nowrap;
+    }
+    .btn-gold:hover{ background: var(--vam-gold-dark); border-color: var(--vam-gold-dark); color:#0B0B0B; }
+
+    .btn-light-outline{
+      border-radius: 14px;
+      padding: 10px 14px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+      color:#fff;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      white-space: nowrap;
+    }
+    .btn-light-outline:hover{ background: rgba(255,255,255,.10); color:#fff; }
+
+    /* Catalog panel */
+    .catalog-panel{
+      height:100%;
+      background:#0b0b0b;
+      border-left: 1px solid rgba(255,255,255,.10);
+      padding: 14px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .catalog-title{
+      font-weight: 900;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      font-size: .78rem;
+      color: rgba(242,242,242,.82);
+      display:flex;
+      align-items:center;
+      gap:8px;
+      margin:0;
+    }
+    .catalog-img{
+      width: 100%;
+      height: auto;
+      display:block;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 16px 44px rgba(0,0,0,.45);
+      background:#fff;
+      cursor: zoom-in;
+    }
+    .tap-hint{
+      color: rgba(242,242,242,.70);
+      font-size: .86rem;
+      font-weight: 900;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin:0;
+    }
+
+    /* Controls */
+    .controls{
+      background: rgba(255,255,255,.90);
+      border: 1px solid rgba(0,0,0,.08);
+      border-radius: 18px;
+      box-shadow: 0 10px 26px rgba(0,0,0,.08);
+      padding: 14px;
+    }
+    .search{
+      border-radius: 14px;
+      border: 1px solid rgba(0,0,0,.12);
+      padding: 12px 14px;
+    }
+    .count{
+      color: rgba(0,0,0,.62);
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      font-size: .82rem;
+    }
+
+    /* Lot Cards */
+    .lot-card{
+      border-radius: 18px;
+      overflow:hidden;
+      background:#fff;
+      border:1px solid rgba(0,0,0,.08);
+      box-shadow: 0 14px 36px rgba(0,0,0,.12);
+      height:100%;
+      cursor:pointer;
+      transition: transform .12s ease, box-shadow .12s ease;
+    }
+    .lot-card:hover{ transform: translateY(-2px); box-shadow: 0 18px 44px rgba(0,0,0,.18); }
+
+    .lot-top{
+      background:
+        radial-gradient(circle at 25% 20%, rgba(201,164,92,.26), rgba(0,0,0,0) 55%),
+        linear-gradient(135deg, #111 0%, #0b0b0b 60%, #151515 100%);
+      color: var(--vam-text);
+      padding: 14px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      min-height: 92px;
+    }
+    .lot-left{ display:flex; align-items:center; gap:12px; }
+    .lot-num{ font-weight:900; letter-spacing:.10em; text-transform:uppercase; font-size:.80rem; color: rgba(242,242,242,.82); }
+    .lot-big{ font-weight:900; letter-spacing:.06em; text-transform:uppercase; font-size: 1.9rem; line-height:1; margin:5px 0 0; color: var(--vam-gold); }
+
+    .thumb{
+      width: 96px; height: 96px;
+      border-radius: 14px;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      flex: 0 0 auto;
+      cursor: zoom-in;
+    }
+    .thumb img{ width:100%; height:100%; object-fit: cover; display:block; }
+
+    .play{
+      width: 42px; height: 42px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.14);
+      display:flex; align-items:center; justify-content:center;
+      flex: 0 0 auto;
+    }
+    .play i{ color: var(--vam-gold); }
+
+    .lot-body{ padding: 12px 14px 14px; }
+    .lot-title{ font-weight: 900; margin:0 0 4px; }
+    .lot-meta{ color: rgba(0,0,0,.62); margin:0; font-size:.95rem; }
+
+    .active-lot{
+      outline: 3px solid rgba(201,164,92,.55);
+      outline-offset: 2px;
+    }
+
+    /* ✅ mobile: professional stacking + aligned controls */
+    @media (max-width: 991.98px){
+      .catalog-panel{ border-left:none; border-top: 1px solid rgba(255,255,255,.10); }
+
+      .scrub-wrap{ gap:10px; }
+      .timecode{ min-width: 92px; }
+
+      .nav-row{
+        display:grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items:center;
+        gap:10px;
+      }
+      .nav-row .btn-nav{
+        width:100%;
+        justify-content:center;
+      }
+      .lot-counter{
+        justify-self:center;
+      }
+    }
+
+    /* =========================
+       FULLSCREEN IMAGE VIEWER
+       ========================= */
+    .img-modal{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.92);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+    .img-modal.show{ display:flex; }
+
+    .img-modal-close{
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.08);
+      color: #fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size: 18px;
+      cursor: pointer;
+      z-index: 3;
+    }
+    .img-modal-close:hover{ background: rgba(255,255,255,.12); }
+
+    .img-modal-hint{
+      position: absolute;
+      left: 14px;
+      top: 14px;
+      color: rgba(255,255,255,.75);
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-size: .78rem;
+      z-index: 3;
+    }
+
+    .zoom-stage{
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      touch-action: none;
+      cursor: default;
+      z-index: 2;
+    }
+    .zoom-stage.dragging{ cursor: grabbing; }
+
+    .zoom-img{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform-origin: 0 0;
+      user-select: none;
+      -webkit-user-drag: none;
+      max-width: none;
+      width: auto;
+      height: auto;
+      will-change: transform;
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- TOP -->
-<div class="topbar">
-  <div class="container py-3 d-flex justify-content-between align-items-center">
-    <strong>BARTELT ANGUS • LOT VIDEOS</strong>
-    <div class="d-flex gap-2">
-      <a class="btn-ghost" href="sale-bartelt.html"><i class="fa-solid fa-arrow-left"></i> Sale Info</a>
-      <a class="btn-ghost" href="./index.html#sales"><i class="fa-solid fa-house"></i> Home</a>
-    </div>
-  </div>
-</div>
-
-<main class="py-4">
-<div class="container">
-
-<!-- PLAYER -->
-<div class="player-shell mb-4">
-  <div class="player-head">
-    <div id="playerTitle" class="player-title">Lot 1 • Bull</div>
-  </div>
-
-  <div class="video-ratio">
-    <iframe id="playerFrame" allow="autoplay; fullscreen"></iframe>
-  </div>
-
-  <div class="player-actions">
-    <div class="scrub-wrap">
-      <button id="playBtn" class="btn-play"><i id="playIcon" class="fa-solid fa-pause"></i></button>
-      <input id="scrub" class="scrub" type="range" min="0" max="1000" value="0">
-      <div id="timecode" class="timecode">0:00 / 0:00</div>
-    </div>
-
-    <div class="nav-row">
-      <button id="prevBtn" class="btn-nav"><i class="fa-solid fa-arrow-left"></i> Prev</button>
-      <div id="lotCounter" class="lot-counter">Lot 1 / 19</div>
-      <button id="nextBtn" class="btn-nav">Next <i class="fa-solid fa-arrow-right"></i></button>
-    </div>
-  </div>
-
-  <div class="sale-strip">
-    <div class="sale-row">
-      <div class="sale-mini">
-        <span><i class="fa-solid fa-calendar-days"></i> March 4</span>
-        <span><i class="fa-solid fa-location-dot"></i> Platte Livestock Market</span>
-        <span><i class="fa-solid fa-phone"></i> 605-999-0147</span>
+  <!-- Sticky Top Bar -->
+  <div class="topbar">
+    <div class="container py-3 d-flex flex-wrap align-items-center justify-content-between gap-2">
+      <div>
+        <p class="title mb-1">Bartelt Angus • Lot Videos</p>
+      </div>
+      <div class="d-flex gap-2 flex-wrap">
+        <a class="btn-ghost" href="sale-bartelt.html"><i class="fa-solid fa-arrow-left"></i> Sale Info</a>
+        <a class="btn-ghost" href="./index.html#sales"><i class="fa-solid fa-house"></i> Home</a>
       </div>
     </div>
   </div>
-</div>
 
-<!-- CONTROLS -->
-<div class="controls mb-4">
-  <input id="searchInput" class="form-control" placeholder="Search lots (ex: 11, bull)">
-</div>
+  <main class="py-5">
+    <div class="container">
 
-<!-- GRID -->
-<div id="grid" class="row g-4"></div>
+      <!-- BIG PLAYER -->
+      <div class="player-shell mb-4">
+        <div class="player-head">
+          <div>
+            <p class="player-title mb-1" id="playerTitle">Loading Lot…</p>
+            <p class="player-sub" id="playerSub">Fast switching (no iframe reload) • muted autoplay • play/pause + scrub only</p>
+          </div>
+        </div>
 
-</div>
-</main>
+        <div class="row g-0">
+          <!-- VIDEO -->
+          <div class="col-12 col-lg-8 order-1 order-lg-1">
+            <div class="video-ratio">
+              <iframe id="playerFrame"
+                src=""
+                title="Lot Video"
+                allow="autoplay; fullscreen; picture-in-picture"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen></iframe>
+            </div>
 
-<script src="https://player.vimeo.com/api/player.js"></script>
+            <div class="player-actions">
+              <!-- Scrub row -->
+              <div class="scrub-wrap">
+                <button id="playBtn" class="btn-play" type="button" aria-label="Play/Pause">
+                  <i id="playIcon" class="fa-solid fa-pause"></i>
+                </button>
+                <input id="scrub" class="scrub" type="range" min="0" max="1000" value="0" step="1" aria-label="Scrub">
+                <div class="timecode" id="timecode">0:00 / 0:00</div>
+              </div>
 
-<script>
-const lots=[
-{lot:1,meta:"Bull",vimeo:"1161993796"},
-{lot:2,meta:"Bull",vimeo:"1161993835"},
-{lot:3,meta:"Bull",vimeo:"1161993947"},
-{lot:4,meta:"Bull",vimeo:"1161994078"},
-{lot:5,meta:"Bull",vimeo:"1161994197"},
-{lot:6,meta:"Bull",vimeo:"1161994298"},
-{lot:7,meta:"Bull",vimeo:"1161994440"},
-{lot:8,meta:"Bull",vimeo:"1161994525"},
-{lot:9,meta:"Bull",vimeo:"1161994645"},
-{lot:10,meta:"Bull",vimeo:"1161994737"},
-{lot:11,meta:"Bull",vimeo:"1161994854"},
-{lot:12,meta:"Bull",vimeo:"1161994977"},
-{lot:13,meta:"Bull",vimeo:"1161995140"},
-{lot:14,meta:"Bull",vimeo:"1161995267"},
-{lot:15,meta:"Bull",vimeo:"1161995435"},
-{lot:16,meta:"Heifer",vimeo:"1161995589"},
-{lot:17,meta:"Heifer",vimeo:"1161995681"},
-{lot:18,meta:"Heifer",vimeo:"1161995766"},
-{lot:19,meta:"Heifer",vimeo:"1161995824"},
-];
+              <!-- Nav row -->
+              <div class="nav-row">
+                <button id="prevBtn" class="btn-nav" type="button">
+                  <i class="fa-solid fa-arrow-left"></i> Prev
+                </button>
 
-let idx=0,player,duration=0,drag=false;
+                <div class="lot-counter" id="lotCounter">Lot — / —</div>
 
-const frame=document.getElementById("playerFrame");
-const playBtn=document.getElementById("playBtn");
-const playIcon=document.getElementById("playIcon");
-const scrub=document.getElementById("scrub");
-const timecode=document.getElementById("timecode");
-const title=document.getElementById("playerTitle");
-const counter=document.getElementById("lotCounter");
-const grid=document.getElementById("grid");
-const search=document.getElementById("searchInput");
+                <button id="nextBtn" class="btn-nav" type="button">
+                  Next <i class="fa-solid fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
 
-function embed(id){
-  return `https://player.vimeo.com/video/${id}?background=1&autoplay=1&muted=1&loop=1&playsinline=1`;
-}
+          <!-- CATALOG -->
+          <div class="col-12 col-lg-4 order-2 order-lg-2">
+            <div class="catalog-panel" id="catalogWrap" style="display:none;">
+              <p class="catalog-title"><i class="fa-solid fa-image"></i> Catalog image</p>
+              <img id="catalogImg" class="catalog-img" src="" alt="Catalog image">
+              <p class="tap-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Tap to enlarge • tap to zoom • pinch on mobile</p>
+            </div>
+          </div>
 
-function fmt(s){
-  s=Math.floor(s);
-  return `${Math.floor(s/60)}:${String(s%60).padStart(2,"0")}`;
-}
+          <!-- SALE STRIP -->
+          <div class="col-12 col-lg-8 order-3 order-lg-3">
+            <div class="sale-strip">
+              <div class="label"><i class="fa-solid fa-circle-info"></i> Sale</div>
 
-async function load(i){
-  idx=i;
-  const l=lots[i];
-  title.textContent=`Lot ${l.lot} • ${l.meta}`;
-  counter.textContent=`Lot ${l.lot} / ${lots.length}`;
-  frame.src=embed(l.vimeo);
+              <div class="sale-row">
+                <div class="sale-mini">
+                  <span><i class="fa-solid fa-calendar-days"></i> March 4 • Platte, SD</span>
+                  <span><i class="fa-solid fa-location-dot"></i> Platte Livestock Market</span>
+                  <span><i class="fa-solid fa-phone"></i> 605-999-0147</span>
+                </div>
 
-  setTimeout(async()=>{
-    player=new Vimeo.Player(frame);
-    duration=await player.getDuration();
-    scrub.value=0;
-    timecode.textContent=`0:00 / ${fmt(duration)}`;
-    player.on("timeupdate",e=>{
-      if(!drag){
-        scrub.value=(e.seconds/duration)*1000;
-        timecode.textContent=`${fmt(e.seconds)} / ${fmt(duration)}`;
+                <div class="sale-actions">
+                  <a class="btn-gold" target="_blank" rel="noopener"
+                     href="https://www.google.com/maps/search/?api=1&query=Platte%20Livestock%20Market%2C%2036580%20SD-44%2C%20Platte%2C%20SD%2057369">
+                    <i class="fa-solid fa-map-location-dot"></i> Directions
+                  </a>
+
+                  <a class="btn-light-outline" target="_blank" rel="noopener"
+                     href="http://www.plattelivestockmarket.com">
+                    <i class="fa-solid fa-globe"></i> Venue Website
+                  </a>
+
+                  <a class="btn-light-outline" target="_blank" rel="noopener"
+                     href="https://www.facebook.com/barteltangus">
+                    <i class="fa-brands fa-facebook-f"></i> Facebook
+                  </a>
+
+                  <a class="btn-light-outline" href="tel:6059990147">
+                    <i class="fa-solid fa-phone"></i> Call
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="controls mb-4">
+        <div class="row g-3 align-items-center">
+          <div class="col-12 col-lg-6">
+            <input id="searchInput" class="form-control search"
+              placeholder="Search lots (ex: 11, bull, heifer)">
+          </div>
+          <div class="col-12 col-lg-6 d-flex justify-content-lg-end justify-content-start">
+            <div class="count" id="countText">0 lots</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grid -->
+      <div class="row g-4" id="grid"></div>
+
+    </div>
+  </main>
+
+  <!-- FULLSCREEN IMAGE MODAL -->
+  <div id="imgModal" class="img-modal" aria-hidden="true">
+    <div class="img-modal-hint">Fits screen • tap to zoom • drag to move • pinch to zoom • wheel zoom</div>
+    <button id="imgModalClose" class="img-modal-close" type="button" aria-label="Close">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div id="stage" class="zoom-stage" role="dialog" aria-label="Catalog image viewer">
+      <img id="zoomImg" class="zoom-img" src="" alt="Zoomed catalog image">
+    </div>
+  </div>
+
+  <!-- Vimeo API -->
+  <script src="https://player.vimeo.com/api/player.js"></script>
+
+  <script>
+    // ---------- helpers ----------
+    function vimeoSrc(id){
+      // background=1 removes vimeo UI; playsinline helps iOS; muted enables autoplay
+      return `https://player.vimeo.com/video/${id}?background=1&autoplay=1&muted=1&loop=1&autopause=0&playsinline=1&dnt=1`;
+    }
+    function fmtTime(sec){
+      if(!isFinite(sec) || sec < 0) sec = 0;
+      sec = Math.floor(sec);
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      return `${m}:${String(s).padStart(2,"0")}`;
+    }
+
+    // ---------- lots ----------
+    // ✅ Catalog image path restored using your example as placeholder.
+    // Replace each catalogImg with the real file when you have them.
+    const SAMPLE_CATALOG = "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg";
+
+    const lots = [
+      { lot: 1,  title: "Lot 1",  meta: "Bull",   vimeo: "1161993796", catalogImg: SAMPLE_CATALOG },
+      { lot: 2,  title: "Lot 2",  meta: "Bull",   vimeo: "1161993835", catalogImg: SAMPLE_CATALOG },
+      { lot: 3,  title: "Lot 3",  meta: "Bull",   vimeo: "1161993947", catalogImg: SAMPLE_CATALOG },
+      { lot: 4,  title: "Lot 4",  meta: "Bull",   vimeo: "1161994078", catalogImg: SAMPLE_CATALOG },
+      { lot: 5,  title: "Lot 5",  meta: "Bull",   vimeo: "1161994197", catalogImg: SAMPLE_CATALOG },
+      { lot: 6,  title: "Lot 6",  meta: "Bull",   vimeo: "1161994298", catalogImg: SAMPLE_CATALOG },
+      { lot: 7,  title: "Lot 7",  meta: "Bull",   vimeo: "1161994440", catalogImg: SAMPLE_CATALOG },
+      { lot: 8,  title: "Lot 8",  meta: "Bull",   vimeo: "1161994525", catalogImg: SAMPLE_CATALOG },
+      { lot: 9,  title: "Lot 9",  meta: "Bull",   vimeo: "1161994645", catalogImg: SAMPLE_CATALOG },
+      { lot: 10, title: "Lot 10", meta: "Bull",   vimeo: "1161994737", catalogImg: SAMPLE_CATALOG },
+      { lot: 11, title: "Lot 11", meta: "Bull",   vimeo: "1161994854", catalogImg: SAMPLE_CATALOG },
+      { lot: 12, title: "Lot 12", meta: "Bull",   vimeo: "1161994977", catalogImg: SAMPLE_CATALOG },
+      { lot: 13, title: "Lot 13", meta: "Bull",   vimeo: "1161995140", catalogImg: SAMPLE_CATALOG },
+      { lot: 14, title: "Lot 14", meta: "Bull",   vimeo: "1161995267", catalogImg: SAMPLE_CATALOG },
+      { lot: 15, title: "Lot 15", meta: "Bull",   vimeo: "1161995435", catalogImg: SAMPLE_CATALOG },
+      { lot: 16, title: "Lot 16A", meta: "Heifer", vimeo: "1161995589", catalogImg: SAMPLE_CATALOG },
+      { lot: 17, title: "Lot 16B", meta: "Heifer", vimeo: "1161995681", catalogImg: SAMPLE_CATALOG },
+      { lot: 18, title: "Lot 16C", meta: "Heifer", vimeo: "1161995766", catalogImg: SAMPLE_CATALOG },
+      { lot: 19, title: "Lot 16D", meta: "Heifer", vimeo: "1161995824", catalogImg: SAMPLE_CATALOG },
+    ];
+
+    // ---------- dom ----------
+    const grid = document.getElementById("grid");
+    const searchInput = document.getElementById("searchInput");
+    const countText = document.getElementById("countText");
+
+    const playerTitle = document.getElementById("playerTitle");
+    const playerSub = document.getElementById("playerSub");
+    const playerFrame = document.getElementById("playerFrame");
+    const catalogWrap = document.getElementById("catalogWrap");
+    const catalogImg = document.getElementById("catalogImg");
+
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const lotCounter = document.getElementById("lotCounter");
+
+    const playBtn = document.getElementById("playBtn");
+    const playIcon = document.getElementById("playIcon");
+    const scrub = document.getElementById("scrub");
+    const timecode = document.getElementById("timecode");
+
+    // modal
+    const imgModal = document.getElementById("imgModal");
+    const imgModalClose = document.getElementById("imgModalClose");
+    const stage = document.getElementById("stage");
+    const zoomImg = document.getElementById("zoomImg");
+
+    // ---------- state ----------
+    let currentIndex = 0;
+
+    // ✅ create ONE vimeo player instance (faster, less buffering)
+    let vPlayer = null;
+    let duration = 0;
+    let isScrubbing = false;
+    let rafTick = null;
+
+    function setPlayIcon(playing){
+      playIcon.className = playing ? "fa-solid fa-pause" : "fa-solid fa-play";
+    }
+
+    function updateNav(){
+      const total = lots.length;
+      const currentLot = lots[currentIndex].lot;
+      lotCounter.textContent = `Lot ${currentLot} / ${total}`;
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex === total - 1;
+    }
+
+    function matchesSearch(item, q){
+      if(!q) return true;
+      const hay = `${item.lot} ${item.title} ${item.meta}`.toLowerCase();
+      return hay.includes(q);
+    }
+
+    function render(){
+      const q = searchInput.value.trim().toLowerCase();
+      const filtered = lots.filter(l => matchesSearch(l, q));
+      countText.textContent = `${filtered.length} lot${filtered.length === 1 ? "" : "s"}`;
+
+      grid.innerHTML = filtered.map(l => `
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="lot-card" data-lot="${l.lot}">
+            <div class="lot-top">
+              <div class="lot-left">
+                <div>
+                  <div class="lot-num">Lot</div>
+                  <div class="lot-big">${l.lot}</div>
+                </div>
+                <div class="thumb" data-zoom="${l.catalogImg || ""}">
+                  <img src="${l.catalogImg}" alt="Catalog preview for Lot ${l.lot}"
+                       onerror="this.style.display='none'; this.parentElement.style.display='none';">
+                </div>
+              </div>
+              <div class="play"><i class="fa-solid fa-play"></i></div>
+            </div>
+            <div class="lot-body">
+              <p class="lot-title">${l.title}</p>
+              <p class="lot-meta">${l.meta}</p>
+            </div>
+          </div>
+        </div>
+      `).join("");
+
+      document.querySelectorAll(".lot-card").forEach(card => {
+        card.addEventListener("click", () => {
+          const lot = parseInt(card.getAttribute("data-lot"), 10);
+          selectLot(lot);
+        });
+      });
+
+      document.querySelectorAll(".thumb").forEach(t => {
+        t.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const src = t.getAttribute("data-zoom");
+          if(src) openImageModal(src);
+        });
+      });
+    }
+
+    async function initPlayer(){
+      // set first src once, then reuse player.loadVideo for speed
+      playerFrame.src = vimeoSrc(lots[0].vimeo);
+      vPlayer = new Vimeo.Player(playerFrame);
+
+      // hard-force mute/autoplay
+      await vPlayer.setMuted(true).catch(()=>{});
+      await vPlayer.setVolume(0).catch(()=>{});
+      await vPlayer.play().catch(()=>{});
+
+      // one timeupdate listener
+      vPlayer.on("timeupdate", (data) => {
+        if(!data) return;
+        if(!isScrubbing && duration > 0){
+          const v = Math.max(0, Math.min(1000, Math.round((data.seconds / duration) * 1000)));
+          scrub.value = v;
+        }
+        timecode.textContent = `${fmtTime(data.seconds)} / ${fmtTime(duration)}`;
+      });
+
+      vPlayer.on("play", () => setPlayIcon(true));
+      vPlayer.on("pause", () => setPlayIcon(false));
+    }
+
+    async function loadCurrent(){
+      const item = lots[currentIndex];
+
+      playerTitle.textContent = `Lot ${item.lot} • ${item.meta}`;
+      playerSub.textContent = item.title || "";
+
+      // catalog image
+      if(item.catalogImg && item.catalogImg.trim()){
+        catalogImg.onerror = () => { catalogWrap.style.display = "none"; };
+        catalogImg.onload  = () => { catalogWrap.style.display = "flex"; };
+        catalogImg.src = item.catalogImg.trim();
+      }else{
+        catalogWrap.style.display = "none";
+      }
+
+      updateNav();
+
+      // switch video without reloading iframe (faster)
+      try{
+        await vPlayer.loadVideo(item.vimeo);
+        await vPlayer.setMuted(true);
+        await vPlayer.play().catch(()=>{});
+        duration = await vPlayer.getDuration().catch(()=>0);
+        if(!isFinite(duration) || duration < 0) duration = 0;
+        scrub.value = 0;
+        timecode.textContent = `${fmtTime(0)} / ${fmtTime(duration)}`;
+      }catch(e){
+        duration = 0;
+        scrub.value = 0;
+        timecode.textContent = "0:00 / 0:00";
+      }
+
+      // highlight active card if visible
+      document.querySelectorAll(".lot-card").forEach(c => c.classList.remove("active-lot"));
+      const active = document.querySelector(`[data-lot="${item.lot}"]`);
+      if(active) active.classList.add("active-lot");
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function selectLot(lotNumber){
+      const i = lots.findIndex(x => x.lot === lotNumber);
+      if(i === -1) return;
+      currentIndex = i;
+      loadCurrent();
+    }
+
+    // controls
+    playBtn.addEventListener("click", async () => {
+      if(!vPlayer) return;
+      try{
+        const paused = await vPlayer.getPaused();
+        if(paused) await vPlayer.play();
+        else await vPlayer.pause();
+      }catch(e){}
+    });
+
+    // scrub behavior: show accurate preview time while dragging, then commit on release
+    scrub.addEventListener("pointerdown", () => { isScrubbing = true; });
+    scrub.addEventListener("input", async () => {
+      if(!duration) return;
+      const target = (parseInt(scrub.value, 10) / 1000) * duration;
+      timecode.textContent = `${fmtTime(target)} / ${fmtTime(duration)}`; // ✅ accurate while dragging
+    });
+    scrub.addEventListener("pointerup", async () => {
+      if(!vPlayer || !duration) { isScrubbing = false; return; }
+      const target = (parseInt(scrub.value, 10) / 1000) * duration;
+      try{ await vPlayer.setCurrentTime(target); }catch(e){}
+      isScrubbing = false;
+    });
+    scrub.addEventListener("change", async () => {
+      if(!vPlayer || !duration) { isScrubbing = false; return; }
+      const target = (parseInt(scrub.value, 10) / 1000) * duration;
+      try{ await vPlayer.setCurrentTime(target); }catch(e){}
+      isScrubbing = false;
+    });
+
+    prevBtn.addEventListener("click", () => {
+      if(currentIndex > 0){ currentIndex--; loadCurrent(); }
+    });
+    nextBtn.addEventListener("click", () => {
+      if(currentIndex < lots.length - 1){ currentIndex++; loadCurrent(); }
+    });
+
+    // ---------- Image modal (same as before) ----------
+    let scale = 1, minScale = 1, maxScale = 4;
+    let x = 0, y = 0;
+    let isDragging = false, startX = 0, startY = 0, dragStartX = 0, dragStartY = 0;
+    let lastTouchDist = null;
+    let clickSuppress = false;
+
+    function applyTransform(){ zoomImg.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px) scale(${scale})`; }
+    function setCursor(){ stage.style.cursor = (scale > minScale + 0.01) ? "grab" : "default"; }
+
+    function fitToScreen(){
+      const rect = stage.getBoundingClientRect();
+      const sw = rect.width, sh = rect.height;
+      const iw = zoomImg.naturalWidth || 1;
+      const ih = zoomImg.naturalHeight || 1;
+      const pad = 24;
+      const fitW = Math.max(1, sw - pad * 2);
+      const fitH = Math.max(1, sh - pad * 2);
+      const fitScale = Math.min(fitW / iw, fitH / ih, 1);
+      minScale = fitScale;
+      scale = fitScale;
+      x = 0; y = 0;
+      setCursor(); applyTransform();
+    }
+
+    function openImageModal(src){
+      imgModal.classList.add("show");
+      imgModal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      zoomImg.onload = () => { fitToScreen(); };
+      zoomImg.src = src;
+      setTimeout(() => { if(zoomImg.complete) fitToScreen(); }, 0);
+    }
+    function closeImageModal(){
+      imgModal.classList.remove("show");
+      imgModal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      lastTouchDist = null;
+    }
+    imgModal.addEventListener("click", (e) => { if(e.target === imgModal) closeImageModal(); });
+    imgModalClose.addEventListener("click", closeImageModal);
+    document.addEventListener("keydown", (e) => { if(e.key === "Escape" && imgModal.classList.contains("show")) closeImageModal(); });
+
+    function toggleZoom(){
+      const zoomInTarget = Math.min(maxScale, minScale * 2.25);
+      if(scale <= minScale + 0.01){ scale = zoomInTarget; }
+      else{ scale = minScale; x = 0; y = 0; }
+      setCursor(); applyTransform();
+    }
+
+    stage.addEventListener("pointerdown", (e) => {
+      e.preventDefault();
+      stage.setPointerCapture(e.pointerId);
+      isDragging = true;
+      stage.classList.add("dragging");
+      startX = e.clientX; startY = e.clientY;
+      dragStartX = x; dragStartY = y;
+      clickSuppress = false;
+    });
+    stage.addEventListener("pointermove", (e) => {
+      if(!isDragging) return;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      if(Math.abs(dx) > 6 || Math.abs(dy) > 6) clickSuppress = true;
+      if(scale > minScale + 0.01){
+        x = dragStartX + dx;
+        y = dragStartY + dy;
+        applyTransform();
       }
     });
-  },60);
-}
+    stage.addEventListener("pointerup", () => {
+      isDragging = false;
+      stage.classList.remove("dragging");
+      if(!clickSuppress) toggleZoom();
+    });
+    stage.addEventListener("pointercancel", () => {
+      isDragging = false;
+      stage.classList.remove("dragging");
+    });
 
-function render(){
-  const q=search.value.toLowerCase();
-  grid.innerHTML=lots.filter(l=>`${l.lot} ${l.meta}`.toLowerCase().includes(q))
-  .map(l=>`
-    <div class="col-12 col-md-6 col-lg-4">
-      <div class="lot-card ${l.lot===lots[idx].lot?'active-lot':''}" onclick="select(${l.lot})">
-        <div class="lot-top">
-          <div class="lot-big">Lot ${l.lot}</div>
-          <div>${l.meta}</div>
-        </div>
-        <div class="lot-body">Click to play</div>
-      </div>
-    </div>
-  `).join("");
-}
+    stage.addEventListener("wheel", (e) => {
+      e.preventDefault();
+      const delta = -Math.sign(e.deltaY) * 0.15;
+      const next = Math.min(maxScale, Math.max(minScale, scale + delta));
+      scale = next;
+      if(scale <= minScale + 0.01){ scale = minScale; x = 0; y = 0; }
+      setCursor(); applyTransform();
+    }, { passive:false });
 
-window.select=(n)=>load(lots.findIndex(x=>x.lot===n));
+    stage.addEventListener("touchmove", (e) => {
+      if(e.touches.length !== 2){ lastTouchDist = null; return; }
+      e.preventDefault();
+      const t1 = e.touches[0], t2 = e.touches[1];
+      const dx = t1.clientX - t2.clientX;
+      const dy = t1.clientY - t2.clientY;
+      const dist = Math.hypot(dx, dy);
+      if(lastTouchDist == null){ lastTouchDist = dist; return; }
+      const diff = (dist - lastTouchDist) / 250;
+      scale = Math.min(maxScale, Math.max(minScale, scale + diff));
+      lastTouchDist = dist;
+      if(scale <= minScale + 0.01){ scale = minScale; x = 0; y = 0; }
+      setCursor(); applyTransform();
+    }, { passive:false });
 
-playBtn.onclick=async()=>{
-  const p=await player.getPaused();
-  p?player.play():player.pause();
-  playIcon.className=p?"fa-solid fa-pause":"fa-solid fa-play";
-};
+    window.addEventListener("resize", () => {
+      if(imgModal.classList.contains("show")) fitToScreen();
+    });
 
-scrub.oninput=()=>{drag=true};
-scrub.onchange=()=>{drag=false;player.setCurrentTime((scrub.value/1000)*duration)};
-document.getElementById("prevBtn").onclick=()=>idx>0&&load(idx-1);
-document.getElementById("nextBtn").onclick=()=>idx<lots.length-1&&load(idx+1);
+    catalogImg.addEventListener("click", () => {
+      const src = catalogImg.getAttribute("src");
+      if(src) openImageModal(src);
+    });
 
-search.oninput=render;
+    // ---------- Init ----------
+    (async function(){
+      render();
+      updateNav();
+      searchInput.addEventListener("input", render);
 
-render();
-load(0);
-</script>
+      await initPlayer();   // ✅ one player instance
+      await loadCurrent();  // ✅ then load first lot
+    })();
+  </script>
 
 </body>
 </html>
