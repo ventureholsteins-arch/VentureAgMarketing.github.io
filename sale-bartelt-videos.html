@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bartelt Angus • Lot Videos | Venture Ag Marketing</title>
+<title>Bartelt Angus • Lot Videos</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -13,90 +13,119 @@
   --bg:#0B0B0B;
   --text:#F2F2F2;
   --gold:#C9A45C;
-  --gold-dark:#9F7C3B;
 }
-body{background:#F7F7F7;font-family:system-ui;color:#111}
-
-/* Topbar */
-.topbar{
-  background:#0B0B0B;
+body{
+  margin:0;
+  background:#111;
   color:#fff;
-  position:sticky;top:0;z-index:10;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+}
+
+/* ---------- TOP BAR ---------- */
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:#0B0B0B;
+  border-bottom:1px solid rgba(255,255,255,.08);
 }
 .btn-ghost{
-  border:1px solid rgba(255,255,255,.25);
-  color:#fff;background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.22);
+  background:rgba(255,255,255,.06);
+  color:#fff;
   border-radius:14px;
   padding:10px 14px;
   font-weight:900;
   letter-spacing:.08em;
   text-transform:uppercase;
-  display:inline-flex;align-items:center;gap:8px;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
 }
 
-/* Player */
+/* ---------- PLAYER ---------- */
 .player-shell{
-  background:#0B0B0B;
+  background:#000;
   border-radius:18px;
   overflow:hidden;
-  box-shadow:0 18px 54px rgba(0,0,0,.25);
+  box-shadow:0 18px 50px rgba(0,0,0,.6);
 }
+
+/* header */
 .player-head{
   padding:14px 16px;
   border-bottom:1px solid rgba(255,255,255,.1);
-  color:#fff;
 }
-.player-title{font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+.player-title{
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
 
-/* Video */
-.video-ratio{background:#000}
-iframe{border:0;width:100%;height:100%}
+/* ---------- VIDEO FIX (CRITICAL) ---------- */
+.video-ratio{
+  position:relative;
+  width:100%;
+  padding-top:56.25%; /* 16:9 */
+  background:#000;
+  overflow:hidden;
+}
 
-/* Player Actions */
+/* FORCE iframe to fill box (iOS fix) */
+.video-ratio iframe{
+  position:absolute !important;
+  inset:0 !important;
+  width:100% !important;
+  height:100% !important;
+  display:block;
+  border:0;
+}
+
+/* BLOCK TOUCHES so iOS never shows native controls */
+.video-ratio iframe{
+  pointer-events:none;
+}
+
+/* ---------- CONTROLS ---------- */
 .player-actions{
   padding:12px 14px;
   background:#0B0B0B;
   border-top:1px solid rgba(255,255,255,.1);
   display:flex;
+  flex-direction:column;
   gap:12px;
-  justify-content:space-between;
-  align-items:center;
-  flex-wrap:wrap;
 }
 
-/* Scrub row */
 .scrub-wrap{
   display:flex;
   align-items:center;
   gap:10px;
-  flex:1 1 360px;
 }
 .btn-play{
-  width:44px;height:44px;
+  width:44px;
+  height:44px;
   border-radius:14px;
   border:1px solid rgba(255,255,255,.2);
   background:rgba(255,255,255,.08);
   color:#fff;
 }
 .scrub{
-  width:100%;
+  flex:1;
   accent-color:var(--gold);
 }
 .timecode{
-  min-width:100px;
-  color:rgba(255,255,255,.7);
+  min-width:90px;
   font-weight:900;
   font-size:.78rem;
+  color:rgba(255,255,255,.7);
   text-align:right;
 }
 
-/* Nav row */
 .nav-row{
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:10px;
-  width:auto;
 }
 .btn-nav{
   padding:10px 14px;
@@ -109,29 +138,20 @@ iframe{border:0;width:100%;height:100%}
   text-transform:uppercase;
 }
 .lot-counter{
-  color:rgba(255,255,255,.75);
   font-weight:900;
-  letter-spacing:.10em;
+  letter-spacing:.1em;
+  color:rgba(255,255,255,.75);
   white-space:nowrap;
-}
-
-/* MOBILE FIX */
-@media(max-width:991.98px){
-  .player-actions{
-    flex-direction:column;
-    align-items:stretch;
-  }
-  .scrub-wrap{width:100%}
-  .nav-row{width:100%}
 }
 </style>
 </head>
 
 <body>
 
+<!-- TOP BAR -->
 <div class="topbar">
   <div class="container py-3 d-flex justify-content-between align-items-center">
-    <strong style="letter-spacing:.1em">BARTELT ANGUS • LOT VIDEOS</strong>
+    <strong>BARTELT ANGUS • LOT VIDEOS</strong>
     <div class="d-flex gap-2">
       <a class="btn-ghost" href="sale-bartelt.html"><i class="fa-solid fa-arrow-left"></i> Sale Info</a>
       <a class="btn-ghost" href="./index.html#sales"><i class="fa-solid fa-house"></i> Home</a>
@@ -139,41 +159,44 @@ iframe{border:0;width:100%;height:100%}
   </div>
 </div>
 
+<!-- PLAYER -->
 <main class="py-4">
 <div class="container">
 
 <div class="player-shell">
 
-<div class="player-head">
-  <div class="player-title" id="playerTitle">Lot 1 • Bull</div>
-</div>
-
-<div class="ratio ratio-16x9 video-ratio">
-  <iframe id="playerFrame"
-    allow="autoplay; fullscreen"
-    referrerpolicy="strict-origin-when-cross-origin">
-  </iframe>
-</div>
-
-<div class="player-actions">
-
-  <!-- SCRUB ROW -->
-  <div class="scrub-wrap">
-    <button id="playBtn" class="btn-play"><i id="playIcon" class="fa-solid fa-pause"></i></button>
-    <input id="scrub" class="scrub" type="range" min="0" max="1000" value="0">
-    <div id="timecode" class="timecode">0:00 / 0:00</div>
+  <div class="player-head">
+    <div id="playerTitle" class="player-title">Lot 1 • Bull</div>
   </div>
 
-  <!-- NAV ROW -->
-  <div class="nav-row">
-    <button id="prevBtn" class="btn-nav"><i class="fa-solid fa-arrow-left"></i> Prev</button>
-    <div id="lotCounter" class="lot-counter">Lot 1 / 19</div>
-    <button id="nextBtn" class="btn-nav">Next <i class="fa-solid fa-arrow-right"></i></button>
+  <div class="video-ratio">
+    <iframe id="playerFrame"
+      allow="autoplay; fullscreen"
+      referrerpolicy="strict-origin-when-cross-origin">
+    </iframe>
+  </div>
+
+  <div class="player-actions">
+
+    <!-- SCRUB ROW -->
+    <div class="scrub-wrap">
+      <button id="playBtn" class="btn-play">
+        <i id="playIcon" class="fa-solid fa-pause"></i>
+      </button>
+      <input id="scrub" class="scrub" type="range" min="0" max="1000" value="0">
+      <div id="timecode" class="timecode">0:00 / 0:00</div>
+    </div>
+
+    <!-- NAV ROW -->
+    <div class="nav-row">
+      <button id="prevBtn" class="btn-nav"><i class="fa-solid fa-arrow-left"></i> Prev</button>
+      <div id="lotCounter" class="lot-counter">Lot 1 / 19</div>
+      <button id="nextBtn" class="btn-nav">Next <i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+
   </div>
 
 </div>
-</div>
-
 </div>
 </main>
 
@@ -213,7 +236,7 @@ const title=document.getElementById("playerTitle");
 const counter=document.getElementById("lotCounter");
 
 function embed(id){
-  return `https://player.vimeo.com/video/${id}?background=1&autoplay=1&muted=1&loop=1`;
+  return `https://player.vimeo.com/video/${id}?background=1&autoplay=1&muted=1&loop=1&playsinline=1`;
 }
 
 async function load(i){
@@ -249,13 +272,13 @@ playBtn.onclick=async()=>{
   playIcon.className=p?"fa-solid fa-pause":"fa-solid fa-play";
 };
 
-scrub.oninput=e=>{
+scrub.oninput=()=>{
   drag=true;
   const t=(scrub.value/1000)*duration;
   timecode.textContent=`${fmt(t)} / ${fmt(duration)}`;
 };
 
-scrub.onchange=e=>{
+scrub.onchange=()=>{
   drag=false;
   player.setCurrentTime((scrub.value/1000)*duration);
 };
