@@ -10,7 +10,16 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    :root{ --bg:#0B0B0B; --text:#F2F2F2; --gold:#C9A45C; --gold2:#9F7C3B; }
+    :root{
+      --bg:#0B0B0B;
+      --text:#F2F2F2;
+      --gold:#C9A45C;
+      --gold2:#9F7C3B;
+      --ink:#111;
+      --soft:#F7F7F7;
+      --cardShadow: 0 14px 36px rgba(0,0,0,.12);
+    }
+
     body{ font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; background:#fff; color:#111; }
 
     .topbar{
@@ -74,8 +83,9 @@
     .card-soft{
       border-radius: 18px;
       border: 1px solid rgba(0,0,0,.08);
-      box-shadow: 0 14px 36px rgba(0,0,0,.12);
+      box-shadow: var(--cardShadow);
       overflow:hidden;
+      background:#fff;
     }
     .poster img{ width:100%; height:auto; display:block; }
     .muted{ color: rgba(0,0,0,.62); }
@@ -94,18 +104,17 @@
     }
     .chip i{ color: var(--gold2); }
 
-    /* Request strip */
-    .request-strip{
+    /* Professional CTA panel (lighter, not “all black”) */
+    .cta-panel{
       border-radius: 18px;
       overflow: hidden;
-      color: var(--text);
+      border: 1px solid rgba(0,0,0,.10);
+      box-shadow: var(--cardShadow);
       background:
-        radial-gradient(circle at 18% 20%, rgba(201,164,92,.22), rgba(0,0,0,0) 52%),
-        linear-gradient(135deg, #0b0b0b 0%, #111 55%, #0b0b0b 100%);
-      border: 1px solid rgba(0,0,0,.12);
-      box-shadow: 0 18px 54px rgba(0,0,0,.18);
+        radial-gradient(circle at 15% 25%, rgba(201,164,92,.22), rgba(255,255,255,0) 55%),
+        linear-gradient(135deg, #ffffff 0%, #fbfbfb 55%, #ffffff 100%);
     }
-    .request-strip-inner{
+    .cta-inner{
       padding: 18px;
       display:flex;
       align-items:center;
@@ -113,19 +122,20 @@
       gap:14px;
       flex-wrap:wrap;
     }
-    .request-strip h2{
+    .cta-title{
       margin:0;
       font-weight: 900;
+      letter-spacing: .06em;
       text-transform: uppercase;
-      letter-spacing: .10em;
-      font-size: .95rem;
+      font-size: 1rem;
+      color:#111;
     }
-    .request-strip p{
+    .cta-sub{
       margin: 6px 0 0;
-      color: rgba(242,242,242,.74);
+      color: rgba(0,0,0,.62);
       font-weight: 700;
     }
-    .request-badges{
+    .cta-badges{
       display:flex;
       gap:8px;
       flex-wrap:wrap;
@@ -138,32 +148,31 @@
       gap:8px;
       padding: 8px 10px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.06);
-      color: rgba(242,242,242,.90);
+      border: 1px solid rgba(0,0,0,.10);
+      background: rgba(0,0,0,.04);
+      color: rgba(0,0,0,.78);
       font-weight: 900;
       letter-spacing: .08em;
       text-transform: uppercase;
       font-size: .72rem;
       white-space: nowrap;
     }
-    .mini-badge i{ color: var(--gold); }
+    .mini-badge i{ color: var(--gold2); }
 
-    /* Modal form theme */
+    /* Modal theme: light + clean */
     .modal-content.form-theme{
-      background:#0b0b0b;
-      border: 1px solid rgba(255,255,255,.10);
+      background:#fff;
+      border: 1px solid rgba(0,0,0,.12);
       border-radius: 18px;
-      box-shadow: 0 26px 90px rgba(0,0,0,.55);
+      box-shadow: 0 26px 90px rgba(0,0,0,.25);
       overflow:hidden;
     }
     .form-head{
       padding: 16px 16px 12px;
       background:
-        radial-gradient(circle at 20% 30%, rgba(201,164,92,.18), rgba(0,0,0,0) 55%),
-        linear-gradient(135deg, #0b0b0b 0%, #111 55%, #0b0b0b 100%);
-      border-bottom: 1px solid rgba(255,255,255,.10);
-      color: var(--text);
+        radial-gradient(circle at 20% 35%, rgba(201,164,92,.24), rgba(255,255,255,0) 55%),
+        linear-gradient(135deg, #ffffff 0%, #fbfbfb 60%, #ffffff 100%);
+      border-bottom: 1px solid rgba(0,0,0,.08);
     }
     .form-title{
       font-weight: 900;
@@ -171,18 +180,18 @@
       letter-spacing: .10em;
       font-size: .92rem;
       margin:0;
+      color:#111;
     }
     .form-sub{
       margin: 6px 0 0;
-      color: rgba(242,242,242,.72);
+      color: rgba(0,0,0,.62);
       font-weight: 700;
       font-size: .92rem;
     }
-    .btn-close-white{ filter: invert(1); opacity:.85; }
 
-    .form-body{ padding: 16px; color: var(--text); }
+    .form-body{ padding: 16px; }
     .form-label.form-label-theme{
-      color: rgba(242,242,242,.85);
+      color: rgba(0,0,0,.70);
       font-weight: 900;
       letter-spacing: .06em;
       text-transform: uppercase;
@@ -191,33 +200,23 @@
     .form-control.form-control-theme{
       border-radius: 14px;
       padding: 12px 14px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color: #fff;
+      border: 1px solid rgba(0,0,0,.12);
+      background: rgba(0,0,0,.02);
+      color: #111;
     }
     .form-control.form-control-theme:focus{
-      background: rgba(255,255,255,.08);
-      border-color: rgba(201,164,92,.65);
-      box-shadow: 0 0 0 .2rem rgba(201,164,92,.18);
-      color:#fff;
+      background: rgba(0,0,0,.02);
+      border-color: rgba(201,164,92,.85);
+      box-shadow: 0 0 0 .2rem rgba(201,164,92,.20);
+      color:#111;
     }
-
-    .form-hint{
-      color: rgba(242,242,242,.70);
-      font-weight: 800;
-      margin: 10px 0 0;
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-    .form-hint i{ color: var(--gold); }
 
     .form-footer{
       padding: 12px 16px 16px;
-      border-top: 1px solid rgba(255,255,255,.10);
+      border-top: 1px solid rgba(0,0,0,.08);
       display:flex;
       gap:10px;
-      justify-content:space-between;
+      justify-content:flex-end;
       align-items:center;
       flex-wrap:wrap;
     }
@@ -227,15 +226,42 @@
       margin-top: 12px;
       padding: 12px 14px;
       border-radius: 14px;
-      border: 1px solid rgba(46, 204, 113, .35);
-      background: rgba(46, 204, 113, .12);
-      color: rgba(242,242,242,.95);
+      border: 1px solid rgba(46, 204, 113, .28);
+      background: rgba(46, 204, 113, .10);
+      color: rgba(0,0,0,.78);
       font-weight: 900;
-      letter-spacing: .04em;
+      letter-spacing: .02em;
       align-items:center;
       gap:10px;
     }
-    .invalid-feedback{ color: rgba(255,180,180,.95); font-weight: 800; }
+
+    .error-box{
+      display:none;
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(231,76,60,.28);
+      background: rgba(231,76,60,.08);
+      color: rgba(0,0,0,.78);
+      font-weight: 900;
+      letter-spacing: .02em;
+      align-items:center;
+      gap:10px;
+    }
+
+    .invalid-feedback{ color: rgba(231,76,60,.95); font-weight: 800; }
+
+    .req-star{
+      color: rgba(231,76,60,.95);
+      font-weight: 900;
+      margin-left: 4px;
+    }
+    .optional-note{
+      color: rgba(0,0,0,.55);
+      font-weight: 800;
+      font-size: .86rem;
+      margin-top: 4px;
+    }
   </style>
 </head>
 
@@ -263,6 +289,10 @@
         <a class="btn btn-gold" href="sale-bartelt-videos.html">
           <i class="fa-solid fa-video"></i> Videos
         </a>
+
+        <button class="btn btn-gold" type="button" data-bs-toggle="modal" data-bs-target="#requestModal">
+          <i class="fa-solid fa-clipboard-list"></i> Request Catalog
+        </button>
       </div>
     </div>
   </div>
@@ -270,19 +300,17 @@
   <main class="py-5">
     <div class="container">
 
-      <!-- Request strip -->
-      <div class="request-strip mb-4">
-        <div class="request-strip-inner">
+      <div class="cta-panel mb-4">
+        <div class="cta-inner">
           <div>
-            <h2>Request Catalog / Sale Updates</h2>
-            <p>Quick form — we’ll follow up with you. No spam.</p>
+            <p class="cta-title mb-0">Request a catalog / buyer follow-up</p>
+            <p class="cta-sub mb-0">Submit your mailing info and we’ll follow up with you.</p>
           </div>
 
-          <div class="request-badges">
-            <span class="mini-badge"><i class="fa-solid fa-bolt"></i> Fast</span>
-            <span class="mini-badge"><i class="fa-solid fa-lock"></i> Private</span>
+          <div class="cta-badges">
+            <span class="mini-badge"><i class="fa-solid fa-envelope"></i> Catalog Request</span>
             <button class="btn btn-gold" type="button" data-bs-toggle="modal" data-bs-target="#requestModal">
-              <i class="fa-solid fa-pen-to-square"></i> Open Form
+              <i class="fa-solid fa-pen-to-square"></i> Fill Out Form
             </button>
           </div>
         </div>
@@ -325,7 +353,7 @@
               </a>
 
               <button class="btn btn-gold" type="button" data-bs-toggle="modal" data-bs-target="#requestModal">
-                <i class="fa-solid fa-clipboard-list"></i> Request Info
+                <i class="fa-solid fa-clipboard-list"></i> Request Catalog
               </button>
             </div>
 
@@ -380,87 +408,82 @@
 
         <div class="form-head d-flex align-items-start justify-content-between gap-3">
           <div>
-            <p class="form-title">Catalog Requests</p>
-            <p class="form-sub mb-0">Submit this and you’ll be added for follow up.</p>
+            <p class="form-title">Catalog Request Form</p>
+            <p class="form-sub mb-0">Fields marked with <span class="req-star">*</span> are required.</p>
           </div>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
         <form id="requestForm" class="form-body needs-validation" novalidate>
           <div class="row g-3">
+
             <div class="col-12 col-md-6">
-              <label class="form-label form-label-theme" for="firstName">First Name</label>
+              <label class="form-label form-label-theme" for="firstName">First Name<span class="req-star">*</span></label>
               <input class="form-control form-control-theme" id="firstName" name="firstName" required>
               <div class="invalid-feedback">First name is required.</div>
             </div>
 
             <div class="col-12 col-md-6">
-              <label class="form-label form-label-theme" for="lastName">Last Name</label>
+              <label class="form-label form-label-theme" for="lastName">Last Name<span class="req-star">*</span></label>
               <input class="form-control form-control-theme" id="lastName" name="lastName" required>
               <div class="invalid-feedback">Last name is required.</div>
             </div>
 
             <div class="col-12">
-              <label class="form-label form-label-theme" for="address1">Address (House # and Street only)</label>
+              <label class="form-label form-label-theme" for="address1">Address (House # and Street only)<span class="req-star">*</span></label>
               <input class="form-control form-control-theme" id="address1" name="address1" placeholder="123 Main St" required>
-              <div class="invalid-feedback">Street address is required.</div>
+              <div class="invalid-feedback">Address is required.</div>
             </div>
 
             <div class="col-12 col-md-6">
-              <label class="form-label form-label-theme" for="city">City</label>
+              <label class="form-label form-label-theme" for="city">City<span class="req-star">*</span></label>
               <input class="form-control form-control-theme" id="city" name="city" required>
               <div class="invalid-feedback">City is required.</div>
             </div>
 
             <div class="col-6 col-md-3">
-              <label class="form-label form-label-theme" for="state">State</label>
+              <label class="form-label form-label-theme" for="state">State<span class="req-star">*</span></label>
               <input class="form-control form-control-theme" id="state" name="state" maxlength="2" placeholder="SD" required>
-              <div class="invalid-feedback">State is required (2 letters).</div>
+              <div class="invalid-feedback">State is required.</div>
             </div>
 
             <div class="col-6 col-md-3">
-              <label class="form-label form-label-theme" for="zip">Zip Code</label>
+              <label class="form-label form-label-theme" for="zip">Zip Code<span class="req-star">*</span></label>
               <input class="form-control form-control-theme" id="zip" name="zip" inputmode="numeric" pattern="\\d{5}(-\\d{4})?" placeholder="57369" required>
               <div class="invalid-feedback">Enter a valid zip code.</div>
             </div>
 
             <div class="col-12 col-md-6">
-              <label class="form-label form-label-theme" for="phone">Phone #</label>
-              <input class="form-control form-control-theme" id="phone" name="phone" inputmode="tel" placeholder="(605) 555-1234" required>
-              <div class="invalid-feedback">Phone number is required.</div>
+              <label class="form-label form-label-theme" for="phone">Phone (optional)</label>
+              <input class="form-control form-control-theme" id="phone" name="phone" inputmode="tel" placeholder="(605) 555-1234">
             </div>
 
             <div class="col-12 col-md-6">
-              <label class="form-label form-label-theme" for="email">Email</label>
-              <input class="form-control form-control-theme" id="email" name="email" type="email" placeholder="name@email.com" required>
-              <div class="invalid-feedback">Enter a valid email.</div>
+              <label class="form-label form-label-theme" for="email">Email (optional)</label>
+              <input class="form-control form-control-theme" id="email" name="email" type="email" placeholder="name@email.com">
             </div>
 
             <div class="col-12">
-              <div class="form-hint">
-                <i class="fa-solid fa-database"></i>
-                Saved to your Google Sheet: <span style="color:rgba(242,242,242,.92); font-weight:900;">catalog requests</span>
+              <div class="optional-note">
+                You can also call/text <strong>605-999-0147</strong> if you prefer.
               </div>
 
               <div id="formSuccess" class="success-box">
                 <i class="fa-solid fa-circle-check"></i>
-                Submitted! You’re on the list.
+                Submission received. Thank you.
               </div>
 
-              <div id="formError" class="success-box" style="display:none; border-color: rgba(231,76,60,.45); background: rgba(231,76,60,.14);">
+              <div id="formError" class="error-box">
                 <i class="fa-solid fa-triangle-exclamation"></i>
-                Submit failed. Try again or call/text 605-999-0147.
+                Submission failed. Please try again.
               </div>
             </div>
+
           </div>
 
           <div class="form-footer">
-            <div style="color:rgba(242,242,242,.70); font-weight:900; letter-spacing:.06em; text-transform:uppercase; font-size:.74rem;">
-              No spam • sale-only follow up
-            </div>
-
             <button class="btn btn-gold" id="submitBtn" type="submit">
-              <i class="fa-solid fa-paper-plane"></i> Submit
+              <i class="fa-solid fa-paper-plane"></i> Submit Request
             </button>
           </div>
         </form>
@@ -472,7 +495,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    // ✅ Paste your Apps Script web app URL here after deploying
+    // ✅ Your Apps Script Web App URL (live)
     const GOOGLE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzTlpV6KO9bAlkaPGVF53ylAQBbaz6WY2eUH4EEbC0MvO-4BU5BWlr0Vw5GdW7XPxIy3g/exec";
 
     (function () {
@@ -484,18 +507,17 @@
       const submitBtn = document.getElementById("submitBtn");
 
       function setLoading(on){
-        if(!submitBtn) return;
         submitBtn.disabled = on;
         submitBtn.innerHTML = on
           ? `<i class="fa-solid fa-spinner fa-spin"></i> Sending...`
-          : `<i class="fa-solid fa-paper-plane"></i> Submit`;
+          : `<i class="fa-solid fa-paper-plane"></i> Submit Request`;
       }
 
       form.addEventListener("submit", async function (e) {
         e.preventDefault();
         e.stopPropagation();
 
-        // normalize state
+        // normalize state to uppercase
         const state = document.getElementById("state");
         if(state && state.value) state.value = state.value.toUpperCase().trim();
 
@@ -505,13 +527,12 @@
         }
 
         form.classList.add("was-validated");
-        if(success) success.style.display = "none";
-        if(errorBox) errorBox.style.display = "none";
+        success.style.display = "none";
+        errorBox.style.display = "none";
 
         setLoading(true);
 
         try{
-          // Build form data
           const fd = new FormData(form);
           fd.append("page", window.location.href);
           fd.append("ua", navigator.userAgent);
@@ -521,16 +542,15 @@
             body: fd
           });
 
-          // Apps Script returns JSON but we only need ok/not ok
           if(res.ok){
-            if(success) success.style.display = "flex";
+            success.style.display = "flex";
             form.reset();
             form.classList.remove("was-validated");
           } else {
-            if(errorBox) errorBox.style.display = "flex";
+            errorBox.style.display = "flex";
           }
         }catch(err){
-          if(errorBox) errorBox.style.display = "flex";
+          errorBox.style.display = "flex";
         }finally{
           setLoading(false);
         }
