@@ -261,7 +261,7 @@
         <span class="soon"><i class="fa-solid fa-video"></i> Videos <b>Coming Soon</b></span>
 
         <!-- ✅ only primary button -->
-        <button class="btn-gold" type="button" data-bs-toggle="modal" data-bs-target="#requestModal">
+        <button class="btn-gold" id="openRequestBtn" type="button" data-bs-toggle="modal" data-bs-target="#requestModal">
           <i class="fa-solid fa-clipboard-list"></i> Request Catalog
         </button>
       </div>
@@ -482,6 +482,45 @@
           errorBox.style.display = "flex";
         }finally{
           setLoading(false);
+        }
+      });
+    })();
+  </script>
+
+  <!-- ✅ HASH LINK SUPPORT: sale-bartelt.html#request opens the modal automatically -->
+  <script>
+    (function () {
+      const modalEl = document.getElementById("requestModal");
+      const openBtn = document.getElementById("openRequestBtn");
+      if (!modalEl) return;
+
+      function openIfHash() {
+        if (window.location.hash === "#request") {
+          const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+          modal.show();
+        }
+      }
+
+      // If user clicks the button, update URL so it’s shareable
+      if(openBtn){
+        openBtn.addEventListener("click", () => {
+          // don't add history spam
+          if(window.location.hash !== "#request"){
+            history.replaceState(null, "", window.location.pathname + window.location.search + "#request");
+          }
+        });
+      }
+
+      // Open on load
+      openIfHash();
+
+      // Open if hash changes
+      window.addEventListener("hashchange", openIfHash);
+
+      // Clean URL when modal closes (keeps it clean)
+      modalEl.addEventListener("hidden.bs.modal", () => {
+        if (window.location.hash === "#request") {
+          history.replaceState(null, "", window.location.pathname + window.location.search);
         }
       });
     })();
