@@ -373,12 +373,40 @@
       outline-offset: 2px;
     }
 
+    /* ✅ MOBILE FIX: keep Prev/Counter/Next level; scrub drops to its own row */
     @media (max-width: 991.98px){
       .thumb{ width: 110px; height: 110px; }
       .catalog-panel{ border-left:none; border-top: 1px solid rgba(255,255,255,.10); }
       .sale-row{ justify-content:flex-start; }
       .sale-actions{ justify-content:flex-start; }
       .timecode{ min-width: 95px; }
+
+      .player-actions{
+        flex-wrap: nowrap;
+        gap: 8px;
+        align-items: center;
+      }
+      .btn-nav{
+        padding: 8px 10px;
+        border-radius: 12px;
+        font-size: .82rem;
+        gap: 8px;
+        white-space: nowrap;
+      }
+      .scrub-wrap{
+        flex: 1 1 100%;
+        min-width: 0;
+        order: 4;
+      }
+      .lot-counter{
+        font-size: .74rem;
+        white-space: nowrap;
+      }
+      .btn-play{
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+      }
     }
 
     /* =========================
@@ -483,9 +511,6 @@
           <!-- VIDEO -->
           <div class="col-12 col-lg-8 order-1 order-lg-1">
             <div class="ratio ratio-16x9 video-ratio">
-              <!-- IMPORTANT:
-                   We use Vimeo "background=1" so Vimeo UI + that ugly unmute overlay do not appear.
-                   Then we provide our own play + scrub controls below. -->
               <iframe id="playerFrame" class="player-frame"
                 src=""
                 title="Lot Video"
@@ -598,13 +623,10 @@
     </div>
   </div>
 
-  <!-- Vimeo Player API (required for our scrub + play/pause controls) -->
+  <!-- Vimeo Player API -->
   <script src="https://player.vimeo.com/api/player.js"></script>
 
   <script>
-    // =========================
-    // VIMEO HELPERS
-    // =========================
     function extractVimeoId(input){
       if(!input) return "";
       const s = String(input).trim();
@@ -627,17 +649,8 @@
     function vimeoEmbedBackground(fromUrlOrId){
       const id = extractVimeoId(fromUrlOrId);
       if(!id) return "";
-
-      // ✅ background=1 removes Vimeo UI + overlays (including that unmute prompt)
-      // ✅ autoplay=1 + muted=1 + loop=1 gives the "native site" feel
       return `https://player.vimeo.com/video/${id}?` +
-        `background=1` +
-        `&autoplay=1` +
-        `&muted=1` +
-        `&loop=1` +
-        `&autopause=0` +
-        `&playsinline=1` +
-        `&dnt=1`;
+        `background=1&autoplay=1&muted=1&loop=1&autopause=0&playsinline=1&dnt=1`;
     }
 
     function fmtTime(sec){
@@ -648,9 +661,6 @@
       return `${m}:${String(s).padStart(2,"0")}`;
     }
 
-    // =========================
-    // LOTS — from your Vimeo IDs
-    // =========================
     const lots = [
       { lot: 1,  title: "Lot 1",  meta: "Bull",   vimeo: "1161993796", catalogImg: "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg.jpg" },
       { lot: 2,  title: "Lot 2",  meta: "Bull",   vimeo: "1161993835", catalogImg: "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg" },
@@ -667,14 +677,10 @@
       { lot: 13, title: "Lot 13", meta: "Bull",   vimeo: "1161995140", catalogImg: "assets/img/catalog/bartelt/lot13.jpg" },
       { lot: 14, title: "Lot 14", meta: "Bull",   vimeo: "1161995267", catalogImg: "assets/img/catalog/bartelt/lot14.jpg" },
       { lot: 15, title: "Lot 15", meta: "Bull",   vimeo: "1161995435", catalogImg: "assets/img/catalog/bartelt/lot15.jpg" },
-
-      // Your 16A/16B/16C/16D videos (mapped as 16-19 here)
       { lot: 16, title: "Lot 16A", meta: "Heifer", vimeo: "1161995589", catalogImg: "assets/img/catalog/bartelt/lot16a.jpg" },
       { lot: 17, title: "Lot 16B", meta: "Heifer", vimeo: "1161995681", catalogImg: "assets/img/catalog/bartelt/lot16b.jpg" },
       { lot: 18, title: "Lot 16C", meta: "Heifer", vimeo: "1161995766", catalogImg: "assets/img/catalog/bartelt/lot16c.jpg" },
       { lot: 19, title: "Lot 16D", meta: "Heifer", vimeo: "1161995824", catalogImg: "assets/img/catalog/bartelt/lot16d.jpg" },
-
-      // If you actually have 20-25 later, add their Vimeo IDs and catalog images.
     ];
 
     const grid = document.getElementById("grid");
@@ -691,13 +697,11 @@
     const nextBtn = document.getElementById("nextBtn");
     const lotCounter = document.getElementById("lotCounter");
 
-    // Custom controls
     const playBtn = document.getElementById("playBtn");
     const playIcon = document.getElementById("playIcon");
     const scrub = document.getElementById("scrub");
     const timecode = document.getElementById("timecode");
 
-    // Modal elements
     const imgModal = document.getElementById("imgModal");
     const imgModalClose = document.getElementById("imgModalClose");
     const stage = document.getElementById("stage");
@@ -705,7 +709,6 @@
 
     let currentIndex = -1;
 
-    // Vimeo player instance + timing
     let vPlayer = null;
     let duration = 0;
     let isPlaying = true;
@@ -718,14 +721,12 @@
     async function attachVimeoPlayer(){
       try{
         if(vPlayer){
-          // clean up previous player listeners
           vPlayer.unload().catch(()=>{});
           vPlayer = null;
         }
 
         vPlayer = new Vimeo.Player(playerFrame);
 
-        // Force muted (some browsers are picky)
         await vPlayer.setVolume(0).catch(()=>{});
         await vPlayer.setMuted(true).catch(()=>{});
         await vPlayer.play().catch(()=>{});
@@ -738,7 +739,6 @@
         timecode.textContent = `${fmtTime(0)} / ${fmtTime(duration)}`;
         scrub.value = 0;
 
-        // Update scrubber as video plays
         vPlayer.on("timeupdate", (data) => {
           if(!data) return;
           const sec = data.seconds || 0;
@@ -749,12 +749,10 @@
           timecode.textContent = `${fmtTime(sec)} / ${fmtTime(duration)}`;
         });
 
-        // Keep our state in sync
         vPlayer.on("play", () => { isPlaying = true; setPlayIcon(); });
         vPlayer.on("pause", () => { isPlaying = false; setPlayIcon(); });
 
       }catch(e){
-        // If something fails, keep UI usable
         duration = 0;
         timecode.textContent = "0:00 / 0:00";
       }
@@ -788,10 +786,8 @@
       playerTitle.textContent = `Lot ${item.lot} • ${item.meta}`;
       playerSub.textContent = item.title || "";
 
-      // Load Vimeo background player (no overlays)
       if(item.vimeo && String(item.vimeo).trim() !== ""){
         playerFrame.src = vimeoEmbedBackground(item.vimeo);
-        // wait a tick for iframe to swap src before attaching player
         setTimeout(() => { attachVimeoPlayer(); }, 60);
       }else{
         playerFrame.src = "";
@@ -801,7 +797,6 @@
         scrub.value = 0;
       }
 
-      // Catalog image
       if(item.catalogImg && item.catalogImg.trim() !== ""){
         catalogImg.src = item.catalogImg.trim();
         catalogWrap.style.display = "flex";
@@ -847,7 +842,6 @@
         </div>
       `).join("");
 
-      // click card -> select lot
       document.querySelectorAll(".lot-card").forEach(card => {
         card.addEventListener("click", () => {
           const lot = parseInt(card.getAttribute("data-lot"), 10);
@@ -855,7 +849,6 @@
         });
       });
 
-      // click any thumb -> open zoom modal
       document.querySelectorAll(".thumb").forEach(t => {
         t.addEventListener("click", (e) => {
           e.stopPropagation();
@@ -865,9 +858,6 @@
       });
     }
 
-    // =========================
-    // Custom controls wiring
-    // =========================
     playBtn.addEventListener("click", async () => {
       if(!vPlayer) return;
       try{
@@ -881,77 +871,43 @@
       if(!vPlayer || !duration) return;
       isScrubbing = true;
       const target = (parseInt(scrub.value, 10) / 1000) * duration;
-      try{
-        await vPlayer.setCurrentTime(target);
-      }catch(e){}
+      try{ await vPlayer.setCurrentTime(target); }catch(e){}
     });
 
-    scrub.addEventListener("change", () => {
-      isScrubbing = false;
-    });
+    scrub.addEventListener("change", () => { isScrubbing = false; });
 
-    // =========================
     // FULLSCREEN IMAGE MODAL
-    // =========================
-    let scale = 1;
-    let minScale = 1;
-    let maxScale = 4;
-
-    let x = 0;
-    let y = 0;
-
-    let isDragging = false;
-    let startX = 0;
-    let startY = 0;
-    let dragStartX = 0;
-    let dragStartY = 0;
-
+    let scale = 1, minScale = 1, maxScale = 4;
+    let x = 0, y = 0;
+    let isDragging = false, startX = 0, startY = 0, dragStartX = 0, dragStartY = 0;
     let lastTouchDist = null;
 
     function applyTransform(){
       zoomImg.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px) scale(${scale})`;
     }
-
     function setCursor(){
       stage.style.cursor = (scale > minScale + 0.01) ? "grab" : "default";
     }
-
     function fitToScreen(){
       const rect = stage.getBoundingClientRect();
-      const sw = rect.width;
-      const sh = rect.height;
-
+      const sw = rect.width, sh = rect.height;
       const iw = zoomImg.naturalWidth || zoomImg.width || 1;
       const ih = zoomImg.naturalHeight || zoomImg.height || 1;
-
       const pad = 24;
       const fitW = Math.max(1, sw - pad * 2);
       const fitH = Math.max(1, sh - pad * 2);
-
       const fitScale = Math.min(fitW / iw, fitH / ih, 1);
-
-      minScale = fitScale;
-      scale = fitScale;
-      x = 0;
-      y = 0;
-
-      setCursor();
-      applyTransform();
+      minScale = fitScale; scale = fitScale; x = 0; y = 0;
+      setCursor(); applyTransform();
     }
-
     function openImageModal(src){
       imgModal.classList.add("show");
       imgModal.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
-
       zoomImg.onload = () => { fitToScreen(); };
       zoomImg.src = src;
-
-      setTimeout(() => {
-        if(zoomImg.complete) fitToScreen();
-      }, 0);
+      setTimeout(() => { if(zoomImg.complete) fitToScreen(); }, 0);
     }
-
     function closeImageModal(){
       imgModal.classList.remove("show");
       imgModal.setAttribute("aria-hidden", "true");
@@ -959,54 +915,34 @@
       lastTouchDist = null;
     }
 
-    imgModal.addEventListener("click", (e) => {
-      if(e.target === imgModal) closeImageModal();
-    });
+    imgModal.addEventListener("click", (e) => { if(e.target === imgModal) closeImageModal(); });
     imgModalClose.addEventListener("click", closeImageModal);
-
     document.addEventListener("keydown", (e) => {
       if(e.key === "Escape" && imgModal.classList.contains("show")) closeImageModal();
     });
 
     let clickSuppress = false;
-
     function toggleZoom(){
       const zoomInTarget = Math.min(maxScale, minScale * 2.25);
-
-      if(scale <= minScale + 0.01){
-        scale = zoomInTarget;
-      }else{
-        scale = minScale;
-        x = 0;
-        y = 0;
-      }
-      setCursor();
-      applyTransform();
+      if(scale <= minScale + 0.01){ scale = zoomInTarget; }
+      else { scale = minScale; x = 0; y = 0; }
+      setCursor(); applyTransform();
     }
 
     stage.addEventListener("pointerdown", (e) => {
       e.preventDefault();
       stage.setPointerCapture(e.pointerId);
-
       isDragging = true;
-      stage.classList.add("dragging");
-
-      startX = e.clientX;
-      startY = e.clientY;
-      dragStartX = x;
-      dragStartY = y;
-
+      startX = e.clientX; startY = e.clientY;
+      dragStartX = x; dragStartY = y;
       clickSuppress = false;
     });
 
     stage.addEventListener("pointermove", (e) => {
       if(!isDragging) return;
-
       const dx = e.clientX - startX;
       const dy = e.clientY - startY;
-
       if(Math.abs(dx) > 6 || Math.abs(dy) > 6) clickSuppress = true;
-
       if(scale > minScale + 0.01){
         x = dragStartX + dx;
         y = dragStartY + dy;
@@ -1016,65 +952,37 @@
 
     stage.addEventListener("pointerup", () => {
       isDragging = false;
-      stage.classList.remove("dragging");
       if(!clickSuppress) toggleZoom();
     });
 
-    stage.addEventListener("pointercancel", () => {
-      isDragging = false;
-      stage.classList.remove("dragging");
-    });
+    stage.addEventListener("pointercancel", () => { isDragging = false; });
 
     stage.addEventListener("wheel", (e) => {
       e.preventDefault();
       const delta = -Math.sign(e.deltaY) * 0.15;
       const next = Math.min(maxScale, Math.max(minScale, scale + delta));
-
       scale = next;
-      if(scale <= minScale + 0.01){
-        scale = minScale;
-        x = 0; y = 0;
-      }
-      setCursor();
-      applyTransform();
+      if(scale <= minScale + 0.01){ scale = minScale; x = 0; y = 0; }
+      setCursor(); applyTransform();
     }, { passive:false });
 
     stage.addEventListener("touchmove", (e) => {
-      if(e.touches.length !== 2) {
-        lastTouchDist = null;
-        return;
-      }
+      if(e.touches.length !== 2){ lastTouchDist = null; return; }
       e.preventDefault();
-
-      const t1 = e.touches[0];
-      const t2 = e.touches[1];
-
+      const t1 = e.touches[0], t2 = e.touches[1];
       const dx = t1.clientX - t2.clientX;
       const dy = t1.clientY - t2.clientY;
       const dist = Math.hypot(dx, dy);
-
-      if(lastTouchDist == null){
-        lastTouchDist = dist;
-        return;
-      }
-
+      if(lastTouchDist == null){ lastTouchDist = dist; return; }
       const diff = (dist - lastTouchDist) / 250;
       scale = Math.min(maxScale, Math.max(minScale, scale + diff));
       lastTouchDist = dist;
-
-      if(scale <= minScale + 0.01){
-        scale = minScale;
-        x = 0; y = 0;
-      }
-
-      setCursor();
-      applyTransform();
+      if(scale <= minScale + 0.01){ scale = minScale; x = 0; y = 0; }
+      setCursor(); applyTransform();
     }, { passive:false });
 
     window.addEventListener("resize", () => {
-      if(imgModal.classList.contains("show")){
-        fitToScreen();
-      }
+      if(imgModal.classList.contains("show")) fitToScreen();
     });
 
     catalogImg.addEventListener("click", () => {
@@ -1082,18 +990,9 @@
       if(src) openImageModal(src);
     });
 
-    // =========================
-    // Init
-    // =========================
     searchInput.addEventListener("input", render);
-
-    prevBtn.addEventListener("click", () => {
-      if(currentIndex > 0) selectLot(lots[currentIndex - 1].lot);
-    });
-
-    nextBtn.addEventListener("click", () => {
-      if(currentIndex < lots.length - 1) selectLot(lots[currentIndex + 1].lot);
-    });
+    prevBtn.addEventListener("click", () => { if(currentIndex > 0) selectLot(lots[currentIndex - 1].lot); });
+    nextBtn.addEventListener("click", () => { if(currentIndex < lots.length - 1) selectLot(lots[currentIndex + 1].lot); });
 
     render();
     updateNav();
