@@ -91,6 +91,31 @@
       .video-ratio.ratio-16x9{ --bs-aspect-ratio: 44%; }
     }
 
+    /* ✅ Vimeo click shields:
+       blocks logo/title/click-outs while leaving scrub/controls usable */
+    .vimeo-shield-top{
+      position:absolute; top:0; left:0; right:0;
+      height:60px;
+      z-index:3;
+      background:transparent;
+      pointer-events:auto;
+    }
+    .vimeo-shield-sides{
+      position:absolute;
+      top:60px; left:0; right:0;
+      height: calc(100% - 120px); /* leaves bottom controls clickable */
+      z-index:3;
+      background:transparent;
+      pointer-events:auto;
+    }
+    @media (max-width: 991.98px){
+      .vimeo-shield-top{ height:52px; }
+      .vimeo-shield-sides{
+        top:52px;
+        height: calc(100% - 110px);
+      }
+    }
+
     /* Prev/Next */
     .player-actions{
       padding: 12px 14px;
@@ -431,10 +456,7 @@
         <div class="player-head">
           <div>
             <p class="player-title mb-1" id="playerTitle">Loading Lot…</p>
-            <p class="player-sub" id="playerSub">
-              Scrub bar works like normal. Autoplay is muted (Vimeo/browser rules) — tap the speaker in the player to unmute.
-              Tap catalog to enlarge. Tap in modal to zoom. Drag to pan when zoomed. Pinch to zoom on mobile.
-            </p>
+            <p class="player-sub" id="playerSub">Autoplay + muted + loop. Drag the time bar to skip forward/back.</p>
           </div>
         </div>
 
@@ -449,6 +471,10 @@
                 allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
                 referrerpolicy="strict-origin-when-cross-origin"
                 allowfullscreen></iframe>
+
+              <!-- ✅ Shields to kill click-outs -->
+              <div class="vimeo-shield-top" aria-hidden="true"></div>
+              <div class="vimeo-shield-sides" aria-hidden="true"></div>
             </div>
 
             <div class="player-actions">
@@ -546,7 +572,7 @@
 
   <script>
     // =========================
-    // VIMEO EMBED HELPERS
+    // VIMEO HELPERS
     // =========================
     function extractVimeoId(input){
       if(!input) return "";
@@ -571,47 +597,45 @@
       const id = extractVimeoId(fromUrlOrId);
       if(!id) return "";
 
-      // Autoplay almost always requires muted per browser rules.
-      // Controls remain available so you can scrub forward/back.
+      // ✅ autoplay + muted + loop (kills "more from")
       return `https://player.vimeo.com/video/${id}?` +
         `autoplay=1` +
         `&muted=1` +
-        `&loop=0` +
+        `&loop=1` +
         `&autopause=0` +
         `&title=0&byline=0&portrait=0` +
         `&badge=0` +
-        `&playsinline=1`;
+        `&playsinline=1` +
+        `&controls=1`;
     }
 
     // =========================
-    // LOT DATA
-    // Put your Vimeo link/ID in `vimeo`
+    // LOTS — Loaded from your Vimeo IDs
     // =========================
     const lots = [
-      { lot: 1,  title: "Lot 1",  meta: "Bull",   vimeo: "", catalogImg: "assets/img/catalog/bartelt/lot01.jpg" },
-      { lot: 2,  title: "Lot 2",  meta: "Bull",   vimeo: "", catalogImg: "assets/img/catalog/bartelt/lot02.jpg" },
-      { lot: 3,  title: "Lot 3",  meta: "Bull",   vimeo: "", catalogImg: "assets/img/catalog/bartelt/lot03.jpg" },
-      { lot: 4,  title: "Lot 4",  meta: "Bull",   vimeo: "", catalogImg: "assets/img/catalog/bartelt/lot04.jpg" },
-      { lot: 5,  title: "Lot 5",  meta: "Bull",   vimeo: "", catalogImg: "assets/img/catalog/bartelt/lot05.jpg" },
-      { lot: 6,  title: "Lot 6",  meta: "Bull",   vimeo: "", catalogImg: "assets/img/catalog/bartelt/lot06.jpg" },
-      { lot: 7,  title: "Lot 7",  meta: "Bull",   vimeo: "", catalogImg: "assets/img/catalog/bartelt/lot07.jpg" },
-      { lot: 8,  title: "Lot 8",  meta: "Bull",   vimeo: "", catalogImg: "assets/img/catalog/bartelt/lot08.jpg" },
-      { lot: 9,  title: "Lot 9",  meta: "Bull",   vimeo: "", catalogImg: "assets/img/catalog/bartelt/lot09.jpg" },
-      { lot: 10, title: "Lot 10", meta: "Bull",   vimeo: "", catalogImg: "assets/img/catalog/bartelt/lot10.jpg" },
+      { lot: 1,  title: "Lot 1",  meta: "Bull",   vimeo: "1161993796", catalogImg: "assets/img/catalog/bartelt/lot01.jpg" },
+      { lot: 2,  title: "Lot 2",  meta: "Bull",   vimeo: "1161993835", catalogImg: "assets/img/catalog/bartelt/lot02.jpg" },
+      { lot: 3,  title: "Lot 3",  meta: "Bull",   vimeo: "1161993947", catalogImg: "assets/img/catalog/bartelt/lot03.jpg" },
+      { lot: 4,  title: "Lot 4",  meta: "Bull",   vimeo: "1161994078", catalogImg: "assets/img/catalog/bartelt/lot04.jpg" },
+      { lot: 5,  title: "Lot 5",  meta: "Bull",   vimeo: "1161994197", catalogImg: "assets/img/catalog/bartelt/lot05.jpg" },
+      { lot: 6,  title: "Lot 6",  meta: "Bull",   vimeo: "1161994298", catalogImg: "assets/img/catalog/bartelt/lot06.jpg" },
+      { lot: 7,  title: "Lot 7",  meta: "Bull",   vimeo: "1161994440", catalogImg: "assets/img/catalog/bartelt/lot07.jpg" },
+      { lot: 8,  title: "Lot 8",  meta: "Bull",   vimeo: "1161994525", catalogImg: "assets/img/catalog/bartelt/lot08.jpg" },
+      { lot: 9,  title: "Lot 9",  meta: "Bull",   vimeo: "1161994645", catalogImg: "assets/img/catalog/bartelt/lot09.jpg" },
+      { lot: 10, title: "Lot 10", meta: "Bull",   vimeo: "1161994737", catalogImg: "assets/img/catalog/bartelt/lot10.jpg" },
+      { lot: 11, title: "Lot 11", meta: "Bull",   vimeo: "1161994854", catalogImg: "assets/img/catalog/bartelt/lot11.jpg" },
+      { lot: 12, title: "Lot 12", meta: "Bull",   vimeo: "1161994977", catalogImg: "assets/img/catalog/bartelt/lot12.jpg" },
+      { lot: 13, title: "Lot 13", meta: "Bull",   vimeo: "1161995140", catalogImg: "assets/img/catalog/bartelt/lot13.jpg" },
+      { lot: 14, title: "Lot 14", meta: "Bull",   vimeo: "1161995267", catalogImg: "assets/img/catalog/bartelt/lot14.jpg" },
+      { lot: 15, title: "Lot 15", meta: "Bull",   vimeo: "1161995435", catalogImg: "assets/img/catalog/bartelt/lot15.jpg" },
 
-      // ✅ LOT 11 — YOUR VIMEO VIDEO
-      // You gave: https://player.vimeo.com/video/1161994854?badge=0&autopause=0...
-      // We can store just the ID, or the URL. Either works.
-      { lot: 11, title: "Lot 11", meta: "Bull", vimeo: "1161994854", catalogImg: "assets/img/catalog/bartelt/lot11.jpg" },
+      // If you actually use 16A/16B/16C/16D as separate lots, keep them:
+      { lot: 16, title: "Lot 16A", meta: "Heifer", vimeo: "1161995589", catalogImg: "assets/img/catalog/bartelt/lot16a.jpg" },
+      { lot: 17, title: "Lot 16B", meta: "Heifer", vimeo: "1161995681", catalogImg: "assets/img/catalog/bartelt/lot16b.jpg" },
+      { lot: 18, title: "Lot 16C", meta: "Heifer", vimeo: "1161995766", catalogImg: "assets/img/catalog/bartelt/lot16c.jpg" },
+      { lot: 19, title: "Lot 16D", meta: "Heifer", vimeo: "1161995824", catalogImg: "assets/img/catalog/bartelt/lot16d.jpg" },
 
-      { lot: 12, title: "Lot 12", meta: "Bull",   vimeo: "", catalogImg: "assets/img/catalog/bartelt/lot12.jpg" },
-      { lot: 13, title: "Lot 13", meta: "Bull",   vimeo: "", catalogImg: "assets/img/catalog/bartelt/lot13.jpg" },
-      { lot: 14, title: "Lot 14", meta: "Bull",   vimeo: "", catalogImg: "assets/img/catalog/bartelt/lot14.jpg" },
-      { lot: 15, title: "Lot 15", meta: "Bull",   vimeo: "", catalogImg: "assets/img/catalog/bartelt/lot15.jpg" },
-      { lot: 16, title: "Lot 16", meta: "Heifer", vimeo: "", catalogImg: "assets/img/catalog/bartelt/lot16.jpg" },
-      { lot: 17, title: "Lot 17", meta: "Heifer", vimeo: "", catalogImg: "assets/img/catalog/bartelt/lot17.jpg" },
-      { lot: 18, title: "Lot 18", meta: "Heifer", vimeo: "", catalogImg: "assets/img/catalog/bartelt/lot18.jpg" },
-      { lot: 19, title: "Lot 19", meta: "Heifer", vimeo: "", catalogImg: "assets/img/catalog/bartelt/lot19.jpg" },
+      // If you also have Lots 20-25, leave placeholders:
       { lot: 20, title: "Lot 20", meta: "Heifer", vimeo: "", catalogImg: "assets/img/catalog/bartelt/lot20.jpg" },
       { lot: 21, title: "Lot 21", meta: "Heifer", vimeo: "", catalogImg: "assets/img/catalog/bartelt/lot21.jpg" },
       { lot: 22, title: "Lot 22", meta: "Heifer", vimeo: "", catalogImg: "assets/img/catalog/bartelt/lot22.jpg" },
@@ -670,14 +694,12 @@
       playerTitle.textContent = `Lot ${item.lot} • ${item.meta}`;
       playerSub.textContent = item.title || "";
 
-      // Vimeo video
       if(item.vimeo && String(item.vimeo).trim() !== ""){
         playerFrame.src = vimeoEmbed(item.vimeo);
       }else{
         playerFrame.src = "";
       }
 
-      // Catalog image
       if(item.catalogImg && item.catalogImg.trim() !== ""){
         catalogImg.src = item.catalogImg.trim();
         catalogWrap.style.display = "flex";
@@ -723,7 +745,6 @@
         </div>
       `).join("");
 
-      // click card -> select lot
       document.querySelectorAll(".lot-card").forEach(card => {
         card.addEventListener("click", () => {
           const lot = parseInt(card.getAttribute("data-lot"), 10);
@@ -731,7 +752,6 @@
         });
       });
 
-      // click any thumb -> open zoom modal
       document.querySelectorAll(".thumb").forEach(t => {
         t.addEventListener("click", (e) => {
           e.stopPropagation();
@@ -742,220 +762,123 @@
     }
 
     // -----------------------------
-    // FULLSCREEN IMAGE MODAL (same as your version)
+    // IMAGE MODAL (unchanged)
     // -----------------------------
     let scale = 1;
     let minScale = 1;
     let maxScale = 4;
-
-    let x = 0;
-    let y = 0;
-
+    let x = 0, y = 0;
     let isDragging = false;
-    let startX = 0;
-    let startY = 0;
-    let dragStartX = 0;
-    let dragStartY = 0;
-
+    let startX = 0, startY = 0;
+    let dragStartX = 0, dragStartY = 0;
     let lastTouchDist = null;
 
     function applyTransform(){
-      // ✅ stable order
       zoomImg.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px) scale(${scale})`;
     }
-
     function setCursor(){
-      if(scale > minScale + 0.01){
-        stage.style.cursor = "grab";
-      }else{
-        stage.style.cursor = "default";
-      }
+      stage.style.cursor = (scale > minScale + 0.01) ? "grab" : "default";
     }
-
     function fitToScreen(){
       const rect = stage.getBoundingClientRect();
-      const sw = rect.width;
-      const sh = rect.height;
-
+      const sw = rect.width, sh = rect.height;
       const iw = zoomImg.naturalWidth || zoomImg.width || 1;
       const ih = zoomImg.naturalHeight || zoomImg.height || 1;
-
       const pad = 24;
       const fitW = Math.max(1, sw - pad * 2);
       const fitH = Math.max(1, sh - pad * 2);
-
       const fitScale = Math.min(fitW / iw, fitH / ih, 1);
-
       minScale = fitScale;
       scale = fitScale;
-      x = 0;
-      y = 0;
-
+      x = 0; y = 0;
       setCursor();
       applyTransform();
     }
-
     function openImageModal(src){
       imgModal.classList.add("show");
       imgModal.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
-
-      zoomImg.onload = () => { fitToScreen(); };
+      zoomImg.onload = () => fitToScreen();
       zoomImg.src = src;
-
-      setTimeout(() => {
-        if(zoomImg.complete) fitToScreen();
-      }, 0);
+      setTimeout(() => { if(zoomImg.complete) fitToScreen(); }, 0);
     }
-
     function closeImageModal(){
       imgModal.classList.remove("show");
       imgModal.setAttribute("aria-hidden", "true");
       document.body.style.overflow = "";
       lastTouchDist = null;
     }
-
-    imgModal.addEventListener("click", (e) => {
-      if(e.target === imgModal) closeImageModal();
-    });
+    imgModal.addEventListener("click", (e) => { if(e.target === imgModal) closeImageModal(); });
     imgModalClose.addEventListener("click", closeImageModal);
-
-    document.addEventListener("keydown", (e) => {
-      if(e.key === "Escape" && imgModal.classList.contains("show")) closeImageModal();
-    });
+    document.addEventListener("keydown", (e) => { if(e.key === "Escape" && imgModal.classList.contains("show")) closeImageModal(); });
 
     let clickSuppress = false;
-
     function toggleZoom(){
       const zoomInTarget = Math.min(maxScale, minScale * 2.25);
-
-      if(scale <= minScale + 0.01){
-        scale = zoomInTarget;
-      }else{
-        scale = minScale;
-        x = 0;
-        y = 0;
-      }
-      setCursor();
-      applyTransform();
+      if(scale <= minScale + 0.01) scale = zoomInTarget;
+      else { scale = minScale; x = 0; y = 0; }
+      setCursor(); applyTransform();
     }
-
     stage.addEventListener("pointerdown", (e) => {
       e.preventDefault();
       stage.setPointerCapture(e.pointerId);
-
       isDragging = true;
       stage.classList.add("dragging");
-
-      startX = e.clientX;
-      startY = e.clientY;
-      dragStartX = x;
-      dragStartY = y;
-
+      startX = e.clientX; startY = e.clientY;
+      dragStartX = x; dragStartY = y;
       clickSuppress = false;
     });
-
     stage.addEventListener("pointermove", (e) => {
       if(!isDragging) return;
-
       const dx = e.clientX - startX;
       const dy = e.clientY - startY;
-
       if(Math.abs(dx) > 6 || Math.abs(dy) > 6) clickSuppress = true;
-
-      if(scale > minScale + 0.01){
-        x = dragStartX + dx;
-        y = dragStartY + dy;
-        applyTransform();
-      }
+      if(scale > minScale + 0.01){ x = dragStartX + dx; y = dragStartY + dy; applyTransform(); }
     });
-
     stage.addEventListener("pointerup", () => {
       isDragging = false;
       stage.classList.remove("dragging");
       if(!clickSuppress) toggleZoom();
     });
-
     stage.addEventListener("pointercancel", () => {
       isDragging = false;
       stage.classList.remove("dragging");
     });
-
     stage.addEventListener("wheel", (e) => {
       e.preventDefault();
       const delta = -Math.sign(e.deltaY) * 0.15;
       const next = Math.min(maxScale, Math.max(minScale, scale + delta));
-
       scale = next;
-      if(scale <= minScale + 0.01){
-        scale = minScale;
-        x = 0; y = 0;
-      }
-      setCursor();
-      applyTransform();
+      if(scale <= minScale + 0.01){ scale = minScale; x = 0; y = 0; }
+      setCursor(); applyTransform();
     }, { passive:false });
-
     stage.addEventListener("touchmove", (e) => {
-      if(e.touches.length !== 2) {
-        lastTouchDist = null;
-        return;
-      }
+      if(e.touches.length !== 2){ lastTouchDist = null; return; }
       e.preventDefault();
-
-      const t1 = e.touches[0];
-      const t2 = e.touches[1];
-
+      const t1 = e.touches[0], t2 = e.touches[1];
       const dx = t1.clientX - t2.clientX;
       const dy = t1.clientY - t2.clientY;
       const dist = Math.hypot(dx, dy);
-
-      if(lastTouchDist == null){
-        lastTouchDist = dist;
-        return;
-      }
-
+      if(lastTouchDist == null){ lastTouchDist = dist; return; }
       const diff = (dist - lastTouchDist) / 250;
       scale = Math.min(maxScale, Math.max(minScale, scale + diff));
       lastTouchDist = dist;
-
-      if(scale <= minScale + 0.01){
-        scale = minScale;
-        x = 0; y = 0;
-      }
-
-      setCursor();
-      applyTransform();
+      if(scale <= minScale + 0.01){ scale = minScale; x = 0; y = 0; }
+      setCursor(); applyTransform();
     }, { passive:false });
-
-    window.addEventListener("resize", () => {
-      if(imgModal.classList.contains("show")){
-        fitToScreen();
-      }
-    });
-
-    catalogImg.addEventListener("click", () => {
-      const src = catalogImg.getAttribute("src");
-      if(src) openImageModal(src);
-    });
+    window.addEventListener("resize", () => { if(imgModal.classList.contains("show")) fitToScreen(); });
+    catalogImg.addEventListener("click", () => { const src = catalogImg.getAttribute("src"); if(src) openImageModal(src); });
 
     // -----------------------------
     // Init
     // -----------------------------
     searchInput.addEventListener("input", render);
-
-    prevBtn.addEventListener("click", () => {
-      if(currentIndex > 0) selectLot(lots[currentIndex - 1].lot);
-    });
-
-    nextBtn.addEventListener("click", () => {
-      if(currentIndex < lots.length - 1) selectLot(lots[currentIndex + 1].lot);
-    });
+    prevBtn.addEventListener("click", () => { if(currentIndex > 0) selectLot(lots[currentIndex - 1].lot); });
+    nextBtn.addEventListener("click", () => { if(currentIndex < lots.length - 1) selectLot(lots[currentIndex + 1].lot); });
 
     render();
     updateNav();
-
-    // ✅ Start on Lot 11 (since that’s the one you added)
-    selectLot(11);
+    selectLot(1);
   </script>
 
 </body>
