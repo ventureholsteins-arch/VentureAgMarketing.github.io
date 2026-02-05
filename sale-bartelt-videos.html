@@ -1,1003 +1,270 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bartelt Angus • Lot Videos | Venture Ag Marketing</title>
-  <meta name="description" content="Bartelt Angus lot videos with catalog images." />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bartelt Angus • Lot Videos | Venture Ag Marketing</title>
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-  <style>
-    :root{
-      --vam-bg:#0B0B0B;
-      --vam-text:#F2F2F2;
-      --vam-muted:rgba(242,242,242,.72);
-      --vam-gold:#C9A45C;
-      --vam-gold-dark:#9F7C3B;
-      --vam-shadow:0 18px 54px rgba(0,0,0,.22);
-    }
-    body{ font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; background:#F7F7F7; color:#111; }
+<style>
+:root{
+  --bg:#0B0B0B;
+  --text:#F2F2F2;
+  --gold:#C9A45C;
+  --gold-dark:#9F7C3B;
+}
+body{background:#F7F7F7;font-family:system-ui;color:#111}
 
-    /* Top Bar */
-    .topbar{
-      background: rgba(11,11,11,.94);
-      color: var(--vam-text);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255,255,255,.08);
-      position: sticky; top: 0; z-index: 10;
-    }
-    .topbar .title{
-      font-weight: 900;
-      letter-spacing: .10em;
-      text-transform: uppercase;
-      margin: 0;
-      font-size: .95rem;
-    }
+/* Topbar */
+.topbar{
+  background:#0B0B0B;
+  color:#fff;
+  position:sticky;top:0;z-index:10;
+}
+.btn-ghost{
+  border:1px solid rgba(255,255,255,.25);
+  color:#fff;background:rgba(255,255,255,.05);
+  border-radius:14px;
+  padding:10px 14px;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  display:inline-flex;align-items:center;gap:8px;
+}
 
-    .btn-ghost{
-      border: 1px solid rgba(255,255,255,.22);
-      color: #fff;
-      background: rgba(255,255,255,.06);
-      font-weight: 900;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      border-radius: 14px;
-      padding: 10px 14px;
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-    }
-    .btn-ghost:hover{ background: rgba(255,255,255,.10); color:#fff; }
+/* Player */
+.player-shell{
+  background:#0B0B0B;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 18px 54px rgba(0,0,0,.25);
+}
+.player-head{
+  padding:14px 16px;
+  border-bottom:1px solid rgba(255,255,255,.1);
+  color:#fff;
+}
+.player-title{font-weight:900;letter-spacing:.08em;text-transform:uppercase}
 
-    /* Player Shell */
-    .player-shell{
-      border-radius: 18px;
-      overflow: hidden;
-      background: #0b0b0b;
-      border: 1px solid rgba(255,255,255,.10);
-      box-shadow: var(--vam-shadow);
-    }
-    .player-head{
-      padding: 14px 16px;
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      align-items:center;
-      justify-content:space-between;
-      border-bottom: 1px solid rgba(255,255,255,.10);
-      background: linear-gradient(135deg, #0b0b0b 0%, #111 55%, #0b0b0b 100%);
-      color: var(--vam-text);
-    }
-    .player-title{
-      font-weight: 900;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      margin: 0;
-      font-size: .95rem;
-    }
-    .player-sub{ margin: 0; color: rgba(242,242,242,.70); font-size: .92rem; }
+/* Video */
+.video-ratio{background:#000}
+iframe{border:0;width:100%;height:100%}
 
-    .player-frame{ width:100%; height:100%; border:0; background:#000; }
+/* Player Actions */
+.player-actions{
+  padding:12px 14px;
+  background:#0B0B0B;
+  border-top:1px solid rgba(255,255,255,.1);
+  display:flex;
+  gap:12px;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+}
 
-    /* Desktop: slightly shorter video */
-    .video-ratio{
-      background:#000;
-      border-bottom: 1px solid rgba(255,255,255,.10);
-      position: relative;
-    }
-    @media (min-width: 992px){
-      .video-ratio.ratio-16x9{ --bs-aspect-ratio: 44%; }
-    }
+/* Scrub row */
+.scrub-wrap{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex:1 1 360px;
+}
+.btn-play{
+  width:44px;height:44px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.2);
+  background:rgba(255,255,255,.08);
+  color:#fff;
+}
+.scrub{
+  width:100%;
+  accent-color:var(--gold);
+}
+.timecode{
+  min-width:100px;
+  color:rgba(255,255,255,.7);
+  font-weight:900;
+  font-size:.78rem;
+  text-align:right;
+}
 
-    /* Player actions */
-    .player-actions{
-      padding: 12px 14px;
-      background: #0b0b0b;
-      border-top: 1px solid rgba(255,255,255,.10);
-      display:flex;
-      gap:10px;
-      align-items:center;
-      justify-content:space-between;
-      flex-wrap:wrap;
-    }
-    .btn-nav{
-      border-radius: 14px;
-      padding: 10px 14px;
-      font-weight: 900;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      border: 1px solid rgba(255,255,255,.18);
-      background: rgba(255,255,255,.06);
-      color: #fff;
-    }
-    .btn-nav:hover{ background: rgba(255,255,255,.10); }
-    .btn-nav:disabled{ opacity: .45; cursor: not-allowed; }
+/* Nav row */
+.nav-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  width:auto;
+}
+.btn-nav{
+  padding:10px 14px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.2);
+  background:rgba(255,255,255,.06);
+  color:#fff;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.lot-counter{
+  color:rgba(255,255,255,.75);
+  font-weight:900;
+  letter-spacing:.10em;
+  white-space:nowrap;
+}
 
-    .lot-counter{
-      color: rgba(242,242,242,.75);
-      font-weight: 900;
-      letter-spacing: .10em;
-      text-transform: uppercase;
-      font-size: .82rem;
-      white-space:nowrap;
-    }
-
-    /* ✅ Custom scrub controls (so Vimeo UI is gone) */
-    .scrub-wrap{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex: 1 1 360px;
-      min-width: 260px;
-    }
-    .btn-play{
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.18);
-      background: rgba(255,255,255,.06);
-      color:#fff;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      cursor:pointer;
-      flex: 0 0 auto;
-    }
-    .btn-play:hover{ background: rgba(255,255,255,.10); }
-
-    .scrub{
-      width: 100%;
-      accent-color: var(--vam-gold);
-      height: 6px;
-      cursor: pointer;
-    }
-    .timecode{
-      color: rgba(242,242,242,.70);
-      font-weight: 900;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      font-size: .78rem;
-      white-space:nowrap;
-      min-width: 110px;
-      text-align:right;
-    }
-
-    /* Sale info strip */
-    .sale-strip{
-      background: linear-gradient(135deg, rgba(201,164,92,.16), rgba(255,255,255,.04));
-      border-top: 1px solid rgba(255,255,255,.10);
-      padding: 12px 14px;
-      color: rgba(242,242,242,.92);
-    }
-    .sale-strip .label{
-      font-weight: 900;
-      letter-spacing: .10em;
-      text-transform: uppercase;
-      font-size: .78rem;
-      color: rgba(242,242,242,.80);
-      margin-bottom: 8px;
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
-    .sale-row{
-      display:flex;
-      flex-wrap:wrap;
-      align-items:center;
-      gap:12px 18px;
-      justify-content:space-between;
-    }
-    .sale-mini{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px 16px;
-      align-items:center;
-      color: rgba(242,242,242,.88);
-      font-weight: 800;
-    }
-    .sale-mini span{
-      display:inline-flex;
-      gap:8px;
-      align-items:center;
-      color: rgba(242,242,242,.84);
-      font-weight: 800;
-      letter-spacing: .02em;
-    }
-    .sale-mini i{ color: var(--vam-gold); }
-    .sale-actions{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      align-items:center;
-      justify-content:flex-end;
-    }
-
-    .btn-gold{
-      background: var(--vam-gold);
-      border: 1px solid var(--vam-gold);
-      color:#0B0B0B;
-      font-weight: 900;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      border-radius: 14px;
-      padding: 10px 14px;
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      white-space: nowrap;
-    }
-    .btn-gold:hover{ background: var(--vam-gold-dark); border-color: var(--vam-gold-dark); color:#0B0B0B; }
-
-    .btn-light-outline{
-      border-radius: 14px;
-      padding: 10px 14px;
-      font-weight: 900;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      border: 1px solid rgba(255,255,255,.18);
-      background: rgba(255,255,255,.06);
-      color:#fff;
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      white-space: nowrap;
-    }
-    .btn-light-outline:hover{ background: rgba(255,255,255,.10); color:#fff; }
-
-    /* Catalog panel */
-    .catalog-panel{
-      height:100%;
-      background:#0b0b0b;
-      border-left: 1px solid rgba(255,255,255,.10);
-      padding: 14px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-    .catalog-title{
-      font-weight: 900;
-      letter-spacing: .10em;
-      text-transform: uppercase;
-      font-size: .78rem;
-      color: rgba(242,242,242,.82);
-      display:flex;
-      align-items:center;
-      gap:8px;
-      margin:0;
-    }
-    .catalog-img{
-      width: 100%;
-      height: auto;
-      display:block;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow: 0 16px 44px rgba(0,0,0,.45);
-      background:#fff;
-      cursor: zoom-in;
-    }
-    .tap-hint{
-      color: rgba(242,242,242,.70);
-      font-size: .86rem;
-      font-weight: 900;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      margin:0;
-    }
-
-    /* Controls */
-    .controls{
-      background: rgba(255,255,255,.80);
-      border: 1px solid rgba(0,0,0,.08);
-      border-radius: 18px;
-      box-shadow: 0 10px 26px rgba(0,0,0,.08);
-      padding: 14px;
-    }
-    .search{
-      border-radius: 14px;
-      border: 1px solid rgba(0,0,0,.12);
-      padding: 12px 14px;
-    }
-    .count{
-      color: rgba(0,0,0,.62);
-      font-weight: 800;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      font-size: .82rem;
-    }
-
-    /* Lot Cards */
-    .lot-card{
-      border-radius: 18px;
-      overflow:hidden;
-      background:#fff;
-      border:1px solid rgba(0,0,0,.08);
-      box-shadow: 0 14px 36px rgba(0,0,0,.12);
-      height:100%;
-      cursor:pointer;
-      transition: transform .12s ease, box-shadow .12s ease;
-    }
-    .lot-card:hover{ transform: translateY(-2px); box-shadow: 0 18px 44px rgba(0,0,0,.18); }
-
-    .lot-top{
-      background:
-        radial-gradient(circle at 25% 20%, rgba(201,164,92,.26), rgba(0,0,0,0) 55%),
-        linear-gradient(135deg, #111 0%, #0b0b0b 60%, #151515 100%);
-      color: var(--vam-text);
-      padding: 14px;
-      border-bottom: 1px solid rgba(255,255,255,.10);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 10px;
-      min-height: 92px;
-    }
-    .lot-left{ display:flex; align-items:center; gap:12px; }
-    .lot-num{ font-weight:900; letter-spacing:.10em; text-transform:uppercase; font-size:.80rem; color: rgba(242,242,242,.82); }
-    .lot-big{ font-weight:900; letter-spacing:.06em; text-transform:uppercase; font-size: 1.9rem; line-height:1; margin:5px 0 0; color: var(--vam-gold); }
-
-    .thumb{
-      width: 96px; height: 96px;
-      border-radius: 14px;
-      overflow:hidden;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      flex: 0 0 auto;
-      cursor: zoom-in;
-    }
-    .thumb img{ width:100%; height:100%; object-fit: cover; display:block; }
-
-    .play{
-      width: 42px; height: 42px;
-      border-radius: 14px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.14);
-      display:flex; align-items:center; justify-content:center;
-      flex: 0 0 auto;
-    }
-    .play i{ color: var(--vam-gold); }
-
-    .lot-body{ padding: 12px 14px 14px; }
-    .lot-title{ font-weight: 900; margin:0 0 4px; }
-    .lot-meta{ color: rgba(0,0,0,.62); margin:0; font-size:.95rem; }
-
-    .active-lot{
-      outline: 3px solid rgba(201,164,92,.55);
-      outline-offset: 2px;
-    }
-
-    /* ✅ MOBILE FIX: keep Prev/Counter/Next level; scrub drops to its own row */
-    @media (max-width: 991.98px){
-      .thumb{ width: 110px; height: 110px; }
-      .catalog-panel{ border-left:none; border-top: 1px solid rgba(255,255,255,.10); }
-      .sale-row{ justify-content:flex-start; }
-      .sale-actions{ justify-content:flex-start; }
-      .timecode{ min-width: 95px; }
-
-      .player-actions{
-        flex-wrap: nowrap;
-        gap: 8px;
-        align-items: center;
-      }
-      .btn-nav{
-        padding: 8px 10px;
-        border-radius: 12px;
-        font-size: .82rem;
-        gap: 8px;
-        white-space: nowrap;
-      }
-      .scrub-wrap{
-        flex: 1 1 100%;
-        min-width: 0;
-        order: 4;
-      }
-      .lot-counter{
-        font-size: .74rem;
-        white-space: nowrap;
-      }
-      .btn-play{
-        width: 40px;
-        height: 40px;
-        border-radius: 12px;
-      }
-    }
-
-    /* =========================
-       FULLSCREEN IMAGE VIEWER
-       ========================= */
-    .img-modal{
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.92);
-      z-index: 9999;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 0;
-    }
-    .img-modal.show{ display:flex; }
-
-    .img-modal-close{
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.18);
-      background: rgba(255,255,255,.08);
-      color: #fff;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size: 18px;
-      cursor: pointer;
-      z-index: 3;
-    }
-    .img-modal-close:hover{ background: rgba(255,255,255,.12); }
-
-    .img-modal-hint{
-      position: absolute;
-      left: 14px;
-      top: 14px;
-      color: rgba(255,255,255,.75);
-      font-weight: 900;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      font-size: .78rem;
-      z-index: 3;
-    }
-
-    .zoom-stage{
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-      touch-action: none;
-      cursor: default;
-      z-index: 2;
-    }
-    .zoom-stage.dragging{ cursor: grabbing; }
-
-    .zoom-img{
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform-origin: 0 0;
-      user-select: none;
-      -webkit-user-drag: none;
-      max-width: none;
-      width: auto;
-      height: auto;
-      will-change: transform;
-    }
-  </style>
+/* MOBILE FIX */
+@media(max-width:991.98px){
+  .player-actions{
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .scrub-wrap{width:100%}
+  .nav-row{width:100%}
+}
+</style>
 </head>
 
 <body>
 
-  <!-- Sticky Top Bar -->
-  <div class="topbar">
-    <div class="container py-3 d-flex flex-wrap align-items-center justify-content-between gap-2">
-      <div>
-        <p class="title mb-1">Bartelt Angus • Lot Videos</p>
-      </div>
-      <div class="d-flex gap-2 flex-wrap">
-        <a class="btn-ghost" href="sale-bartelt.html"><i class="fa-solid fa-arrow-left"></i> Sale Info</a>
-        <a class="btn-ghost" href="./index.html#sales"><i class="fa-solid fa-house"></i> Home</a>
-      </div>
+<div class="topbar">
+  <div class="container py-3 d-flex justify-content-between align-items-center">
+    <strong style="letter-spacing:.1em">BARTELT ANGUS • LOT VIDEOS</strong>
+    <div class="d-flex gap-2">
+      <a class="btn-ghost" href="sale-bartelt.html"><i class="fa-solid fa-arrow-left"></i> Sale Info</a>
+      <a class="btn-ghost" href="./index.html#sales"><i class="fa-solid fa-house"></i> Home</a>
     </div>
   </div>
+</div>
 
-  <main class="py-5">
-    <div class="container">
+<main class="py-4">
+<div class="container">
 
-      <!-- BIG PLAYER -->
-      <div class="player-shell mb-4">
-        <div class="player-head">
-          <div>
-            <p class="player-title mb-1" id="playerTitle">Loading Lot…</p>
-            <p class="player-sub" id="playerSub">Autoplay + muted + loop. Play/Pause + scrub only (no Vimeo overlays).</p>
-          </div>
-        </div>
+<div class="player-shell">
 
-        <div class="row g-0">
-          <!-- VIDEO -->
-          <div class="col-12 col-lg-8 order-1 order-lg-1">
-            <div class="ratio ratio-16x9 video-ratio">
-              <iframe id="playerFrame" class="player-frame"
-                src=""
-                title="Lot Video"
-                frameborder="0"
-                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen></iframe>
-            </div>
+<div class="player-head">
+  <div class="player-title" id="playerTitle">Lot 1 • Bull</div>
+</div>
 
-            <div class="player-actions">
-              <button id="prevBtn" class="btn-nav" type="button">
-                <i class="fa-solid fa-arrow-left"></i> Prev
-              </button>
+<div class="ratio ratio-16x9 video-ratio">
+  <iframe id="playerFrame"
+    allow="autoplay; fullscreen"
+    referrerpolicy="strict-origin-when-cross-origin">
+  </iframe>
+</div>
 
-              <div class="scrub-wrap">
-                <button id="playBtn" class="btn-play" type="button" aria-label="Play/Pause">
-                  <i id="playIcon" class="fa-solid fa-pause"></i>
-                </button>
+<div class="player-actions">
 
-                <input id="scrub" class="scrub" type="range" min="0" max="1000" value="0" step="1" aria-label="Scrub">
-
-                <div class="timecode" id="timecode">0:00 / 0:00</div>
-              </div>
-
-              <div class="lot-counter" id="lotCounter">Lot — / —</div>
-
-              <button id="nextBtn" class="btn-nav" type="button">
-                Next <i class="fa-solid fa-arrow-right"></i>
-              </button>
-            </div>
-          </div>
-
-          <!-- CATALOG -->
-          <div class="col-12 col-lg-4 order-2 order-lg-2">
-            <div class="catalog-panel" id="catalogWrap" style="display:none;">
-              <p class="catalog-title"><i class="fa-solid fa-image"></i> Catalog image</p>
-              <img id="catalogImg" class="catalog-img" src="" alt="Catalog image">
-              <p class="tap-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Tap to enlarge • tap to zoom • pinch on mobile</p>
-            </div>
-          </div>
-
-          <!-- SALE STRIP -->
-          <div class="col-12 col-lg-8 order-3 order-lg-3">
-            <div class="sale-strip">
-              <div class="label"><i class="fa-solid fa-circle-info"></i> Sale</div>
-
-              <div class="sale-row">
-                <div class="sale-mini">
-                  <span><i class="fa-solid fa-calendar-days"></i> March 4 • Platte, SD</span>
-                  <span><i class="fa-solid fa-location-dot"></i> Platte Livestock Market</span>
-                  <span><i class="fa-solid fa-phone"></i> 605-999-0147</span>
-                </div>
-
-                <div class="sale-actions">
-                  <a class="btn-gold" target="_blank" rel="noopener"
-                     href="https://www.google.com/maps/search/?api=1&query=Platte%20Livestock%20Market%2C%2036580%20SD-44%2C%20Platte%2C%20SD%2057369">
-                    <i class="fa-solid fa-map-location-dot"></i> Directions
-                  </a>
-
-                  <a class="btn-light-outline" target="_blank" rel="noopener"
-                     href="http://www.plattelivestockmarket.com">
-                    <i class="fa-solid fa-globe"></i> Venue Website
-                  </a>
-
-                  <a class="btn-light-outline" target="_blank" rel="noopener"
-                     href="https://www.facebook.com/barteltangus">
-                    <i class="fa-brands fa-facebook-f"></i> Facebook
-                  </a>
-
-                  <a class="btn-light-outline" href="tel:6059990147">
-                    <i class="fa-solid fa-phone"></i> Call
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Controls -->
-      <div class="controls mb-4">
-        <div class="row g-3 align-items-center">
-          <div class="col-12 col-lg-6">
-            <input id="searchInput" class="form-control search"
-              placeholder="Search lots (ex: 11, bull, heifer)">
-          </div>
-          <div class="col-12 col-lg-6 d-flex justify-content-lg-end justify-content-start">
-            <div class="count" id="countText">0 lots</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Grid -->
-      <div class="row g-4" id="grid"></div>
-
-    </div>
-  </main>
-
-  <!-- FULLSCREEN IMAGE MODAL -->
-  <div id="imgModal" class="img-modal" aria-hidden="true">
-    <div class="img-modal-hint">Fits screen • tap to zoom • drag to move • pinch to zoom • wheel zoom</div>
-
-    <button id="imgModalClose" class="img-modal-close" type="button" aria-label="Close">
-      <i class="fa-solid fa-xmark"></i>
-    </button>
-
-    <div id="stage" class="zoom-stage" role="dialog" aria-label="Catalog image viewer">
-      <img id="zoomImg" class="zoom-img" src="" alt="Zoomed catalog image">
-    </div>
+  <!-- SCRUB ROW -->
+  <div class="scrub-wrap">
+    <button id="playBtn" class="btn-play"><i id="playIcon" class="fa-solid fa-pause"></i></button>
+    <input id="scrub" class="scrub" type="range" min="0" max="1000" value="0">
+    <div id="timecode" class="timecode">0:00 / 0:00</div>
   </div>
 
-  <!-- Vimeo Player API -->
-  <script src="https://player.vimeo.com/api/player.js"></script>
+  <!-- NAV ROW -->
+  <div class="nav-row">
+    <button id="prevBtn" class="btn-nav"><i class="fa-solid fa-arrow-left"></i> Prev</button>
+    <div id="lotCounter" class="lot-counter">Lot 1 / 19</div>
+    <button id="nextBtn" class="btn-nav">Next <i class="fa-solid fa-arrow-right"></i></button>
+  </div>
 
-  <script>
-    function extractVimeoId(input){
-      if(!input) return "";
-      const s = String(input).trim();
-      if(!s) return "";
-      if(/^\d+$/.test(s)) return s;
+</div>
+</div>
 
-      try{
-        const url = new URL(s);
-        const parts = url.pathname.split("/").filter(Boolean);
-        for(let i = parts.length - 1; i >= 0; i--){
-          if(/^\d+$/.test(parts[i])) return parts[i];
-        }
-      }catch(e){
-        const m = s.match(/(\d{6,})/);
-        return m ? m[1] : "";
-      }
-      return "";
-    }
+</div>
+</main>
 
-    function vimeoEmbedBackground(fromUrlOrId){
-      const id = extractVimeoId(fromUrlOrId);
-      if(!id) return "";
-      return `https://player.vimeo.com/video/${id}?` +
-        `background=1&autoplay=1&muted=1&loop=1&autopause=0&playsinline=1&dnt=1`;
-    }
+<script src="https://player.vimeo.com/api/player.js"></script>
 
-    function fmtTime(sec){
-      if(!isFinite(sec) || sec < 0) sec = 0;
-      sec = Math.floor(sec);
-      const m = Math.floor(sec / 60);
-      const s = sec % 60;
-      return `${m}:${String(s).padStart(2,"0")}`;
-    }
+<script>
+const lots=[
+{lot:1,meta:"Bull",vimeo:"1161993796"},
+{lot:2,meta:"Bull",vimeo:"1161993835"},
+{lot:3,meta:"Bull",vimeo:"1161993947"},
+{lot:4,meta:"Bull",vimeo:"1161994078"},
+{lot:5,meta:"Bull",vimeo:"1161994197"},
+{lot:6,meta:"Bull",vimeo:"1161994298"},
+{lot:7,meta:"Bull",vimeo:"1161994440"},
+{lot:8,meta:"Bull",vimeo:"1161994525"},
+{lot:9,meta:"Bull",vimeo:"1161994645"},
+{lot:10,meta:"Bull",vimeo:"1161994737"},
+{lot:11,meta:"Bull",vimeo:"1161994854"},
+{lot:12,meta:"Bull",vimeo:"1161994977"},
+{lot:13,meta:"Bull",vimeo:"1161995140"},
+{lot:14,meta:"Bull",vimeo:"1161995267"},
+{lot:15,meta:"Bull",vimeo:"1161995435"},
+{lot:16,meta:"Heifer",vimeo:"1161995589"},
+{lot:17,meta:"Heifer",vimeo:"1161995681"},
+{lot:18,meta:"Heifer",vimeo:"1161995766"},
+{lot:19,meta:"Heifer",vimeo:"1161995824"},
+];
 
-    const lots = [
-      { lot: 1,  title: "Lot 1",  meta: "Bull",   vimeo: "1161993796", catalogImg: "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg.jpg" },
-      { lot: 2,  title: "Lot 2",  meta: "Bull",   vimeo: "1161993835", catalogImg: "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg" },
-      { lot: 3,  title: "Lot 3",  meta: "Bull",   vimeo: "1161993947", catalogImg: "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg" },
-      { lot: 4,  title: "Lot 4",  meta: "Bull",   vimeo: "1161994078", catalogImg: "assets/img/catalog/bartelt/lot04.jpg" },
-      { lot: 5,  title: "Lot 5",  meta: "Bull",   vimeo: "1161994197", catalogImg: "assets/img/catalog/bartelt/lot05.jpg" },
-      { lot: 6,  title: "Lot 6",  meta: "Bull",   vimeo: "1161994298", catalogImg: "assets/img/catalog/bartelt/lot06.jpg" },
-      { lot: 7,  title: "Lot 7",  meta: "Bull",   vimeo: "1161994440", catalogImg: "assets/img/catalog/bartelt/lot07.jpg" },
-      { lot: 8,  title: "Lot 8",  meta: "Bull",   vimeo: "1161994525", catalogImg: "assets/img/catalog/bartelt/lot08.jpg" },
-      { lot: 9,  title: "Lot 9",  meta: "Bull",   vimeo: "1161994645", catalogImg: "assets/img/catalog/bartelt/lot09.jpg" },
-      { lot: 10, title: "Lot 10", meta: "Bull",   vimeo: "1161994737", catalogImg: "assets/img/catalog/bartelt/lot10.jpg" },
-      { lot: 11, title: "Lot 11", meta: "Bull",   vimeo: "1161994854", catalogImg: "assets/img/catalog/bartelt/lot11.jpg" },
-      { lot: 12, title: "Lot 12", meta: "Bull",   vimeo: "1161994977", catalogImg: "assets/img/catalog/bartelt/lot12.jpg" },
-      { lot: 13, title: "Lot 13", meta: "Bull",   vimeo: "1161995140", catalogImg: "assets/img/catalog/bartelt/lot13.jpg" },
-      { lot: 14, title: "Lot 14", meta: "Bull",   vimeo: "1161995267", catalogImg: "assets/img/catalog/bartelt/lot14.jpg" },
-      { lot: 15, title: "Lot 15", meta: "Bull",   vimeo: "1161995435", catalogImg: "assets/img/catalog/bartelt/lot15.jpg" },
-      { lot: 16, title: "Lot 16A", meta: "Heifer", vimeo: "1161995589", catalogImg: "assets/img/catalog/bartelt/lot16a.jpg" },
-      { lot: 17, title: "Lot 16B", meta: "Heifer", vimeo: "1161995681", catalogImg: "assets/img/catalog/bartelt/lot16b.jpg" },
-      { lot: 18, title: "Lot 16C", meta: "Heifer", vimeo: "1161995766", catalogImg: "assets/img/catalog/bartelt/lot16c.jpg" },
-      { lot: 19, title: "Lot 16D", meta: "Heifer", vimeo: "1161995824", catalogImg: "assets/img/catalog/bartelt/lot16d.jpg" },
-    ];
+let idx=0,player,duration=0,drag=false;
 
-    const grid = document.getElementById("grid");
-    const searchInput = document.getElementById("searchInput");
-    const countText = document.getElementById("countText");
+const frame=document.getElementById("playerFrame");
+const playBtn=document.getElementById("playBtn");
+const playIcon=document.getElementById("playIcon");
+const scrub=document.getElementById("scrub");
+const timecode=document.getElementById("timecode");
+const title=document.getElementById("playerTitle");
+const counter=document.getElementById("lotCounter");
 
-    const playerTitle = document.getElementById("playerTitle");
-    const playerSub = document.getElementById("playerSub");
-    const playerFrame = document.getElementById("playerFrame");
-    const catalogWrap = document.getElementById("catalogWrap");
-    const catalogImg = document.getElementById("catalogImg");
+function embed(id){
+  return `https://player.vimeo.com/video/${id}?background=1&autoplay=1&muted=1&loop=1`;
+}
 
-    const prevBtn = document.getElementById("prevBtn");
-    const nextBtn = document.getElementById("nextBtn");
-    const lotCounter = document.getElementById("lotCounter");
+async function load(i){
+  idx=i;
+  const l=lots[i];
+  title.textContent=`Lot ${l.lot} • ${l.meta}`;
+  counter.textContent=`Lot ${l.lot} / ${lots.length}`;
+  frame.src=embed(l.vimeo);
 
-    const playBtn = document.getElementById("playBtn");
-    const playIcon = document.getElementById("playIcon");
-    const scrub = document.getElementById("scrub");
-    const timecode = document.getElementById("timecode");
+  setTimeout(async()=>{
+    player=new Vimeo.Player(frame);
+    duration=await player.getDuration();
+    scrub.value=0;
+    timecode.textContent=`0:00 / ${fmt(duration)}`;
 
-    const imgModal = document.getElementById("imgModal");
-    const imgModalClose = document.getElementById("imgModalClose");
-    const stage = document.getElementById("stage");
-    const zoomImg = document.getElementById("zoomImg");
-
-    let currentIndex = -1;
-
-    let vPlayer = null;
-    let duration = 0;
-    let isPlaying = true;
-    let isScrubbing = false;
-
-    function setPlayIcon(){
-      playIcon.className = isPlaying ? "fa-solid fa-pause" : "fa-solid fa-play";
-    }
-
-    async function attachVimeoPlayer(){
-      try{
-        if(vPlayer){
-          vPlayer.unload().catch(()=>{});
-          vPlayer = null;
-        }
-
-        vPlayer = new Vimeo.Player(playerFrame);
-
-        await vPlayer.setVolume(0).catch(()=>{});
-        await vPlayer.setMuted(true).catch(()=>{});
-        await vPlayer.play().catch(()=>{});
-
-        duration = await vPlayer.getDuration().catch(()=>0);
-        if(!isFinite(duration) || duration < 0) duration = 0;
-
-        isPlaying = true;
-        setPlayIcon();
-        timecode.textContent = `${fmtTime(0)} / ${fmtTime(duration)}`;
-        scrub.value = 0;
-
-        vPlayer.on("timeupdate", (data) => {
-          if(!data) return;
-          const sec = data.seconds || 0;
-          if(!isScrubbing && duration > 0){
-            const v = Math.max(0, Math.min(1000, Math.round((sec / duration) * 1000)));
-            scrub.value = v;
-          }
-          timecode.textContent = `${fmtTime(sec)} / ${fmtTime(duration)}`;
-        });
-
-        vPlayer.on("play", () => { isPlaying = true; setPlayIcon(); });
-        vPlayer.on("pause", () => { isPlaying = false; setPlayIcon(); });
-
-      }catch(e){
-        duration = 0;
-        timecode.textContent = "0:00 / 0:00";
-      }
-    }
-
-    function updateNav(){
-      const total = lots.length;
-      if(currentIndex < 0){
-        lotCounter.textContent = "Lot — / —";
-        prevBtn.disabled = true;
-        nextBtn.disabled = true;
-        return;
-      }
-      const currentLot = lots[currentIndex].lot;
-      lotCounter.textContent = `Lot ${currentLot} / ${total}`;
-      prevBtn.disabled = currentIndex === 0;
-      nextBtn.disabled = currentIndex === total - 1;
-    }
-
-    async function selectLot(lotNumber){
-      const item = lots.find(x => x.lot === lotNumber);
-      if(!item) return;
-
-      currentIndex = lots.findIndex(x => x.lot === lotNumber);
-      updateNav();
-
-      document.querySelectorAll(".lot-card").forEach(c => c.classList.remove("active-lot"));
-      const active = document.querySelector(`[data-lot="${lotNumber}"]`);
-      if(active) active.classList.add("active-lot");
-
-      playerTitle.textContent = `Lot ${item.lot} • ${item.meta}`;
-      playerSub.textContent = item.title || "";
-
-      if(item.vimeo && String(item.vimeo).trim() !== ""){
-        playerFrame.src = vimeoEmbedBackground(item.vimeo);
-        setTimeout(() => { attachVimeoPlayer(); }, 60);
-      }else{
-        playerFrame.src = "";
-        if(vPlayer){ vPlayer.unload().catch(()=>{}); vPlayer = null; }
-        duration = 0;
-        timecode.textContent = "0:00 / 0:00";
-        scrub.value = 0;
-      }
-
-      if(item.catalogImg && item.catalogImg.trim() !== ""){
-        catalogImg.src = item.catalogImg.trim();
-        catalogWrap.style.display = "flex";
-      }else{
-        catalogWrap.style.display = "none";
-      }
-
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    function matchesSearch(item, q){
-      if(!q) return true;
-      const hay = `${item.lot} ${item.title} ${item.meta}`.toLowerCase();
-      return hay.includes(q);
-    }
-
-    function render(){
-      const q = searchInput.value.trim().toLowerCase();
-      const filtered = lots.filter(l => matchesSearch(l, q));
-      countText.textContent = `${filtered.length} lot${filtered.length === 1 ? "" : "s"}`;
-
-      grid.innerHTML = filtered.map(l => `
-        <div class="col-12 col-md-6 col-lg-4">
-          <div class="lot-card" data-lot="${l.lot}">
-            <div class="lot-top">
-              <div class="lot-left">
-                <div>
-                  <div class="lot-num">Lot</div>
-                  <div class="lot-big">${l.lot}</div>
-                </div>
-                <div class="thumb" data-zoom="${l.catalogImg || ""}">
-                  <img src="${l.catalogImg}" alt="Catalog preview for Lot ${l.lot}"
-                       onerror="this.style.display='none'; this.parentElement.style.display='none';">
-                </div>
-              </div>
-              <div class="play"><i class="fa-solid fa-play"></i></div>
-            </div>
-            <div class="lot-body">
-              <p class="lot-title">${l.title}</p>
-              <p class="lot-meta">${l.meta}</p>
-            </div>
-          </div>
-        </div>
-      `).join("");
-
-      document.querySelectorAll(".lot-card").forEach(card => {
-        card.addEventListener("click", () => {
-          const lot = parseInt(card.getAttribute("data-lot"), 10);
-          selectLot(lot);
-        });
-      });
-
-      document.querySelectorAll(".thumb").forEach(t => {
-        t.addEventListener("click", (e) => {
-          e.stopPropagation();
-          const src = t.getAttribute("data-zoom");
-          if(src) openImageModal(src);
-        });
-      });
-    }
-
-    playBtn.addEventListener("click", async () => {
-      if(!vPlayer) return;
-      try{
-        const paused = await vPlayer.getPaused();
-        if(paused) await vPlayer.play();
-        else await vPlayer.pause();
-      }catch(e){}
-    });
-
-    scrub.addEventListener("input", async () => {
-      if(!vPlayer || !duration) return;
-      isScrubbing = true;
-      const target = (parseInt(scrub.value, 10) / 1000) * duration;
-      try{ await vPlayer.setCurrentTime(target); }catch(e){}
-    });
-
-    scrub.addEventListener("change", () => { isScrubbing = false; });
-
-    // FULLSCREEN IMAGE MODAL
-    let scale = 1, minScale = 1, maxScale = 4;
-    let x = 0, y = 0;
-    let isDragging = false, startX = 0, startY = 0, dragStartX = 0, dragStartY = 0;
-    let lastTouchDist = null;
-
-    function applyTransform(){
-      zoomImg.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px) scale(${scale})`;
-    }
-    function setCursor(){
-      stage.style.cursor = (scale > minScale + 0.01) ? "grab" : "default";
-    }
-    function fitToScreen(){
-      const rect = stage.getBoundingClientRect();
-      const sw = rect.width, sh = rect.height;
-      const iw = zoomImg.naturalWidth || zoomImg.width || 1;
-      const ih = zoomImg.naturalHeight || zoomImg.height || 1;
-      const pad = 24;
-      const fitW = Math.max(1, sw - pad * 2);
-      const fitH = Math.max(1, sh - pad * 2);
-      const fitScale = Math.min(fitW / iw, fitH / ih, 1);
-      minScale = fitScale; scale = fitScale; x = 0; y = 0;
-      setCursor(); applyTransform();
-    }
-    function openImageModal(src){
-      imgModal.classList.add("show");
-      imgModal.setAttribute("aria-hidden", "false");
-      document.body.style.overflow = "hidden";
-      zoomImg.onload = () => { fitToScreen(); };
-      zoomImg.src = src;
-      setTimeout(() => { if(zoomImg.complete) fitToScreen(); }, 0);
-    }
-    function closeImageModal(){
-      imgModal.classList.remove("show");
-      imgModal.setAttribute("aria-hidden", "true");
-      document.body.style.overflow = "";
-      lastTouchDist = null;
-    }
-
-    imgModal.addEventListener("click", (e) => { if(e.target === imgModal) closeImageModal(); });
-    imgModalClose.addEventListener("click", closeImageModal);
-    document.addEventListener("keydown", (e) => {
-      if(e.key === "Escape" && imgModal.classList.contains("show")) closeImageModal();
-    });
-
-    let clickSuppress = false;
-    function toggleZoom(){
-      const zoomInTarget = Math.min(maxScale, minScale * 2.25);
-      if(scale <= minScale + 0.01){ scale = zoomInTarget; }
-      else { scale = minScale; x = 0; y = 0; }
-      setCursor(); applyTransform();
-    }
-
-    stage.addEventListener("pointerdown", (e) => {
-      e.preventDefault();
-      stage.setPointerCapture(e.pointerId);
-      isDragging = true;
-      startX = e.clientX; startY = e.clientY;
-      dragStartX = x; dragStartY = y;
-      clickSuppress = false;
-    });
-
-    stage.addEventListener("pointermove", (e) => {
-      if(!isDragging) return;
-      const dx = e.clientX - startX;
-      const dy = e.clientY - startY;
-      if(Math.abs(dx) > 6 || Math.abs(dy) > 6) clickSuppress = true;
-      if(scale > minScale + 0.01){
-        x = dragStartX + dx;
-        y = dragStartY + dy;
-        applyTransform();
+    player.on("timeupdate",e=>{
+      if(!drag){
+        scrub.value=(e.seconds/duration)*1000;
+        timecode.textContent=`${fmt(e.seconds)} / ${fmt(duration)}`;
       }
     });
+  },60);
+}
 
-    stage.addEventListener("pointerup", () => {
-      isDragging = false;
-      if(!clickSuppress) toggleZoom();
-    });
+function fmt(s){
+  s=Math.floor(s);
+  return `${Math.floor(s/60)}:${String(s%60).padStart(2,"0")}`;
+}
 
-    stage.addEventListener("pointercancel", () => { isDragging = false; });
+playBtn.onclick=async()=>{
+  const p=await player.getPaused();
+  p?player.play():player.pause();
+  playIcon.className=p?"fa-solid fa-pause":"fa-solid fa-play";
+};
 
-    stage.addEventListener("wheel", (e) => {
-      e.preventDefault();
-      const delta = -Math.sign(e.deltaY) * 0.15;
-      const next = Math.min(maxScale, Math.max(minScale, scale + delta));
-      scale = next;
-      if(scale <= minScale + 0.01){ scale = minScale; x = 0; y = 0; }
-      setCursor(); applyTransform();
-    }, { passive:false });
+scrub.oninput=e=>{
+  drag=true;
+  const t=(scrub.value/1000)*duration;
+  timecode.textContent=`${fmt(t)} / ${fmt(duration)}`;
+};
 
-    stage.addEventListener("touchmove", (e) => {
-      if(e.touches.length !== 2){ lastTouchDist = null; return; }
-      e.preventDefault();
-      const t1 = e.touches[0], t2 = e.touches[1];
-      const dx = t1.clientX - t2.clientX;
-      const dy = t1.clientY - t2.clientY;
-      const dist = Math.hypot(dx, dy);
-      if(lastTouchDist == null){ lastTouchDist = dist; return; }
-      const diff = (dist - lastTouchDist) / 250;
-      scale = Math.min(maxScale, Math.max(minScale, scale + diff));
-      lastTouchDist = dist;
-      if(scale <= minScale + 0.01){ scale = minScale; x = 0; y = 0; }
-      setCursor(); applyTransform();
-    }, { passive:false });
+scrub.onchange=e=>{
+  drag=false;
+  player.setCurrentTime((scrub.value/1000)*duration);
+};
 
-    window.addEventListener("resize", () => {
-      if(imgModal.classList.contains("show")) fitToScreen();
-    });
+document.getElementById("prevBtn").onclick=()=>idx>0&&load(idx-1);
+document.getElementById("nextBtn").onclick=()=>idx<lots.length-1&&load(idx+1);
 
-    catalogImg.addEventListener("click", () => {
-      const src = catalogImg.getAttribute("src");
-      if(src) openImageModal(src);
-    });
-
-    searchInput.addEventListener("input", render);
-    prevBtn.addEventListener("click", () => { if(currentIndex > 0) selectLot(lots[currentIndex - 1].lot); });
-    nextBtn.addEventListener("click", () => { if(currentIndex < lots.length - 1) selectLot(lots[currentIndex + 1].lot); });
-
-    render();
-    updateNav();
-    selectLot(1);
-  </script>
+load(0);
+</script>
 
 </body>
 </html>
