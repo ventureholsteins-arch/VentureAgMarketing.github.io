@@ -628,8 +628,9 @@
 
                 <div class="col-12 col-md-6">
                   <div class="contact-label">State *</div>
-                  <input class="form-control" name="state" maxlength="2" placeholder="SD" required>
-                  <div class="invalid-feedback">State is required.</div>
+                  <!-- ✅ improved state input -->
+                  <input class="form-control" name="state" maxlength="2" pattern="^[A-Za-z]{2}$" placeholder="SD" required>
+                  <div class="invalid-feedback">Enter 2-letter state code (ex: SD).</div>
                 </div>
 
                 <div class="col-12 col-md-6">
@@ -730,13 +731,17 @@
         btn.textContent = on ? "Sending..." : "Send";
       }
 
+      // live uppercase for state
+      const st = form.querySelector('[name="state"]');
+      if(st){
+        st.addEventListener("input", () => {
+          st.value = st.value.toUpperCase().replace(/[^A-Z]/g, "").slice(0,2);
+        });
+      }
+
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
         e.stopPropagation();
-
-        // normalize state to uppercase
-        const st = form.querySelector('[name="state"]');
-        if(st && st.value) st.value = st.value.toUpperCase().trim();
 
         ok.style.display = "none";
         bad.style.display = "none";
@@ -751,8 +756,9 @@
 
         try{
           const fd = new FormData(form);
-          fd.append("type", "book_sale");          // ✅ tells Apps Script to write to "Book a Sale"
+          fd.append("type", "book_sale");          // ✅ routes to "Book a Sale"
           fd.append("page", window.location.href);
+          fd.append("ua", navigator.userAgent);    // ✅ optional (nice to have)
 
           const res = await fetch(GOOGLE_WEB_APP_URL, { method:"POST", body: fd });
 
