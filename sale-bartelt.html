@@ -257,8 +257,18 @@
       <div class="top-links">
         <a class="top-link" href="./index.html#sales"><i class="fa-solid fa-arrow-left"></i> Back</a>
 
-        <span class="soon"><i class="fa-solid fa-book"></i> Catalog <b>Coming Soon</b></span>
-        <span class="soon"><i class="fa-solid fa-video"></i> Videos <b>Coming Soon</b></span>
+        <!-- ✅ REPLACED Coming Soon chips with real links -->
+        <a class="top-link"
+           href="https://indd.adobe.com/view/76b41055-0c52-421c-ada3-4e6d8c1d3dda"
+           target="_blank" rel="noopener">
+          <i class="fa-solid fa-book"></i> Catalog
+        </a>
+
+        <a class="top-link"
+           href="sale-bartelt-videos.html"
+           target="_blank" rel="noopener">
+          <i class="fa-solid fa-video"></i> Videos
+        </a>
 
         <!-- ✅ only primary button -->
         <button class="btn-gold" id="openRequestBtn" type="button" data-bs-toggle="modal" data-bs-target="#requestModal">
@@ -383,11 +393,10 @@
 
             <div class="col-6 col-md-3">
               <label class="form-label form-label-theme" for="zip">Zip Code</label>
-<input class="form-control form-control-theme" id="zip" name="zip"
-  inputmode="numeric" autocomplete="postal-code"
-  pattern="^\d{5}(-\d{4})?$" placeholder="57369" maxlength="10">
-<div class="invalid-feedback">Enter a valid zip code.</div>
-
+              <input class="form-control form-control-theme" id="zip" name="zip"
+                inputmode="numeric" autocomplete="postal-code"
+                pattern="^\d{5}(-\d{4})?$" placeholder="57369" maxlength="10">
+              <div class="invalid-feedback">Enter a valid zip code.</div>
             </div>
 
             <div class="col-12 col-md-6">
@@ -503,23 +512,17 @@
         }
       }
 
-      // If user clicks the button, update URL so it’s shareable
       if(openBtn){
         openBtn.addEventListener("click", () => {
-          // don't add history spam
           if(window.location.hash !== "#request"){
             history.replaceState(null, "", window.location.pathname + window.location.search + "#request");
           }
         });
       }
 
-      // Open on load
       openIfHash();
-
-      // Open if hash changes
       window.addEventListener("hashchange", openIfHash);
 
-      // Clean URL when modal closes (keeps it clean)
       modalEl.addEventListener("hidden.bs.modal", () => {
         if (window.location.hash === "#request") {
           history.replaceState(null, "", window.location.pathname + window.location.search);
