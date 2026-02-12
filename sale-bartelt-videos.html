@@ -91,10 +91,8 @@
       .video-ratio.ratio-16x9{ --bs-aspect-ratio: 44%; }
     }
 
-    /* ✅ HARD LOCK: block ALL clicks on the Vimeo iframe (prevents overlays/unmute UI) */
-    .video-ratio iframe{
-      pointer-events: none;
-    }
+    /* ✅ HARD LOCK: block ALL clicks on the Vimeo iframe */
+    .video-ratio iframe{ pointer-events: none; }
 
     /* Player actions */
     .player-actions{
@@ -134,26 +132,15 @@
       white-space:nowrap;
     }
 
-    /* Custom scrub controls (our UI only) */
+    /* Custom scrub controls */
     .scrub-area{
       width: 100%;
       padding: 10px 14px 12px;
       background: #0b0b0b;
       border-top: 1px solid rgba(255,255,255,.10);
     }
-
-    .scrub-row{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-
-    .scrub{
-      width: 100%;
-      accent-color: var(--vam-gold);
-      height: 6px;
-      cursor: pointer;
-    }
+    .scrub-row{ display:flex; align-items:center; gap:10px; }
+    .scrub{ width: 100%; accent-color: var(--vam-gold); height: 6px; cursor: pointer; }
     .timecode{
       color: rgba(242,242,242,.70);
       font-weight: 900;
@@ -183,37 +170,11 @@
       align-items:center;
       gap:8px;
     }
-    .sale-row{
-      display:flex;
-      flex-wrap:wrap;
-      align-items:center;
-      gap:12px 18px;
-      justify-content:space-between;
-    }
-    .sale-mini{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px 16px;
-      align-items:center;
-      color: rgba(242,242,242,.88);
-      font-weight: 800;
-    }
-    .sale-mini span{
-      display:inline-flex;
-      gap:8px;
-      align-items:center;
-      color: rgba(242,242,242,.84);
-      font-weight: 800;
-      letter-spacing: .02em;
-    }
+    .sale-row{ display:flex; flex-wrap:wrap; align-items:center; gap:12px 18px; justify-content:space-between; }
+    .sale-mini{ display:flex; flex-wrap:wrap; gap:10px 16px; align-items:center; color: rgba(242,242,242,.88); font-weight: 800; }
+    .sale-mini span{ display:inline-flex; gap:8px; align-items:center; color: rgba(242,242,242,.84); font-weight: 800; letter-spacing: .02em; }
     .sale-mini i{ color: var(--vam-gold); }
-    .sale-actions{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      align-items:center;
-      justify-content:flex-start; /* ✅ LEFT, per your request */
-    }
+    .sale-actions{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:flex-start; }
 
     .btn-gold{
       background: var(--vam-gold);
@@ -270,16 +231,30 @@
       gap:8px;
       margin:0;
     }
-    .catalog-img{
+
+    /* ✅ THIS is the “different sizes won’t ruin layout” fix */
+    .catalog-frame{
       width: 100%;
-      height: auto;
-      display:block;
+      aspect-ratio: 4 / 3;          /* consistent box size */
       border-radius: 16px;
       border: 1px solid rgba(255,255,255,.12);
       box-shadow: 0 16px 44px rgba(0,0,0,.45);
       background:#fff;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
       cursor: zoom-in;
     }
+    .catalog-img{
+      width: 100%;
+      height: 100%;
+      object-fit: contain;           /* show whole page image */
+      object-position: center;
+      display:block;
+      background:#fff;
+    }
+
     .tap-hint{
       color: rgba(242,242,242,.70);
       font-size: .86rem;
@@ -376,6 +351,7 @@
       .sale-row{ justify-content:flex-start; }
       .sale-actions{ justify-content:flex-start; }
       .timecode{ min-width: 95px; }
+      .catalog-frame{ aspect-ratio: 16 / 9; } /* little more phone-friendly */
     }
 
     /* =========================
@@ -489,7 +465,6 @@
                 allowfullscreen></iframe>
             </div>
 
-            <!-- ✅ scrub is ABOVE prev/next on mobile and desktop -->
             <div class="scrub-area">
               <div class="scrub-row">
                 <input id="scrub" class="scrub" type="range" min="0" max="1000" value="0" step="1" aria-label="Scrub">
@@ -502,7 +477,7 @@
                 <i class="fa-solid fa-arrow-left"></i> Prev
               </button>
 
-              <div class="lot-counter" id="lotCounter">Lot — / —</div>
+              <div class="lot-counter" id="lotCounter">— / —</div>
 
               <button id="nextBtn" class="btn-nav" type="button">
                 Next <i class="fa-solid fa-arrow-right"></i>
@@ -514,7 +489,11 @@
           <div class="col-12 col-lg-4 order-2 order-lg-2">
             <div class="catalog-panel" id="catalogWrap" style="display:none;">
               <p class="catalog-title"><i class="fa-solid fa-image"></i> Catalog image</p>
-              <img id="catalogImg" class="catalog-img" src="" alt="Catalog image">
+
+              <div class="catalog-frame" id="catalogFrame">
+                <img id="catalogImg" class="catalog-img" src="" alt="Catalog image">
+              </div>
+
               <p class="tap-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Tap to enlarge • tap to zoom • pinch on mobile</p>
             </div>
           </div>
@@ -531,7 +510,6 @@
                   <span><i class="fa-solid fa-phone"></i> 605-999-0147</span>
                 </div>
 
-                <!-- ✅ LEFT (not right) -->
                 <div class="sale-actions">
                   <a class="btn-gold" target="_blank" rel="noopener"
                      href="https://www.google.com/maps/search/?api=1&query=Platte%20Livestock%20Market%2C%2036580%20SD-44%2C%20Platte%2C%20SD%2057369">
@@ -620,8 +598,6 @@
     function vimeoSrc(fromUrlOrId){
       const id = extractVimeoId(fromUrlOrId);
       if(!id) return "";
-      // ✅ background=1 removes Vimeo UI & overlays (including unmute prompts)
-      // ✅ always muted + autoplay + loop
       return `https://player.vimeo.com/video/${id}?background=1&autoplay=1&muted=1&loop=1&autopause=0&playsinline=1&dnt=1`;
     }
 
@@ -634,35 +610,29 @@
     }
 
     // =========================
-    // LOTS (PUT YOUR REAL CATALOG IMAGES HERE)
-    // Using your example path everywhere so you see it working.
+    // LOTS (UPDATED: real image paths + string lot ids supported)
     // =========================
-    const CATALOG_EXAMPLE = "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg";
-
     const lots = [
-  { lot: 1,  title: "Lot 1",  meta: "Bull",   vimeo: "https://vimeo.com/1162334058", catalogImg: "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg" },
-  { lot: 2,  title: "Lot 2",  meta: "Bull",   vimeo: "https://vimeo.com/1162333759", catalogImg: "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg" },
-  { lot: 3,  title: "Lot 3",  meta: "Bull",   vimeo: "https://vimeo.com/1162333807", catalogImg: "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg" },
-  { lot: 4,  title: "Lot 4",  meta: "Bull",   vimeo: "https://vimeo.com/1162333865", catalogImg: "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg" },
-  { lot: 5,  title: "Lot 5",  meta: "Bull",   vimeo: "https://vimeo.com/1162333914", catalogImg: "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg" },
-  { lot: 6,  title: "Lot 6",  meta: "Bull",   vimeo: "https://vimeo.com/1162334132", catalogImg: "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg" },
-  { lot: 7,  title: "Lot 7",  meta: "Bull",   vimeo: "https://vimeo.com/1162335921", catalogImg: "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg" },
-  { lot: 8,  title: "Lot 8",  meta: "Bull",   vimeo: "https://vimeo.com/1162334293", catalogImg: "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg" },
-  { lot: 9,  title: "Lot 9",  meta: "Bull",   vimeo: "https://vimeo.com/1162334325", catalogImg: "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg" },
-  { lot: 10, title: "Lot 10", meta: "Bull",   vimeo: "https://vimeo.com/1162334352", catalogImg: "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg" },
-  { lot: 11, title: "Lot 11", meta: "Bull",   vimeo: "https://vimeo.com/1162334383", catalogImg: "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg" },
-  { lot: 12, title: "Lot 12", meta: "Bull",   vimeo: "https://vimeo.com/1162334426", catalogImg: "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg" },
-  { lot: 13, title: "Lot 13", meta: "Bull",   vimeo: "https://vimeo.com/1162334466", catalogImg: "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg" },
-  { lot: 14, title: "Lot 14", meta: "Bull",   vimeo: "https://vimeo.com/1162334539", catalogImg: "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg" },
-  { lot: 15, title: "Lot 15", meta: "Bull",   vimeo: "https://vimeo.com/1162336799", catalogImg: "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg" },
-
-  // 16A–16D mapped as 16–19 (keeps nav simple)
-  { lot: 16, title: "Lot 16A", meta: "Heifer", vimeo: "https://vimeo.com/1162334821", catalogImg: "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg" },
-  { lot: 17, title: "Lot 16B", meta: "Heifer", vimeo: "https://vimeo.com/1162334880", catalogImg: "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg" },
-  { lot: 18, title: "Lot 16C", meta: "Heifer", vimeo: "https://vimeo.com/1162334951", catalogImg: "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg" },
-  { lot: 19, title: "Lot 16D", meta: "Heifer", vimeo: "https://vimeo.com/1162335034", catalogImg: "assets/img/Catalog/Screenshot 2026-02-03 124207.jpg" },
-];
-
+      { lot: "1",   title: "Lot 1",   meta: "Bull",       vimeo: "https://vimeo.com/1162334058", catalogImg: "assets/img/Catalog/Lot 1.JPG" },
+      { lot: "2",   title: "Lot 2",   meta: "Bull",       vimeo: "https://vimeo.com/1162333759", catalogImg: "assets/img/Catalog/Lot 2.JPG" },
+      { lot: "3",   title: "Lot 3",   meta: "Bull",       vimeo: "https://vimeo.com/1162333807", catalogImg: "assets/img/Catalog/Lot 3.JPG" },
+      { lot: "4",   title: "Lot 4",   meta: "Bull",       vimeo: "https://vimeo.com/1162333865", catalogImg: "assets/img/Catalog/Lot 4.JPG" },
+      { lot: "5",   title: "Lot 5",   meta: "Bull",       vimeo: "https://vimeo.com/1162333914", catalogImg: "assets/img/Catalog/Lot 5.JPG" },
+      { lot: "6",   title: "Lot 6",   meta: "Bull",       vimeo: "https://vimeo.com/1162334132", catalogImg: "assets/img/Catalog/Lot 6.JPG" },
+      { lot: "7",   title: "Lot 7",   meta: "Bull",       vimeo: "https://vimeo.com/1162335921", catalogImg: "assets/img/Catalog/Lot 7.JPG" },
+      { lot: "8",   title: "Lot 8",   meta: "Bull",       vimeo: "https://vimeo.com/1162334293", catalogImg: "assets/img/Catalog/Lot 8.JPG" },
+      { lot: "9",   title: "Lot 9",   meta: "Bull",       vimeo: "https://vimeo.com/1162334325", catalogImg: "assets/img/Catalog/Lot 9.JPG" },
+      { lot: "10",  title: "Lot 10",  meta: "Commercial", vimeo: "https://vimeo.com/1162334352", catalogImg: "assets/img/Catalog/Lot 10.JPG" },
+      { lot: "11",  title: "Lot 11",  meta: "Commercial", vimeo: "https://vimeo.com/1162334383", catalogImg: "assets/img/Catalog/Lot 11.JPG" },
+      { lot: "12",  title: "Lot 12",  meta: "Commercial", vimeo: "https://vimeo.com/1162334426", catalogImg: "assets/img/Catalog/Lot 12.JPG" },
+      { lot: "13",  title: "Lot 13",  meta: "Commercial", vimeo: "https://vimeo.com/1162334466", catalogImg: "assets/img/Catalog/Lot 13.JPG" },
+      { lot: "14",  title: "Lot 14",  meta: "Bull",       vimeo: "https://vimeo.com/1162334539", catalogImg: "assets/img/Catalog/Lot 14.JPG" },
+      { lot: "15",  title: "Lot 15",  meta: "Bull",       vimeo: "https://vimeo.com/1162336799", catalogImg: "assets/img/Catalog/Lot 15.JPG" },
+      { lot: "16A", title: "Lot 16A", meta: "Heifer",     vimeo: "https://vimeo.com/1162334821", catalogImg: "assets/img/Catalog/Lot 16A.JPG" },
+      { lot: "16B", title: "Lot 16B", meta: "Heifer",     vimeo: "https://vimeo.com/1162334880", catalogImg: "assets/img/Catalog/Lot 16B.JPG" },
+      { lot: "16C", title: "Lot 16C", meta: "Heifer",     vimeo: "https://vimeo.com/1162334951", catalogImg: "assets/img/Catalog/Lot 16C.JPG" },
+      { lot: "16D", title: "Lot 16D", meta: "Heifer",     vimeo: "https://vimeo.com/1162335034", catalogImg: "assets/img/Catalog/Lot 16D.JPG" },
+    ];
 
     const grid = document.getElementById("grid");
     const searchInput = document.getElementById("searchInput");
@@ -713,7 +683,6 @@
 
         vPlayer = new Vimeo.Player(playerFrame);
 
-        // ✅ hard lock: always muted
         await hardLockMutedAutoplay();
 
         duration = await vPlayer.getDuration().catch(()=>0);
@@ -722,13 +691,11 @@
         timecode.textContent = `${fmtTime(0)} / ${fmtTime(duration)}`;
         scrub.value = 0;
 
-        // Keep it looping even if Vimeo doesn't loop for any reason
         vPlayer.on("ended", async () => {
           try{ await vPlayer.setCurrentTime(0); }catch(e){}
           await hardLockMutedAutoplay();
         });
 
-        // Update scrubber as video plays
         vPlayer.on("timeupdate", (data) => {
           const sec = (data && data.seconds) ? data.seconds : 0;
 
@@ -739,7 +706,6 @@
           timecode.textContent = `${fmtTime(sec)} / ${fmtTime(duration)}`;
         });
 
-        // If Vimeo ever pauses because of mobile policies, try again on first user touch
         document.addEventListener("touchstart", hardLockMutedAutoplay, { once:true, passive:true });
         document.addEventListener("click", hardLockMutedAutoplay, { once:true });
 
@@ -752,26 +718,25 @@
     function updateNav(){
       const total = lots.length;
       if(currentIndex < 0){
-        lotCounter.textContent = "Lot — / —";
+        lotCounter.textContent = "— / —";
         prevBtn.disabled = true;
         nextBtn.disabled = true;
         return;
       }
-      const currentLot = lots[currentIndex].lot;
-      lotCounter.textContent = `Lot ${currentLot} / ${total}`;
+      lotCounter.textContent = `${currentIndex + 1} / ${total}`;
       prevBtn.disabled = currentIndex === 0;
       nextBtn.disabled = currentIndex === total - 1;
     }
 
-    async function selectLot(lotNumber){
-      const item = lots.find(x => x.lot === lotNumber);
+    async function selectLotByIndex(idx){
+      const item = lots[idx];
       if(!item) return;
 
-      currentIndex = lots.findIndex(x => x.lot === lotNumber);
+      currentIndex = idx;
       updateNav();
 
       document.querySelectorAll(".lot-card").forEach(c => c.classList.remove("active-lot"));
-      const active = document.querySelector(`[data-lot="${lotNumber}"]`);
+      const active = document.querySelector(`[data-lot="${item.lot}"]`);
       if(active) active.classList.add("active-lot");
 
       playerTitle.textContent = `Lot ${item.lot} • ${item.meta}`;
@@ -796,6 +761,11 @@
       }
 
       window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function selectLotByLotId(lotId){
+      const idx = lots.findIndex(x => String(x.lot) === String(lotId));
+      if(idx >= 0) selectLotByIndex(idx);
     }
 
     function matchesSearch(item, q){
@@ -835,8 +805,8 @@
 
       document.querySelectorAll(".lot-card").forEach(card => {
         card.addEventListener("click", () => {
-          const lot = parseInt(card.getAttribute("data-lot"), 10);
-          selectLot(lot);
+          const lotId = card.getAttribute("data-lot");
+          selectLotByLotId(lotId);
         });
       });
 
@@ -1030,7 +1000,8 @@
       if(imgModal.classList.contains("show")) fitToScreen();
     });
 
-    catalogImg.addEventListener("click", () => {
+    // click on the big right panel image
+    document.getElementById("catalogFrame").addEventListener("click", () => {
       const src = catalogImg.getAttribute("src");
       if(src) openImageModal(src);
     });
@@ -1041,16 +1012,16 @@
     searchInput.addEventListener("input", render);
 
     prevBtn.addEventListener("click", () => {
-      if(currentIndex > 0) selectLot(lots[currentIndex - 1].lot);
+      if(currentIndex > 0) selectLotByIndex(currentIndex - 1);
     });
 
     nextBtn.addEventListener("click", () => {
-      if(currentIndex < lots.length - 1) selectLot(lots[currentIndex + 1].lot);
+      if(currentIndex < lots.length - 1) selectLotByIndex(currentIndex + 1);
     });
 
     render();
     updateNav();
-    selectLot(1);
+    selectLotByIndex(0);
   </script>
 
 </body>
