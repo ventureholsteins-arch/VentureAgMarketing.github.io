@@ -71,14 +71,32 @@
       background: linear-gradient(135deg, #0b0b0b 0%, #111 55%, #0b0b0b 100%);
       color: var(--vam-text);
     }
+
+    /* ✅ Player name + sire */
     .player-title{
       font-weight: 900;
-      letter-spacing: .08em;
+      letter-spacing: .06em;
       text-transform: uppercase;
       margin: 0;
-      font-size: .95rem;
+      font-size: 1.05rem;
     }
-    .player-sub{ margin: 0; color: rgba(242,242,242,.70); font-size: .92rem; }
+    .player-sub{
+      margin: 2px 0 0;
+      color: rgba(242,242,242,.78);
+      font-size: .88rem;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .player-note{
+      margin: 6px 0 0;
+      color: rgba(242,242,242,.62);
+      font-size: .82rem;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
     .player-frame{ width:100%; height:100%; border:0; background:#000; }
 
     /* Desktop: slightly shorter video */
@@ -91,7 +109,7 @@
       .video-ratio.ratio-16x9{ --bs-aspect-ratio: 44%; }
     }
 
-    /* ✅ HARD LOCK: block ALL clicks on the Vimeo iframe */
+    /* ✅ HARD LOCK: block ALL clicks on the Vimeo iframe (prevents overlays/unmute UI) */
     .video-ratio iframe{ pointer-events: none; }
 
     /* Player actions */
@@ -132,7 +150,7 @@
       white-space:nowrap;
     }
 
-    /* Custom scrub controls */
+    /* Custom scrub controls (our UI only) */
     .scrub-area{
       width: 100%;
       padding: 10px 14px 12px;
@@ -170,11 +188,37 @@
       align-items:center;
       gap:8px;
     }
-    .sale-row{ display:flex; flex-wrap:wrap; align-items:center; gap:12px 18px; justify-content:space-between; }
-    .sale-mini{ display:flex; flex-wrap:wrap; gap:10px 16px; align-items:center; color: rgba(242,242,242,.88); font-weight: 800; }
-    .sale-mini span{ display:inline-flex; gap:8px; align-items:center; color: rgba(242,242,242,.84); font-weight: 800; letter-spacing: .02em; }
+    .sale-row{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:12px 18px;
+      justify-content:space-between;
+    }
+    .sale-mini{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px 16px;
+      align-items:center;
+      color: rgba(242,242,242,.88);
+      font-weight: 800;
+    }
+    .sale-mini span{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      color: rgba(242,242,242,.84);
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
     .sale-mini i{ color: var(--vam-gold); }
-    .sale-actions{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:flex-start; }
+    .sale-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      justify-content:flex-start;
+    }
 
     .btn-gold{
       background: var(--vam-gold);
@@ -232,10 +276,10 @@
       margin:0;
     }
 
-    /* ✅ THIS is the “different sizes won’t ruin layout” fix */
+    /* ✅ consistent image box so different sizes never wreck layout */
     .catalog-frame{
       width: 100%;
-      aspect-ratio: 4 / 3;          /* consistent box size */
+      aspect-ratio: 4 / 3;
       border-radius: 16px;
       border: 1px solid rgba(255,255,255,.12);
       box-shadow: 0 16px 44px rgba(0,0,0,.45);
@@ -249,7 +293,7 @@
     .catalog-img{
       width: 100%;
       height: 100%;
-      object-fit: contain;           /* show whole page image */
+      object-fit: contain;
       object-position: center;
       display:block;
       background:#fff;
@@ -351,7 +395,7 @@
       .sale-row{ justify-content:flex-start; }
       .sale-actions{ justify-content:flex-start; }
       .timecode{ min-width: 95px; }
-      .catalog-frame{ aspect-ratio: 16 / 9; } /* little more phone-friendly */
+      .catalog-frame{ aspect-ratio: 16 / 9; }
     }
 
     /* =========================
@@ -421,6 +465,8 @@
       width: auto;
       height: auto;
       will-change: transform;
+      opacity: 0; /* ✅ prevents the “first tap top-left” flash on mobile */
+      transition: opacity .08s linear;
     }
   </style>
 </head>
@@ -447,8 +493,9 @@
       <div class="player-shell mb-4">
         <div class="player-head">
           <div>
-            <p class="player-title mb-1" id="playerTitle">Loading Lot…</p>
-            <p class="player-sub" id="playerSub">Always muted • autoplay • loop • scrub only (no Vimeo overlays)</p>
+            <p class="player-title mb-1" id="playerTitle">Loading…</p>
+            <p class="player-sub" id="playerSub"></p>
+            <p class="player-note" id="playerNote">Always muted • autoplay • loop • scrub only (no Vimeo overlays)</p>
           </div>
         </div>
 
@@ -489,11 +536,9 @@
           <div class="col-12 col-lg-4 order-2 order-lg-2">
             <div class="catalog-panel" id="catalogWrap" style="display:none;">
               <p class="catalog-title"><i class="fa-solid fa-image"></i> Catalog image</p>
-
               <div class="catalog-frame" id="catalogFrame">
                 <img id="catalogImg" class="catalog-img" src="" alt="Catalog image">
               </div>
-
               <p class="tap-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Tap to enlarge • tap to zoom • pinch on mobile</p>
             </div>
           </div>
@@ -610,28 +655,29 @@
     }
 
     // =========================
-    // LOTS (UPDATED: real image paths + string lot ids supported)
+    // LOTS (name + sire)
+    // NOTE: Update/verify sires if any differ in your catalog.
     // =========================
     const lots = [
-      { lot: "1",   title: "Lot 1",   meta: "Bull",       vimeo: "https://vimeo.com/1162334058", catalogImg: "assets/img/Catalog/Lot 1.JPG" },
-      { lot: "2",   title: "Lot 2",   meta: "Bull",       vimeo: "https://vimeo.com/1162333759", catalogImg: "assets/img/Catalog/Lot 2.JPG" },
-      { lot: "3",   title: "Lot 3",   meta: "Bull",       vimeo: "https://vimeo.com/1162333807", catalogImg: "assets/img/Catalog/Lot 3.JPG" },
-      { lot: "4",   title: "Lot 4",   meta: "Bull",       vimeo: "https://vimeo.com/1162333865", catalogImg: "assets/img/Catalog/Lot 4.JPG" },
-      { lot: "5",   title: "Lot 5",   meta: "Bull",       vimeo: "https://vimeo.com/1162333914", catalogImg: "assets/img/Catalog/Lot 5.JPG" },
-      { lot: "6",   title: "Lot 6",   meta: "Bull",       vimeo: "https://vimeo.com/1162334132", catalogImg: "assets/img/Catalog/Lot 6.JPG" },
-      { lot: "7",   title: "Lot 7",   meta: "Bull",       vimeo: "https://vimeo.com/1162335921", catalogImg: "assets/img/Catalog/Lot 7.JPG" },
-      { lot: "8",   title: "Lot 8",   meta: "Bull",       vimeo: "https://vimeo.com/1162334293", catalogImg: "assets/img/Catalog/Lot 8.JPG" },
-      { lot: "9",   title: "Lot 9",   meta: "Bull",       vimeo: "https://vimeo.com/1162334325", catalogImg: "assets/img/Catalog/Lot 9.JPG" },
-      { lot: "10",  title: "Lot 10",  meta: "Commercial", vimeo: "https://vimeo.com/1162334352", catalogImg: "assets/img/Catalog/Lot 10.JPG" },
-      { lot: "11",  title: "Lot 11",  meta: "Commercial", vimeo: "https://vimeo.com/1162334383", catalogImg: "assets/img/Catalog/Lot 11.JPG" },
-      { lot: "12",  title: "Lot 12",  meta: "Commercial", vimeo: "https://vimeo.com/1162334426", catalogImg: "assets/img/Catalog/Lot 12.JPG" },
-      { lot: "13",  title: "Lot 13",  meta: "Commercial", vimeo: "https://vimeo.com/1162334466", catalogImg: "assets/img/Catalog/Lot 13.JPG" },
-      { lot: "14",  title: "Lot 14",  meta: "Bull",       vimeo: "https://vimeo.com/1162334539", catalogImg: "assets/img/Catalog/Lot 14.JPG" },
-      { lot: "15",  title: "Lot 15",  meta: "Bull",       vimeo: "https://vimeo.com/1162336799", catalogImg: "assets/img/Catalog/Lot 15.JPG" },
-      { lot: "16A", title: "Lot 16A", meta: "Heifer",     vimeo: "https://vimeo.com/1162334821", catalogImg: "assets/img/Catalog/Lot 16A.JPG" },
-      { lot: "16B", title: "Lot 16B", meta: "Heifer",     vimeo: "https://vimeo.com/1162334880", catalogImg: "assets/img/Catalog/Lot 16B.JPG" },
-      { lot: "16C", title: "Lot 16C", meta: "Heifer",     vimeo: "https://vimeo.com/1162334951", catalogImg: "assets/img/Catalog/Lot 16C.JPG" },
-      { lot: "16D", title: "Lot 16D", meta: "Heifer",     vimeo: "https://vimeo.com/1162335034", catalogImg: "assets/img/Catalog/Lot 16D.JPG" },
+      { lot:"1",   name:"Bartelt Chief 551",        sire:"Connealy Craftsman",           meta:"Bull",       vimeo:"https://vimeo.com/1162334058", catalogImg:"assets/img/Catalog/Lot 1.JPG" },
+      { lot:"2",   name:"Bartelt Bulldozer 557",    sire:"Sitz Barricade 632F",          meta:"Bull",       vimeo:"https://vimeo.com/1162333759", catalogImg:"assets/img/Catalog/Lot 2.JPG" },
+      { lot:"3",   name:"Bartelt All The Above 550",sire:"Stellpflug Hoffman RiseAbove", meta:"Bull",       vimeo:"https://vimeo.com/1162333807", catalogImg:"assets/img/Catalog/Lot 3.JPG" },
+      { lot:"4",   name:"Bartelt Rise Above 554",   sire:"Stellpflug Hoffman RiseAbove", meta:"Bull",       vimeo:"https://vimeo.com/1162333865", catalogImg:"assets/img/Catalog/Lot 4.JPG" },
+      { lot:"5",   name:"Bartelt Rise Above 558",   sire:"Stellpflug Hoffman RiseAbove", meta:"Bull",       vimeo:"https://vimeo.com/1162333914", catalogImg:"assets/img/Catalog/Lot 5.JPG" },
+      { lot:"6",   name:"Bartelt Progressive 559",  sire:"Ellingson Profound 855",       meta:"Bull",       vimeo:"https://vimeo.com/1162334132", catalogImg:"assets/img/Catalog/Lot 6.JPG" },
+      { lot:"7",   name:"Bartelt Progressive 561",  sire:"Ellingson Profound 855",       meta:"Bull",       vimeo:"https://vimeo.com/1162335921", catalogImg:"assets/img/Catalog/Lot 7.JPG" },
+      { lot:"8",   name:"Bartelt Big Country 560",  sire:"Kraye Big Country 017",        meta:"Bull",       vimeo:"https://vimeo.com/1162334293", catalogImg:"assets/img/Catalog/Lot 8.JPG" },
+      { lot:"9",   name:"Bartelt Statesman 555",    sire:"Virginia Tech Statesman",      meta:"Bull",       vimeo:"https://vimeo.com/1162334325", catalogImg:"assets/img/Catalog/Lot 9.JPG" },
+      { lot:"10",  name:"Bartelt Bar None 556",     sire:"Deer Valley Growth Fund",      meta:"Commercial", vimeo:"https://vimeo.com/1162334352", catalogImg:"assets/img/Catalog/Lot 10.JPG" },
+      { lot:"11",  name:"Bartelt Spectrum 571",     sire:"Sitz Spectrum",                meta:"Commercial", vimeo:"https://vimeo.com/1162334383", catalogImg:"assets/img/Catalog/Lot 11.JPG" },
+      { lot:"12",  name:"Bartelt Bar None 572",     sire:"Deer Valley Growth Fund",      meta:"Commercial", vimeo:"https://vimeo.com/1162334426", catalogImg:"assets/img/Catalog/Lot 12.JPG" },
+      { lot:"13",  name:"Bartelt Exclusive 573",    sire:"Mogck Exclusive 325",          meta:"Commercial", vimeo:"https://vimeo.com/1162334466", catalogImg:"assets/img/Catalog/Lot 13.JPG" },
+      { lot:"14",  name:"A-B Palisades N552",       sire:"DJF Palisades 1170",           meta:"Bull",       vimeo:"https://vimeo.com/1162334539", catalogImg:"assets/img/Catalog/Lot 14.JPG" },
+      { lot:"15",  name:"A-B Reserve N553",         sire:"LCDR Reserve 210J",            meta:"Bull",       vimeo:"https://vimeo.com/1162336799", catalogImg:"assets/img/Catalog/Lot 15.JPG" },
+      { lot:"16A", name:"Bartelt Jilt 521",         sire:"Virginia Tech Statesman",      meta:"Heifer",     vimeo:"https://vimeo.com/1162334821", catalogImg:"assets/img/Catalog/Lot 16A.JPG" },
+      { lot:"16B", name:"Bartelt Eileen Erica 522", sire:"Schiefelbein Top Gun 522",     meta:"Heifer",     vimeo:"https://vimeo.com/1162334880", catalogImg:"assets/img/Catalog/Lot 16B.JPG" },
+      { lot:"16C", name:"Bartelt Erica 526",        sire:"Sitz Spectrum",                meta:"Heifer",     vimeo:"https://vimeo.com/1162334951", catalogImg:"assets/img/Catalog/Lot 16C.JPG" },
+      { lot:"16D", name:"A-B Jilt N523",            sire:"KRJ Dakota Outlaw 6974",       meta:"Heifer",     vimeo:"https://vimeo.com/1162335034", catalogImg:"assets/img/Catalog/Lot 16D.JPG" },
     ];
 
     const grid = document.getElementById("grid");
@@ -739,8 +785,9 @@
       const active = document.querySelector(`[data-lot="${item.lot}"]`);
       if(active) active.classList.add("active-lot");
 
-      playerTitle.textContent = `Lot ${item.lot} • ${item.meta}`;
-      playerSub.textContent = item.title || "";
+      // ✅ Big text = name, line below = Sire:
+      playerTitle.textContent = (item.name || `Lot ${item.lot}`).toUpperCase();
+      playerSub.textContent = item.sire ? `Sire: ${item.sire}`.toUpperCase() : "";
 
       if(item.vimeo && String(item.vimeo).trim() !== ""){
         playerFrame.src = vimeoSrc(item.vimeo);
@@ -770,7 +817,7 @@
 
     function matchesSearch(item, q){
       if(!q) return true;
-      const hay = `${item.lot} ${item.title} ${item.meta}`.toLowerCase();
+      const hay = `${item.lot} ${item.name} ${item.sire} ${item.meta}`.toLowerCase();
       return hay.includes(q);
     }
 
@@ -796,8 +843,8 @@
               <div class="play"><i class="fa-solid fa-play"></i></div>
             </div>
             <div class="lot-body">
-              <p class="lot-title">${l.title}</p>
-              <p class="lot-meta">${l.meta}</p>
+              <p class="lot-title">${(l.name || l.lot)}</p>
+              <p class="lot-meta">${l.meta || ""}</p>
             </div>
           </div>
         </div>
@@ -843,7 +890,7 @@
     });
 
     // =========================
-    // FULLSCREEN IMAGE MODAL
+    // FULLSCREEN IMAGE MODAL (mobile first-tap center fix)
     // =========================
     let scale = 1;
     let minScale = 1;
@@ -860,13 +907,14 @@
     function setCursor(){
       stage.style.cursor = (scale > minScale + 0.01) ? "grab" : "default";
     }
+
     function fitToScreen(){
       const rect = stage.getBoundingClientRect();
       const sw = rect.width;
       const sh = rect.height;
 
-      const iw = zoomImg.naturalWidth || zoomImg.width || 1;
-      const ih = zoomImg.naturalHeight || zoomImg.height || 1;
+      const iw = zoomImg.naturalWidth || 1;
+      const ih = zoomImg.naturalHeight || 1;
 
       const pad = 24;
       const fitW = Math.max(1, sw - pad * 2);
@@ -880,6 +928,9 @@
 
       setCursor();
       applyTransform();
+
+      // ✅ show only after centered/fitted (prevents top-left flash)
+      zoomImg.style.opacity = "1";
     }
 
     function openImageModal(src){
@@ -887,9 +938,18 @@
       imgModal.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
 
+      // ✅ set centered transform BEFORE load (mobile first-tap fix)
+      zoomImg.style.opacity = "0";
+      minScale = 1;
+      scale = 1;
+      x = 0; y = 0;
+      setCursor();
+      applyTransform();
+
       zoomImg.onload = () => { fitToScreen(); };
       zoomImg.src = src;
 
+      // Fallback if cached
       setTimeout(() => { if(zoomImg.complete) fitToScreen(); }, 0);
     }
 
@@ -898,6 +958,7 @@
       imgModal.setAttribute("aria-hidden", "true");
       document.body.style.overflow = "";
       lastTouchDist = null;
+      zoomImg.style.opacity = "0";
     }
 
     imgModal.addEventListener("click", (e) => {
@@ -1000,7 +1061,6 @@
       if(imgModal.classList.contains("show")) fitToScreen();
     });
 
-    // click on the big right panel image
     document.getElementById("catalogFrame").addEventListener("click", () => {
       const src = catalogImg.getAttribute("src");
       if(src) openImageModal(src);
