@@ -6,6 +6,11 @@
   <title>Bartelt Angus • Lot Videos | Venture Ag Marketing</title>
   <meta name="description" content="Bartelt Angus lot videos with catalog images." />
 
+  <!-- Speed: warm connections -->
+  <link rel="preconnect" href="https://player.vimeo.com">
+  <link rel="preconnect" href="https://i.vimeocdn.com">
+  <link rel="preconnect" href="https://vumbnail.com">
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -72,7 +77,6 @@
       color: var(--vam-text);
     }
 
-    /* ✅ Player name + sire */
     .player-title{
       font-weight: 900;
       letter-spacing: .06em;
@@ -84,14 +88,6 @@
       margin: 2px 0 0;
       color: rgba(242,242,242,.78);
       font-size: .88rem;
-      font-weight: 800;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-    }
-    .player-note{
-      margin: 6px 0 0;
-      color: rgba(242,242,242,.62);
-      font-size: .82rem;
       font-weight: 800;
       letter-spacing: .04em;
       text-transform: uppercase;
@@ -109,8 +105,67 @@
       .video-ratio.ratio-16x9{ --bs-aspect-ratio: 44%; }
     }
 
-    /* ✅ HARD LOCK: block ALL clicks on the Vimeo iframe (prevents overlays/unmute UI) */
+    /* Hard lock clicks on Vimeo iframe (no overlays/unmute UI) */
     .video-ratio iframe{ pointer-events: none; }
+
+    /* ✅ Loading overlay (thumb) */
+    .vimeo-lite{
+      position:absolute;
+      inset:0;
+      background:#000;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      user-select:none;
+      z-index: 2;
+    }
+    .vimeo-lite img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      opacity:.98;
+    }
+    .vimeo-lite .play-btn{
+      position:absolute;
+      inset:0;
+      display:grid;
+      place-items:center;
+      pointer-events:none;
+    }
+    .vimeo-lite .play-btn::before{
+      content:"";
+      width:64px;
+      height:64px;
+      border-radius:999px;
+      background:rgba(0,0,0,.55);
+      backdrop-filter: blur(6px);
+      box-shadow:0 12px 28px rgba(0,0,0,.35);
+    }
+    .vimeo-lite .play-btn::after{
+      content:"";
+      position:absolute;
+      width:0;height:0;
+      border-left:18px solid #fff;
+      border-top:12px solid transparent;
+      border-bottom:12px solid transparent;
+      transform: translateX(3px);
+    }
+    .vimeo-lite .tiny{
+      position:absolute;
+      bottom:10px;
+      left:10px;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      font-size:.72rem;
+      color:rgba(255,255,255,.72);
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.14);
+      padding:6px 10px;
+      border-radius:999px;
+      backdrop-filter: blur(6px);
+    }
 
     /* Player actions */
     .player-actions{
@@ -276,7 +331,6 @@
       margin:0;
     }
 
-    /* ✅ consistent image box so different sizes never wreck layout */
     .catalog-frame{
       width: 100%;
       aspect-ratio: 4 / 3;
@@ -448,7 +502,7 @@
       position: absolute;
       inset: 0;
       overflow: hidden;
-      touch-action: none;
+      touch-action: pan-x pan-y; /* pinch works; no double-tap zoom behavior */
       cursor: default;
       z-index: 2;
     }
@@ -465,7 +519,7 @@
       width: auto;
       height: auto;
       will-change: transform;
-      opacity: 0; /* ✅ prevents the “first tap top-left” flash on mobile */
+      opacity: 0;
       transition: opacity .08s linear;
     }
   </style>
@@ -495,7 +549,6 @@
           <div>
             <p class="player-title mb-1" id="playerTitle">Loading…</p>
             <p class="player-sub" id="playerSub"></p>
-            <p class="player-note" id="playerNote">Always muted • autoplay • loop • scrub only (no Vimeo overlays)</p>
           </div>
         </div>
 
@@ -510,6 +563,13 @@
                 allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
                 referrerpolicy="strict-origin-when-cross-origin"
                 allowfullscreen></iframe>
+
+              <!-- Loading overlay -->
+              <div id="vimeoLoading" class="vimeo-lite">
+                <img id="vimeoLoadingImg" src="" alt="Loading thumbnail" loading="lazy" decoding="async">
+                <div class="play-btn"></div>
+                <div class="tiny">Loading…</div>
+              </div>
             </div>
 
             <div class="scrub-area">
@@ -539,7 +599,7 @@
               <div class="catalog-frame" id="catalogFrame">
                 <img id="catalogImg" class="catalog-img" src="" alt="Catalog image">
               </div>
-              <p class="tap-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Tap to enlarge • tap to zoom • pinch on mobile</p>
+              <p class="tap-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Tap to enlarge • pinch to zoom</p>
             </div>
           </div>
 
@@ -571,9 +631,7 @@
                     <i class="fa-brands fa-facebook-f"></i> Facebook
                   </a>
 
-                  <a class="btn-light-outline" href="tel:6059990147">
-                    <i class="fa-solid fa-phone"></i> Call
-                  </a>
+                  <!-- ✅ Call button removed -->
                 </div>
               </div>
             </div>
@@ -603,7 +661,7 @@
 
   <!-- FULLSCREEN IMAGE MODAL -->
   <div id="imgModal" class="img-modal" aria-hidden="true">
-    <div class="img-modal-hint">Fits screen • tap to zoom • drag to move • pinch to zoom • wheel zoom</div>
+    <div class="img-modal-hint">Pinch to zoom • drag to move • wheel zoom</div>
 
     <button id="imgModalClose" class="img-modal-close" type="button" aria-label="Close">
       <i class="fa-solid fa-xmark"></i>
@@ -619,7 +677,7 @@
 
   <script>
     // =========================
-    // VIMEO HELPERS (NO OVERLAYS)
+    // VIMEO HELPERS
     // =========================
     function extractVimeoId(input){
       if(!input) return "";
@@ -643,7 +701,13 @@
     function vimeoSrc(fromUrlOrId){
       const id = extractVimeoId(fromUrlOrId);
       if(!id) return "";
-      return `https://player.vimeo.com/video/${id}?background=1&autoplay=1&muted=1&loop=1&autopause=0&playsinline=1&dnt=1`;
+      return `https://player.vimeo.com/video/${id}?background=1&autoplay=1&muted=1&loop=1&autopause=0&playsinline=1&title=0&byline=0&portrait=0&dnt=1`;
+    }
+
+    function vimeoThumbUrl(fromUrlOrId){
+      const id = extractVimeoId(fromUrlOrId);
+      if(!id) return "";
+      return `https://vumbnail.com/${id}.jpg`;
     }
 
     function fmtTime(sec){
@@ -655,8 +719,7 @@
     }
 
     // =========================
-    // LOTS (name + sire)
-    // NOTE: Update/verify sires if any differ in your catalog.
+    // LOTS
     // =========================
     const lots = [
       { lot:"1",   name:"Bartelt Chief 551",        sire:"Connealy Craftsman",           meta:"Bull",       vimeo:"https://vimeo.com/1162334058", catalogImg:"assets/img/Catalog/Lot 1.JPG" },
@@ -698,6 +761,10 @@
     const scrub = document.getElementById("scrub");
     const timecode = document.getElementById("timecode");
 
+    // Loading overlay
+    const vimeoLoading = document.getElementById("vimeoLoading");
+    const vimeoLoadingImg = document.getElementById("vimeoLoadingImg");
+
     // Modal elements
     const imgModal = document.getElementById("imgModal");
     const imgModalClose = document.getElementById("imgModalClose");
@@ -711,53 +778,78 @@
     let duration = 0;
     let isScrubbing = false;
 
-    async function hardLockMutedAutoplay(){
-      if(!vPlayer) return;
+    async function initVimeoPlayerWith(item){
+      if(!item || !item.vimeo) return;
+
+      playerFrame.src = vimeoSrc(item.vimeo);
+      vPlayer = new Vimeo.Player(playerFrame);
+
       try{
         await vPlayer.setMuted(true);
         await vPlayer.setVolume(0);
-        await vPlayer.play();
+        await vPlayer.setLoop(true);
       }catch(e){}
+
+      duration = await vPlayer.getDuration().catch(()=>0);
+      if(!isFinite(duration) || duration < 0) duration = 0;
+
+      timecode.textContent = `${fmtTime(0)} / ${fmtTime(duration)}`;
+      scrub.value = 0;
+
+      vPlayer.on("timeupdate", (data) => {
+        const sec = (data && data.seconds) ? data.seconds : 0;
+
+        if(!isScrubbing && duration > 0){
+          const v = Math.max(0, Math.min(1000, Math.round((sec / duration) * 1000)));
+          scrub.value = v;
+        }
+        timecode.textContent = `${fmtTime(sec)} / ${fmtTime(duration)}`;
+      });
+
+      vPlayer.on("ended", async () => {
+        try{ await vPlayer.setCurrentTime(0); }catch(e){}
+        try{ await vPlayer.play(); }catch(e){}
+      });
+
+      try{ await vPlayer.play(); }catch(e){}
     }
 
-    async function attachVimeoPlayer(){
+    async function playLot(item){
+      if(!item || !item.vimeo) return;
+
+      const id = extractVimeoId(item.vimeo);
+      if(!id) return;
+
+      // show quick thumb while switching
+      vimeoLoadingImg.src = vimeoThumbUrl(id);
+      vimeoLoading.style.display = "flex";
+
       try{
-        if(vPlayer){
-          vPlayer.unload().catch(()=>{});
-          vPlayer = null;
+        if(!vPlayer){
+          await initVimeoPlayerWith(item);
+        }else{
+          await vPlayer.loadVideo(id);
+          await vPlayer.setMuted(true);
+          await vPlayer.setVolume(0);
+          await vPlayer.setLoop(true);
+          await vPlayer.play();
+
+          duration = await vPlayer.getDuration().catch(()=>0);
+          if(!isFinite(duration) || duration < 0) duration = 0;
+          timecode.textContent = `${fmtTime(0)} / ${fmtTime(duration)}`;
+          scrub.value = 0;
         }
-
-        vPlayer = new Vimeo.Player(playerFrame);
-
-        await hardLockMutedAutoplay();
-
-        duration = await vPlayer.getDuration().catch(()=>0);
-        if(!isFinite(duration) || duration < 0) duration = 0;
-
-        timecode.textContent = `${fmtTime(0)} / ${fmtTime(duration)}`;
-        scrub.value = 0;
-
-        vPlayer.on("ended", async () => {
-          try{ await vPlayer.setCurrentTime(0); }catch(e){}
-          await hardLockMutedAutoplay();
-        });
-
-        vPlayer.on("timeupdate", (data) => {
-          const sec = (data && data.seconds) ? data.seconds : 0;
-
-          if(!isScrubbing && duration > 0){
-            const v = Math.max(0, Math.min(1000, Math.round((sec / duration) * 1000)));
-            scrub.value = v;
-          }
-          timecode.textContent = `${fmtTime(sec)} / ${fmtTime(duration)}`;
-        });
-
-        document.addEventListener("touchstart", hardLockMutedAutoplay, { once:true, passive:true });
-        document.addEventListener("click", hardLockMutedAutoplay, { once:true });
-
       }catch(e){
-        duration = 0;
-        timecode.textContent = "0:00 / 0:00";
+        // fallback: rebuild
+        try{
+          playerFrame.src = vimeoSrc(item.vimeo);
+          vPlayer = new Vimeo.Player(playerFrame);
+          await vPlayer.setMuted(true);
+          await vPlayer.setLoop(true);
+          await vPlayer.play();
+        }catch(_){}
+      }finally{
+        setTimeout(()=>{ vimeoLoading.style.display = "none"; }, 220);
       }
     }
 
@@ -785,13 +877,11 @@
       const active = document.querySelector(`[data-lot="${item.lot}"]`);
       if(active) active.classList.add("active-lot");
 
-      // ✅ Big text = name, line below = Sire:
       playerTitle.textContent = (item.name || `Lot ${item.lot}`).toUpperCase();
-      playerSub.textContent = item.sire ? `Sire: ${item.sire}`.toUpperCase() : "";
+      playerSub.textContent = item.sire ? `SIRE: ${item.sire}`.toUpperCase() : "";
 
       if(item.vimeo && String(item.vimeo).trim() !== ""){
-        playerFrame.src = vimeoSrc(item.vimeo);
-        setTimeout(() => { attachVimeoPlayer(); }, 80);
+        await playLot(item); // ✅ autoplay + loop for every lot
       }else{
         playerFrame.src = "";
         if(vPlayer){ vPlayer.unload().catch(()=>{}); vPlayer = null; }
@@ -837,6 +927,7 @@
                 </div>
                 <div class="thumb" data-zoom="${l.catalogImg || ""}">
                   <img src="${l.catalogImg}" alt="Catalog preview for Lot ${l.lot}"
+                       loading="lazy" decoding="async"
                        onerror="this.style.display='none'; this.parentElement.style.display='none';">
                 </div>
               </div>
@@ -890,7 +981,8 @@
     });
 
     // =========================
-    // FULLSCREEN IMAGE MODAL (mobile first-tap center fix)
+    // FULLSCREEN IMAGE MODAL
+    // ✅ tap to enlarge ONLY; pinch to zoom
     // =========================
     let scale = 1;
     let minScale = 1;
@@ -928,8 +1020,6 @@
 
       setCursor();
       applyTransform();
-
-      // ✅ show only after centered/fitted (prevents top-left flash)
       zoomImg.style.opacity = "1";
     }
 
@@ -938,7 +1028,6 @@
       imgModal.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
 
-      // ✅ set centered transform BEFORE load (mobile first-tap fix)
       zoomImg.style.opacity = "0";
       minScale = 1;
       scale = 1;
@@ -949,7 +1038,6 @@
       zoomImg.onload = () => { fitToScreen(); };
       zoomImg.src = src;
 
-      // Fallback if cached
       setTimeout(() => { if(zoomImg.complete) fitToScreen(); }, 0);
     }
 
@@ -970,48 +1058,30 @@
       if(e.key === "Escape" && imgModal.classList.contains("show")) closeImageModal();
     });
 
-    let clickSuppress = false;
-
-    function toggleZoom(){
-      const zoomInTarget = Math.min(maxScale, minScale * 2.25);
-
-      if(scale <= minScale + 0.01){
-        scale = zoomInTarget;
-      }else{
-        scale = minScale;
-        x = 0; y = 0;
-      }
-      setCursor();
-      applyTransform();
-    }
-
+    // Drag only when zoomed in
     stage.addEventListener("pointerdown", (e) => {
+      if(scale <= minScale + 0.01) return;
       e.preventDefault();
       stage.setPointerCapture(e.pointerId);
       isDragging = true;
       stage.classList.add("dragging");
       startX = e.clientX; startY = e.clientY;
       dragStartX = x; dragStartY = y;
-      clickSuppress = false;
     });
 
     stage.addEventListener("pointermove", (e) => {
       if(!isDragging) return;
       const dx = e.clientX - startX;
       const dy = e.clientY - startY;
-      if(Math.abs(dx) > 6 || Math.abs(dy) > 6) clickSuppress = true;
 
-      if(scale > minScale + 0.01){
-        x = dragStartX + dx;
-        y = dragStartY + dy;
-        applyTransform();
-      }
+      x = dragStartX + dx;
+      y = dragStartY + dy;
+      applyTransform();
     });
 
     stage.addEventListener("pointerup", () => {
       isDragging = false;
       stage.classList.remove("dragging");
-      if(!clickSuppress) toggleZoom();
     });
 
     stage.addEventListener("pointercancel", () => {
@@ -1081,7 +1151,7 @@
 
     render();
     updateNav();
-    selectLotByIndex(0);
+    selectLotByIndex(0); // ✅ autoplay first lot on load
   </script>
 
 </body>
