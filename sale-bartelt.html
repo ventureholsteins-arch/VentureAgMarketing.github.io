@@ -48,7 +48,7 @@
     }
     .top-links{
       display:flex;
-      gap:14px;
+      gap:12px;
       flex-wrap:wrap;
       align-items:center;
       justify-content:flex-end;
@@ -69,25 +69,37 @@
     }
     .top-link:hover{ color:#fff; border-bottom-color: rgba(201,164,92,.55); }
 
-    /* Coming soon chips (not buttons) */
-    .soon{
+    /* ✅ NEW: Prominent top pills for Catalog + Videos */
+    .top-pill{
       display:inline-flex;
       align-items:center;
-      gap:8px;
-      padding: 8px 10px;
+      gap:10px;
+      padding: 11px 14px;
       border-radius: 999px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.14);
-      color: rgba(242,242,242,.86);
+      text-decoration:none;
       font-weight: 900;
       letter-spacing: .08em;
       text-transform: uppercase;
-      font-size: .72rem;
+      font-size: .80rem;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.08);
+      color: rgba(242,242,242,.96);
+      transition: transform .10s ease, background .10s ease, border-color .10s ease;
+      box-shadow: 0 10px 26px rgba(0,0,0,.25);
       white-space: nowrap;
     }
-    .soon b{
-      color: rgba(201,164,92,.95);
-      font-weight: 900;
+    .top-pill:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.12);
+      border-color: rgba(201,164,92,.55);
+      color:#fff;
+    }
+    .top-pill i{ color: rgba(201,164,92,.95); }
+
+    /* Even more pop for the Videos pill */
+    .top-pill.video{
+      border-color: rgba(201,164,92,.55);
+      background: linear-gradient(135deg, rgba(201,164,92,.26), rgba(255,255,255,.06));
     }
 
     /* One primary CTA button */
@@ -242,6 +254,7 @@
     @media (max-width: 575.98px){
       .top-links{ justify-content:flex-start; }
       .btn-gold{ width:100%; justify-content:center; }
+      .top-pill{ width:100%; justify-content:center; }
     }
   </style>
 </head>
@@ -257,20 +270,20 @@
       <div class="top-links">
         <a class="top-link" href="./index.html#sales"><i class="fa-solid fa-arrow-left"></i> Back</a>
 
-        <!-- ✅ REPLACED Coming Soon chips with real links -->
-        <a class="top-link"
+        <!-- ✅ Bigger + prominent -->
+        <a class="top-pill"
            href="https://indd.adobe.com/view/76b41055-0c52-421c-ada3-4e6d8c1d3dda"
            target="_blank" rel="noopener">
           <i class="fa-solid fa-book"></i> Catalog
         </a>
 
-        <a class="top-link"
+        <a class="top-pill video"
            href="sale-bartelt-videos.html"
            target="_blank" rel="noopener">
           <i class="fa-solid fa-video"></i> Videos
         </a>
 
-        <!-- ✅ only primary button -->
+        <!-- ✅ primary button -->
         <button class="btn-gold" id="openRequestBtn" type="button" data-bs-toggle="modal" data-bs-target="#requestModal">
           <i class="fa-solid fa-clipboard-list"></i> Request Catalog
         </button>
@@ -395,7 +408,7 @@
               <label class="form-label form-label-theme" for="zip">Zip Code</label>
               <input class="form-control form-control-theme" id="zip" name="zip"
                 inputmode="numeric" autocomplete="postal-code"
-                pattern="^\d{5}(-\d{4})?$" placeholder="57369" maxlength="10">
+                pattern="^\\d{5}(-\\d{4})?$" placeholder="57369" maxlength="10">
               <div class="invalid-feedback">Enter a valid zip code.</div>
             </div>
 
