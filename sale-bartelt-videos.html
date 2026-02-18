@@ -528,21 +528,25 @@
 (function(){
   const BASE = "https://script.google.com/macros/s/AKfycbyfLUpu098zDKtTu11lz0LzF0jQfzV-1W_D1RjdsZe-dQifNGqj8pvKJHqbvWHhCxNC2A/exec";
 
+  // stable session id (anonymous)
   const KEY = "vam_sid";
   let sid = localStorage.getItem(KEY);
   if (!sid) {
-    sid = (crypto?.randomUUID ? crypto.randomUUID() : (Date.now()+"-"+Math.random().toString(16).slice(2)));
+    sid = Date.now() + "-" + Math.random().toString(16).slice(2);
     localStorage.setItem(KEY, sid);
   }
 
   function ping(params){
     const q = new URLSearchParams({
       type: "analytics",
-      ...params,
-      sid,
+      sid: sid,
       page: location.href,
-      ua: navigator.userAgent
+      ua: navigator.userAgent,
+      t: Date.now().toString(),  // cache-buster
+      ...params
     });
+
+    // pixel request (no CORS problems)
     const img = new Image();
     img.src = BASE + "?" + q.toString();
   }
@@ -550,10 +554,10 @@
   // page view
   ping({ event: "page_view" });
 
-  // clicks
+  // clicks (buttons + links)
   document.addEventListener("click", (ev) => {
     const el = ev.target.closest("a,button,[role='button']");
-    if(!el) return;
+    if (!el) return;
 
     const label = (
       el.getAttribute("data-track") ||
@@ -561,11 +565,11 @@
       el.getAttribute("aria-label") ||
       el.id ||
       "unknown"
-    ).trim().slice(0,120);
+    ).trim().slice(0, 120);
 
     const href = el.href || el.getAttribute("href") || "";
 
-    ping({ event: "click", label, href });
+    ping({ event: "click", label: label, href: href });
   }, true);
 })();
 </script>
