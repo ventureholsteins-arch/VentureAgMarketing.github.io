@@ -881,7 +881,7 @@
       playerSub.textContent = item.sire ? `SIRE: ${item.sire}`.toUpperCase() : "";
 
       if(item.vimeo && String(item.vimeo).trim() !== ""){
-        await playLot(item); // ✅ autoplay + loop for every lot
+        await playLot(item);
       }else{
         playerFrame.src = "";
         if(vPlayer){ vPlayer.unload().catch(()=>{}); vPlayer = null; }
@@ -957,9 +957,7 @@
       });
     }
 
-    // =========================
-    // Scrub control (accurate)
-    // =========================
+    // Scrub control
     function scrubToTime(){
       if(!vPlayer || !duration) return;
       const ratio = parseInt(scrub.value, 10) / 1000;
@@ -980,10 +978,7 @@
       scrubToTime();
     });
 
-    // =========================
     // FULLSCREEN IMAGE MODAL
-    // ✅ tap to enlarge ONLY; pinch to zoom
-    // =========================
     let scale = 1;
     let minScale = 1;
     let maxScale = 4;
@@ -1058,7 +1053,6 @@
       if(e.key === "Escape" && imgModal.classList.contains("show")) closeImageModal();
     });
 
-    // Drag only when zoomed in
     stage.addEventListener("pointerdown", (e) => {
       if(scale <= minScale + 0.01) return;
       e.preventDefault();
@@ -1110,7 +1104,7 @@
       const t1 = e.touches[0];
       const t2 = e.touches[1];
       const dx = t1.clientX - t2.clientX;
-      const dy = t1.clientY - t2.clientY;
+      const dy = t1.clientY - t2.clientX;
       const dist = Math.hypot(dx, dy);
 
       if(lastTouchDist == null){ lastTouchDist = dist; return; }
@@ -1136,9 +1130,7 @@
       if(src) openImageModal(src);
     });
 
-    // =========================
     // Init
-    // =========================
     searchInput.addEventListener("input", render);
 
     prevBtn.addEventListener("click", () => {
@@ -1151,9 +1143,10 @@
 
     render();
     updateNav();
-    selectLotByIndex(0); // ✅ autoplay first lot on load
+    selectLotByIndex(0);
   </script>
- <!-- ✅ Analytics tracker (PLACED CORRECTLY at end of body) -->
+
+  <!-- ✅ Analytics tracker (PLACED CORRECTLY at end of body) -->
   <script>
   (function(){
     const BASE = "https://script.google.com/macros/s/AKfycbxsQw8At8_IMxc4TrcdfavEkFeYMaTAzBSDlLdq51gb88J-VUxNEXxam_DJwBLS4LNLqA/exec";
@@ -1198,5 +1191,6 @@
     }, true);
   })();
   </script>
+
 </body>
 </html>
