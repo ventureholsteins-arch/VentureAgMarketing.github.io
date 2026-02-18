@@ -1146,51 +1146,69 @@
     selectLotByIndex(0);
   </script>
 
-  <!-- ✅ Analytics tracker (PLACED CORRECTLY at end of body) -->
-  <script>
-  (function(){
-    const BASE = "https://script.google.com/macros/s/AKfycbxsQw8At8_IMxc4TrcdfavEkFeYMaTAzBSDlLdq51gb88J-VUxNEXxam_DJwBLS4LNLqA/exec";
+<script>
+(function(){
+  const BASE = "https://script.google.com/macros/s/AKfycbxsQw8At8_IMxc4TrcdfavEkFeYMaTAzBSDlLdq51gb88J-VUxNEXxam_DJwBLS4LNLqA/exec";
 
-    const KEY = "vam_sid";
-    let sid = localStorage.getItem(KEY);
-    if (!sid) {
-      sid = Date.now() + "-" + Math.random().toString(16).slice(2);
-      localStorage.setItem(KEY, sid);
-    }
+  // stable anonymous session id
+  const KEY = "vam_sid";
+  let sid = localStorage.getItem(KEY);
+  if (!sid) {
+    sid = Date.now() + "-" + Math.random().toString(16).slice(2);
+    localStorage.setItem(KEY, sid);
+  }
 
-    function ping(params){
-      const q = new URLSearchParams({
-        type: "analytics",
-        sid,
-        page: location.href,
-        ua: navigator.userAgent,
-        t: Date.now().toString(), // cache buster
-        ...params
-      });
-      (new Image()).src = BASE + "?" + q.toString();
-    }
+  function ping(params){
+    const q = new URLSearchParams({
+      type: "analytics",
+      sid,
+      page: location.href,
+      ua: navigator.userAgent,
+      t: Date.now().toString(), // cache buster
+      ...params
+    });
 
-    // page view
+    const url = BASE + "?" + q.toString();
+
+    // ✅ MOST RELIABLE: append a hidden pixel to DOM briefly
+    const img = document.createElement("img");
+    img.width = 1;
+    img.height = 1;
+    img.alt = "";
+    img.style.cssText = "position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;";
+    img.src = url;
+    document.body.appendChild(img);
+
+    // cleanup
+    setTimeout(() => { try { img.remove(); } catch(e){} }, 1500);
+
+    // ✅ backup fire-and-forget (still sends even if img blocked)
+    try { fetch(url, { mode: "no-cors", keepalive: true }); } catch(e){}
+  }
+
+  // page view
+  window.addEventListener("load", () => {
     ping({ event: "page_view" });
+  });
 
-    // clicks
-    document.addEventListener("click", (ev) => {
-      const el = ev.target.closest("a,button,[role='button']");
-      if (!el) return;
+  // clicks
+  document.addEventListener("click", (ev) => {
+    const el = ev.target.closest("a,button,[role='button']");
+    if (!el) return;
 
-      const label = (
-        el.getAttribute("data-track") ||
-        el.innerText ||
-        el.getAttribute("aria-label") ||
-        el.id ||
-        "unknown"
-      ).trim().slice(0, 120);
+    const label = (
+      el.getAttribute("data-track") ||
+      el.innerText ||
+      el.getAttribute("aria-label") ||
+      el.id ||
+      "unknown"
+    ).trim().replace(/\s+/g," ").slice(0, 120);
 
-      const href = el.href || el.getAttribute("href") || "";
-      ping({ event: "click", label, href });
-    }, true);
-  })();
-  </script>
+    const href = el.href || el.getAttribute("href") || "";
+    ping({ event: "click", label, href });
+  }, true);
+})();
+</script>
 
 </body>
 </html>
