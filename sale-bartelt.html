@@ -69,7 +69,7 @@
     }
     .top-link:hover{ color:#fff; border-bottom-color: rgba(201,164,92,.55); }
 
-    /* ✅ Prominent top pills for Catalog + Videos */
+    /* ✅ NEW: Prominent top pills for Catalog + Videos */
     .top-pill{
       display:inline-flex;
       align-items:center;
@@ -270,6 +270,7 @@
       <div class="top-links">
         <a class="top-link" href="./index.html#sales"><i class="fa-solid fa-arrow-left"></i> Back</a>
 
+        <!-- ✅ Bigger + prominent -->
         <a class="top-pill"
            href="https://indd.adobe.com/view/76b41055-0c52-421c-ada3-4e6d8c1d3dda"
            target="_blank" rel="noopener">
@@ -282,6 +283,7 @@
           <i class="fa-solid fa-video"></i> Videos
         </a>
 
+        <!-- ✅ primary button -->
         <button class="btn-gold" id="openRequestBtn" type="button" data-bs-toggle="modal" data-bs-target="#requestModal">
           <i class="fa-solid fa-clipboard-list"></i> Request Catalog
         </button>
@@ -317,6 +319,7 @@
               <div class="detail-row"><i class="fa-solid fa-phone"></i> Austin • <a href="tel:+16059990147" style="color:#111; font-weight:900; text-decoration:none; border-bottom:1px solid rgba(0,0,0,.22);">605-999-0147</a></div>
             </div>
 
+            <!-- links, not buttons -->
             <div class="link-row">
               <a class="mini-link" target="_blank" rel="noopener"
                  href="https://www.google.com/maps/search/?api=1&query=Platte%20Livestock%20Market%2C%2036580%20SD-44%2C%20Platte%2C%20SD%2057369">
@@ -392,4 +395,153 @@
             <div class="col-12 col-md-6">
               <label class="form-label form-label-theme" for="city">City<span class="req-star">*</span></label>
               <input class="form-control form-control-theme" id="city" name="city" required>
-              <div class="invalid-feedback">Ci
+              <div class="invalid-feedback">City is required.</div>
+            </div>
+
+            <div class="col-6 col-md-3">
+              <label class="form-label form-label-theme" for="state">State<span class="req-star">*</span></label>
+              <input class="form-control form-control-theme" id="state" name="state" maxlength="2" placeholder="SD" required>
+              <div class="invalid-feedback">State is required.</div>
+            </div>
+
+            <div class="col-6 col-md-3">
+              <label class="form-label form-label-theme" for="zip">Zip Code</label>
+              <input class="form-control form-control-theme" id="zip" name="zip"
+                inputmode="numeric" autocomplete="postal-code"
+                pattern="^\\d{5}(-\\d{4})?$" placeholder="57369" maxlength="10">
+              <div class="invalid-feedback">Enter a valid zip code.</div>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <label class="form-label form-label-theme" for="phone">Phone (optional)</label>
+              <input class="form-control form-control-theme" id="phone" name="phone" inputmode="tel">
+            </div>
+
+            <div class="col-12 col-md-6">
+              <label class="form-label form-label-theme" for="email">Email (optional)</label>
+              <input class="form-control form-control-theme" id="email" name="email" type="email">
+            </div>
+
+            <div class="col-12">
+              <div id="formSuccess" class="success-box">
+                <i class="fa-solid fa-circle-check"></i>
+                Submission received. Thank you.
+              </div>
+
+              <div id="formError" class="error-box">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                Submission failed. Please try again.
+              </div>
+            </div>
+
+          </div>
+
+          <div class="form-footer">
+            <button class="btn-gold" id="submitBtn" type="submit">
+              <i class="fa-solid fa-paper-plane"></i> Submit
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const GOOGLE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzTlpV6KO9bAlkaPGVF53ylAQBbaz6WY2eUH4EEbC0MvO-4BU5BWlr0Vw5GdW7XPxIy3g/exec";
+
+    (function () {
+      const form = document.getElementById("requestForm");
+      if(!form) return;
+
+      const success = document.getElementById("formSuccess");
+      const errorBox = document.getElementById("formError");
+      const submitBtn = document.getElementById("submitBtn");
+
+      function setLoading(on){
+        submitBtn.disabled = on;
+        submitBtn.innerHTML = on
+          ? `<i class="fa-solid fa-spinner fa-spin"></i> Sending...`
+          : `<i class="fa-solid fa-paper-plane"></i> Submit`;
+      }
+
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const state = document.getElementById("state");
+        if(state && state.value) state.value = state.value.toUpperCase().trim();
+
+        if (!form.checkValidity()) {
+          form.classList.add("was-validated");
+          return;
+        }
+
+        form.classList.add("was-validated");
+        success.style.display = "none";
+        errorBox.style.display = "none";
+
+        setLoading(true);
+
+        try{
+          const fd = new FormData(form);
+          fd.append("page", window.location.href);
+          fd.append("ua", navigator.userAgent);
+
+          const res = await fetch(GOOGLE_WEB_APP_URL, {
+            method: "POST",
+            body: fd
+          });
+
+          if(res.ok){
+            success.style.display = "flex";
+            form.reset();
+            form.classList.remove("was-validated");
+          } else {
+            errorBox.style.display = "flex";
+          }
+        }catch(err){
+          errorBox.style.display = "flex";
+        }finally{
+          setLoading(false);
+        }
+      });
+    })();
+  </script>
+
+  <!-- ✅ HASH LINK SUPPORT: sale-bartelt.html#request opens the modal automatically -->
+  <script>
+    (function () {
+      const modalEl = document.getElementById("requestModal");
+      const openBtn = document.getElementById("openRequestBtn");
+      if (!modalEl) return;
+
+      function openIfHash() {
+        if (window.location.hash === "#request") {
+          const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+          modal.show();
+        }
+      }
+
+      if(openBtn){
+        openBtn.addEventListener("click", () => {
+          if(window.location.hash !== "#request"){
+            history.replaceState(null, "", window.location.pathname + window.location.search + "#request");
+          }
+        });
+      }
+
+      openIfHash();
+      window.addEventListener("hashchange", openIfHash);
+
+      modalEl.addEventListener("hidden.bs.modal", () => {
+        if (window.location.hash === "#request") {
+          history.replaceState(null, "", window.location.pathname + window.location.search);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
