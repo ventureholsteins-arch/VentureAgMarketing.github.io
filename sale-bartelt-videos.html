@@ -524,12 +524,10 @@
     }
   </style>
 </head>
-
-    <script>
+<script>
 (function(){
   const URL = "https://script.google.com/macros/s/AKfycbyfLUpu098zDKtTu11lz0LzF0jQfzV-1W_D1RjdsZe-dQifNGqj8pvKJHqbvWHhCxNC2A/exec";
 
-  // anonymous session id
   const KEY = "vam_sid";
   let sid = localStorage.getItem(KEY);
   if (!sid) {
@@ -537,7 +535,7 @@
     localStorage.setItem(KEY, sid);
   }
 
-  function send(event, extra) {
+  function send(event, extra){
     const fd = new FormData();
     fd.append("type", "analytics");
     fd.append("event", event);
@@ -550,7 +548,8 @@
       if (extra.href) fd.append("href", extra.href);
     }
 
-    fetch(URL, { method: "POST", body: fd }).catch(()=>{});
+    // ✅ key change: no-cors (send-only)
+    fetch(URL, { method: "POST", body: fd, mode: "no-cors" }).catch(()=>{});
   }
 
   // page view
@@ -573,10 +572,8 @@
 
     send("click", { label, href });
   }, true);
-
 })();
 </script>
-
 
 <body>
 
