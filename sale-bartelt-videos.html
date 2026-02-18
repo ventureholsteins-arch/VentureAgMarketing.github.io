@@ -526,9 +526,8 @@
 </head>
 <script>
 (function(){
-  const BASE = "https://script.google.com/macros/s/AKfycbyfLUpu098zDKtTu11lz0LzF0jQfzV-1W_D1RjdsZe-dQifNGqj8pvKJHqbvWHhCxNC2A/exec";
+  const BASE = "https://script.google.com/macros/s/AKfycbxsQw8At8_IMxc4TrcdfavEkFeYMaTAzBSDlLdq51gb88J-VUxNEXxam_DJwBLS4LNLqA/exec";
 
-  // stable session id (anonymous)
   const KEY = "vam_sid";
   let sid = localStorage.getItem(KEY);
   if (!sid) {
@@ -542,19 +541,16 @@
       sid: sid,
       page: location.href,
       ua: navigator.userAgent,
-      t: Date.now().toString(),  // cache-buster
+      t: Date.now().toString(), // ✅ cache buster (required)
       ...params
     });
-
-    // pixel request (no CORS problems)
-    const img = new Image();
-    img.src = BASE + "?" + q.toString();
+    (new Image()).src = BASE + "?" + q.toString();
   }
 
   // page view
   ping({ event: "page_view" });
 
-  // clicks (buttons + links)
+  // clicks
   document.addEventListener("click", (ev) => {
     const el = ev.target.closest("a,button,[role='button']");
     if (!el) return;
@@ -569,7 +565,7 @@
 
     const href = el.href || el.getAttribute("href") || "";
 
-    ping({ event: "click", label: label, href: href });
+    ping({ event: "click", label, href });
   }, true);
 })();
 </script>
