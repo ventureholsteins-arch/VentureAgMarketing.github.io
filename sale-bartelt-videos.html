@@ -526,7 +526,7 @@
 </head>
 <script>
 (function(){
-  const URL = "https://script.google.com/macros/s/AKfycbyfLUpu098zDKtTu11lz0LzF0jQfzV-1W_D1RjdsZe-dQifNGqj8pvKJHqbvWHhCxNC2A/exec";
+  const BASE = "https://script.google.com/macros/s/AKfycbyfLUpu098zDKtTu11lz0LzF0jQfzV-1W_D1RjdsZe-dQifNGqj8pvKJHqbvWHhCxNC2A/exec";
 
   const KEY = "vam_sid";
   let sid = localStorage.getItem(KEY);
@@ -535,25 +535,20 @@
     localStorage.setItem(KEY, sid);
   }
 
-  function send(event, extra){
-    const fd = new FormData();
-    fd.append("type", "analytics");
-    fd.append("event", event);
-    fd.append("page", location.href);
-    fd.append("ua", navigator.userAgent);
-    fd.append("sid", sid);
-
-    if (extra) {
-      if (extra.label) fd.append("label", extra.label);
-      if (extra.href) fd.append("href", extra.href);
-    }
-
-    // ✅ key change: no-cors (send-only)
-    fetch(URL, { method: "POST", body: fd, mode: "no-cors" }).catch(()=>{});
+  function ping(params){
+    const q = new URLSearchParams({
+      type: "analytics",
+      ...params,
+      sid,
+      page: location.href,
+      ua: navigator.userAgent
+    });
+    const img = new Image();
+    img.src = BASE + "?" + q.toString();
   }
 
   // page view
-  send("page_view");
+  ping({ event: "page_view" });
 
   // clicks
   document.addEventListener("click", (ev) => {
@@ -566,11 +561,11 @@
       el.getAttribute("aria-label") ||
       el.id ||
       "unknown"
-    ).trim().slice(0, 120);
+    ).trim().slice(0,120);
 
     const href = el.href || el.getAttribute("href") || "";
 
-    send("click", { label, href });
+    ping({ event: "click", label, href });
   }, true);
 })();
 </script>
