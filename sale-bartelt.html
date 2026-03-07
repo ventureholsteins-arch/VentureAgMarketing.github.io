@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Bartelt Angus • Past Sale | Venture Ag Marketing</title>
-  <meta name="description" content="Bartelt Angus past sale page featuring sale results, sale summary, top selling lots, catalog, and videos." />
+  <meta name="description" content="Bartelt Angus past sale page featuring sale results, catalog, videos, and sale promotion examples." />
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -123,9 +123,15 @@
       background:#fff;
     }
 
-    .poster img{
+    .poster-card{
+      height: 100%;
+      min-height: 100%;
+    }
+
+    .poster-card img{
       width:100%;
-      height:auto;
+      height:100%;
+      object-fit:cover;
       display:block;
     }
 
@@ -255,17 +261,61 @@
       padding-top:22px;
     }
 
-    .fb-wrap iframe{
+    .embed-card{
+      padding: 20px;
+    }
+
+    .catalog-frame{
       width:100%;
-      min-height:760px;
+      height:820px;
+      border:none;
+      display:block;
+      background:#f7f7f7;
+      border-radius:14px;
+    }
+
+    .fb-grid{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap:20px;
+    }
+
+    .fb-item{
+      border: 1px solid rgba(0,0,0,.08);
+      border-radius:16px;
+      overflow:hidden;
+      background:#fff;
+      padding:12px;
+    }
+
+    .fb-item iframe{
+      width:100%;
       border:none;
       overflow:hidden;
-      border-radius:14px;
+      display:block;
+      border-radius:10px;
+      background:#fff;
+    }
+
+    .h-100-fill{
+      height:100%;
     }
 
     @media (max-width: 991.98px){
       .stats-grid{
         grid-template-columns: 1fr;
+      }
+
+      .fb-grid{
+        grid-template-columns: 1fr;
+      }
+
+      .catalog-frame{
+        height:620px;
+      }
+
+      .poster-card{
+        min-height: 420px;
       }
     }
 
@@ -279,8 +329,12 @@
         justify-content:center;
       }
 
-      .fb-wrap iframe{
-        min-height:680px;
+      .catalog-frame{
+        height:520px;
+      }
+
+      .poster-card{
+        min-height: 340px;
       }
     }
   </style>
@@ -314,20 +368,19 @@
   <main class="py-5">
     <div class="container">
 
+      <!-- Top row -->
       <div class="row g-4 align-items-stretch">
         <div class="col-12 col-lg-6">
-          <div class="card-soft poster h-100">
-            <img src="assets/img/sales/bartelt.jpg" alt="Bartelt Angus Sale Poster">
+          <div class="card-soft poster-card h-100">
+            <img src="assets/img/work/thank_you.jpg" alt="Bartelt Angus Thank You Sale Graphic">
           </div>
         </div>
 
         <div class="col-12 col-lg-6">
-          <div class="card-soft p-4 h-100">
+          <div class="card-soft p-4 h-100-fill">
             <span class="eyebrow">Past Sale</span>
             <h1 class="h3 mb-2 section-title">Bartelt Angus Production Sale</h1>
-            <p class="muted mb-3">
-              Platte Livestock Market • Platte, South Dakota
-            </p>
+            <p class="muted mb-3">Platte Livestock Market • Platte, South Dakota</p>
 
             <p class="mb-0" style="font-weight:700; color:rgba(0,0,0,.82);">
               Congratulations to the Bartelt family on an outstanding sale. View the final sale summary,
@@ -349,27 +402,42 @@
               </div>
             </div>
 
-            <div class="link-row">
-              <a class="mini-link"
-                 href="https://indd.adobe.com/view/76b41055-0c52-421c-ada3-4e6d8c1d3dda"
-                 target="_blank" rel="noopener">
-                <i class="fa-solid fa-book"></i> View Catalog
-              </a>
+            <!-- Fill the extra right-side space with results -->
+            <div class="sale-summary-block">
+              <h2 class="h5 section-title mb-3">Top 5 Selling Lots</h2>
+              <ul class="list-clean">
+                <li><i class="fa-solid fa-trophy"></i> Lot 14 — $13,000</li>
+                <li><i class="fa-solid fa-trophy"></i> Lot 15 — $12,000</li>
+                <li><i class="fa-solid fa-trophy"></i> Lot 7 — $11,000</li>
+                <li><i class="fa-solid fa-trophy"></i> Lot 3 — $10,000</li>
+                <li><i class="fa-solid fa-trophy"></i> Lot 9 — $10,000</li>
+              </ul>
+            </div>
 
-              <a class="mini-link" href="sale-bartelt-videos.html">
-                <i class="fa-solid fa-video"></i> Watch Videos
-              </a>
+            <div class="sale-summary-block">
+              <div class="link-row" style="margin-top:0; padding-top:0; border-top:none;">
+                <a class="mini-link"
+                   href="https://indd.adobe.com/view/76b41055-0c52-421c-ada3-4e6d8c1d3dda"
+                   target="_blank" rel="noopener">
+                  <i class="fa-solid fa-book"></i> View Catalog
+                </a>
 
-              <a class="mini-link"
-                 href="https://www.facebook.com/barteltangus"
-                 target="_blank" rel="noopener">
-                <i class="fa-brands fa-facebook-f"></i> Facebook
-              </a>
+                <a class="mini-link" href="sale-bartelt-videos.html">
+                  <i class="fa-solid fa-video"></i> Watch Videos
+                </a>
+
+                <a class="mini-link"
+                   href="https://www.facebook.com/barteltangus"
+                   target="_blank" rel="noopener">
+                  <i class="fa-brands fa-facebook-f"></i> Facebook
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
+      <!-- Sale summary + breakdown -->
       <div class="row g-4 mt-1">
         <div class="col-12 col-lg-6">
           <div class="card-soft p-4 h-100">
@@ -404,68 +472,96 @@
 
         <div class="col-12 col-lg-6">
           <div class="card-soft p-4 h-100">
-            <h2 class="h4 section-title">Top 5 Selling Lots</h2>
+            <h2 class="h4 section-title">Catalog Showcase</h2>
+            <p class="muted mb-4">
+              Browse the embedded sale catalog below.
+            </p>
 
-            <ul class="list-clean">
-              <li><i class="fa-solid fa-trophy"></i> Lot 14 — $13,000</li>
-              <li><i class="fa-solid fa-trophy"></i> Lot 15 — $12,000</li>
-              <li><i class="fa-solid fa-trophy"></i> Lot 7 — $11,000</li>
-              <li><i class="fa-solid fa-trophy"></i> Lot 3 — $10,000</li>
-              <li><i class="fa-solid fa-trophy"></i> Lot 9 — $10,000</li>
-            </ul>
-
-            <div class="sale-summary-block">
-              <h3 class="h6 mb-3" style="font-weight:900; letter-spacing:.08em; text-transform:uppercase;">Quick Links</h3>
-
-              <div class="detail-list">
-                <div class="detail-row">
-                  <i class="fa-solid fa-book"></i>
-                  <a href="https://indd.adobe.com/view/76b41055-0c52-421c-ada3-4e6d8c1d3dda" target="_blank" rel="noopener" style="color:#111; font-weight:900; text-decoration:none; border-bottom:1px solid rgba(0,0,0,.22);">
-                    View Sale Catalog
-                  </a>
-                </div>
-
-                <div class="detail-row">
-                  <i class="fa-solid fa-video"></i>
-                  <a href="sale-bartelt-videos.html" style="color:#111; font-weight:900; text-decoration:none; border-bottom:1px solid rgba(0,0,0,.22);">
-                    Watch Sale Videos
-                  </a>
-                </div>
-
-                <div class="detail-row">
-                  <i class="fa-brands fa-facebook-f"></i>
-                  <a href="https://www.facebook.com/barteltangus" target="_blank" rel="noopener" style="color:#111; font-weight:900; text-decoration:none; border-bottom:1px solid rgba(0,0,0,.22);">
-                    Bartelt Angus Facebook
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div class="sale-summary-block">
-              <p class="muted mb-0">
-                Sale-day marketing materials, catalog, and videos remain available here as part of this past sale archive.
-              </p>
-            </div>
+            <iframe
+              class="catalog-frame"
+              src="https://indd.adobe.com/embed/76b41055-0c52-421c-ada3-4e6d8c1d3dda"
+              title="Bartelt Angus Sale Catalog"
+              allowfullscreen>
+            </iframe>
           </div>
         </div>
       </div>
 
+      <!-- Facebook posts -->
       <div class="row mt-4">
         <div class="col-12">
-          <div class="card-soft p-4">
+          <div class="card-soft embed-card">
             <h2 class="h4 section-title">Sale Promotion</h2>
             <p class="muted mb-4">
-              View sale-related Facebook content below.
+              Additional sale-related Facebook posts are shown below.
             </p>
 
-            <div class="fb-wrap">
-              <iframe
-                src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fphoto.php%3Ffbid%3D929790599428149%26set%3Da.196212122786004%26type%3D3&show_text=true&width=500"
-                scrolling="no"
-                frameborder="0"
-                allowfullscreen="true"
-                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
-              </iframe>
+            <div class="fb-grid">
+              <div class="fb-item">
+                <iframe
+                  src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fphoto.php%3Ffbid%3D929790599428149%26set%3Da.196212122786004%26type%3D3&show_text=true&width=500"
+                  height="747"
+                  scrolling="no"
+                  frameborder="0"
+                  allowfullscreen="true"
+                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+                </iframe>
+              </div>
+
+              <div class="fb-item">
+                <iframe
+                  src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fbarteltangus%2Fposts%2Fpfbid028RuXFRSAwBnv2XPkcKu4NfyYQKTq1C8RGeGXaksjU4BYv7h5tTuLLAuqKcSRdKG2l&show_text=true&width=500"
+                  height="654"
+                  scrolling="no"
+                  frameborder="0"
+                  allowfullscreen="true"
+                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+                </iframe>
+              </div>
+
+              <div class="fb-item">
+                <iframe
+                  src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fbarteltangus%2Fposts%2Fpfbid02pgGn8gXvgCgQxmFSKoyMRf6WpTiWMp6vPUFgUwPsc4Vmd6aRQAgFdbpdAVsmcw8Hl&show_text=true&width=500"
+                  height="571"
+                  scrolling="no"
+                  frameborder="0"
+                  allowfullscreen="true"
+                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+                </iframe>
+              </div>
+
+              <div class="fb-item">
+                <iframe
+                  src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fbarteltangus%2Fposts%2Fpfbid02Bace7ikDwR6M3HNK76xJ2B7Cpv9BArwgLpaAeAKrhXRvY8deA78GUMgzgbfqBZKFl&show_text=true&width=500"
+                  height="660"
+                  scrolling="no"
+                  frameborder="0"
+                  allowfullscreen="true"
+                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+                </iframe>
+              </div>
+
+              <div class="fb-item">
+                <iframe
+                  src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fbarteltangus%2Fposts%2Fpfbid09j9ruWz9rRzypUe3GbGTMJ2sq4NBgr9xwViMCaUPtbFuUhczJ2iQqctK9G65KDB3l&show_text=true&width=500"
+                  height="627"
+                  scrolling="no"
+                  frameborder="0"
+                  allowfullscreen="true"
+                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+                </iframe>
+              </div>
+
+              <div class="fb-item">
+                <iframe
+                  src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid023Z3ynWftTeY2fJpBdonHkDvHaA1wc7zu2btyW3fTKZw8ZKHxKumd4zRwPGGUYvrvl%26id%3D61573283609440&show_text=true&width=500"
+                  height="698"
+                  scrolling="no"
+                  frameborder="0"
+                  allowfullscreen="true"
+                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+                </iframe>
+              </div>
             </div>
           </div>
         </div>
