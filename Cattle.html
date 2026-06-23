@@ -1,0 +1,426 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Venture Holsteins | Catalog</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f5f4f1;
+  color: #222;
+}
+
+header {
+  background: #111;
+  color: white;
+  padding: 35px 20px;
+  text-align: center;
+}
+
+header h1 {
+  font-family: Georgia, serif;
+  font-size: 46px;
+  font-weight: normal;
+  letter-spacing: 1px;
+}
+
+header p {
+  margin-top: 8px;
+  color: #ccc;
+  font-size: 14px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.page-title {
+  margin-bottom: 25px;
+}
+
+.page-title h2 {
+  font-family: Georgia, serif;
+  font-size: 34px;
+  font-weight: normal;
+}
+
+.page-title p {
+  margin-top: 6px;
+  color: #666;
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 25px;
+}
+
+.controls input,
+.controls button {
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  background: white;
+  font-size: 14px;
+}
+
+.controls button {
+  cursor: pointer;
+}
+
+.controls button:hover,
+.controls button.active {
+  background: #111;
+  color: white;
+}
+
+.catalog {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.card {
+  background: white;
+  border: 1px solid #ddd;
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  min-height: 230px;
+}
+
+.photo-wrap {
+  background: #ddd;
+}
+
+.photo-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.info {
+  padding: 22px;
+}
+
+.status {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: #6b4a1f;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+}
+
+.info h3 {
+  font-family: Georgia, serif;
+  font-size: 25px;
+  font-weight: normal;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  color: #555;
+  font-size: 14px;
+  margin-bottom: 14px;
+}
+
+.details {
+  display: grid;
+  grid-template-columns: 95px 1fr;
+  gap: 6px 12px;
+  font-size: 14px;
+  margin-bottom: 14px;
+}
+
+.label {
+  font-weight: bold;
+  color: #333;
+}
+
+.notes {
+  border-top: 1px solid #eee;
+  padding-top: 12px;
+  color: #444;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+.button {
+  display: inline-block;
+  margin-top: 15px;
+  background: #111;
+  color: white;
+  text-decoration: none;
+  padding: 9px 16px;
+  font-size: 13px;
+}
+
+.button:hover {
+  background: #333;
+}
+
+footer {
+  text-align: center;
+  padding: 30px;
+  color: #777;
+  font-size: 14px;
+}
+
+@media (max-width: 900px) {
+  .catalog {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .card {
+    grid-template-columns: 1fr;
+  }
+
+  .photo-wrap img {
+    height: 260px;
+  }
+
+  header h1 {
+    font-size: 36px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Venture Holsteins</h1>
+  <p>Registered Holsteins • Show Cattle • Genetics</p>
+</header>
+
+<main class="container">
+
+  <div class="page-title">
+    <h2>Current Offerings</h2>
+    <p>Select females, show prospects, donors, and genetics from Venture Holsteins.</p>
+  </div>
+
+  <div class="controls">
+    <input type="text" id="searchInput" placeholder="Search by name...">
+    <button class="filter active" data-filter="all">All</button>
+    <button class="filter" data-filter="available">Available</button>
+    <button class="filter" data-filter="show">Show Prospects</button>
+    <button class="filter" data-filter="donor">Donors</button>
+    <button class="filter" data-filter="sold">Sold</button>
+  </div>
+
+  <section class="catalog">
+
+    <div class="card" data-category="available" data-name="venture shila">
+      <div class="photo-wrap">
+        <img src="images/shila.jpg" onerror="this.src='images/no-photo.jpg'" alt="Venture Shila">
+      </div>
+      <div class="info">
+        <div class="status">Available</div>
+        <h3>VG-87 Venture Shila</h3>
+        <div class="subtitle">Fresh Cow • Eye Candy Family</div>
+        <div class="details">
+          <div class="label">Breed</div><div>Holstein</div>
+          <div class="label">Sire</div><div>Eye Candy</div>
+          <div class="label">Status</div><div>Fresh</div>
+          <div class="label">Location</div><div>Mitchell, SD</div>
+        </div>
+        <div class="notes">Balanced young cow with udder quality and strong dairy character.</div>
+        <a class="button" href="mailto:your-email@example.com">Inquire</a>
+      </div>
+    </div>
+
+    <div class="card" data-category="available show" data-name="venture seashore">
+      <div class="photo-wrap">
+        <img src="images/seashore.jpg" onerror="this.src='images/no-photo.jpg'" alt="Venture Seashore">
+      </div>
+      <div class="info">
+        <div class="status">Show Prospect</div>
+        <h3>Venture Seashore</h3>
+        <div class="subtitle">Open Heifer • Major Family</div>
+        <div class="details">
+          <div class="label">Breed</div><div>Holstein</div>
+          <div class="label">Sire</div><div>Major</div>
+          <div class="label">Status</div><div>Open Heifer</div>
+          <div class="label">Location</div><div>Mitchell, SD</div>
+        </div>
+        <div class="notes">Clean-fronted heifer with length, balance, and show-ring style.</div>
+        <a class="button" href="mailto:your-email@example.com">Inquire</a>
+      </div>
+    </div>
+
+    <div class="card" data-category="sold" data-name="venture chico">
+      <div class="photo-wrap">
+        <img src="images/chico.jpg" onerror="this.src='images/no-photo.jpg'" alt="Venture Chico">
+      </div>
+      <div class="info">
+        <div class="status">Sold</div>
+        <h3>Venture Chico</h3>
+        <div class="subtitle">Fresh Cow • Strong Maternal Line</div>
+        <div class="details">
+          <div class="label">Breed</div><div>Holstein</div>
+          <div class="label">Sire</div><div>Unix</div>
+          <div class="label">Status</div><div>Sold</div>
+          <div class="label">Location</div><div>Mitchell, SD</div>
+        </div>
+        <div class="notes">A stylish cow with strength, quality, and production potential.</div>
+        <a class="button" href="mailto:your-email@example.com">Inquire</a>
+      </div>
+    </div>
+
+    <div class="card" data-category="available" data-name="venture capri">
+      <div class="photo-wrap">
+        <img src="images/capri.jpg" onerror="this.src='images/no-photo.jpg'" alt="Venture Capri">
+      </div>
+      <div class="info">
+        <div class="status">Available</div>
+        <h3>Venture Capri</h3>
+        <div class="subtitle">Young Cow • Image Daughter</div>
+        <div class="details">
+          <div class="label">Breed</div><div>Holstein</div>
+          <div class="label">Sire</div><div>Image</div>
+          <div class="label">Status</div><div>Fresh / Bred</div>
+          <div class="label">Location</div><div>Mitchell, SD</div>
+        </div>
+        <div class="notes">Dairy, balanced, and backed by a useful pedigree.</div>
+        <a class="button" href="mailto:your-email@example.com">Inquire</a>
+      </div>
+    </div>
+
+    <div class="card" data-category="show" data-name="venture alia">
+      <div class="photo-wrap">
+        <img src="images/alia.jpg" onerror="this.src='images/no-photo.jpg'" alt="Venture Alia">
+      </div>
+      <div class="info">
+        <div class="status">Show Prospect</div>
+        <h3>Venture Alia</h3>
+        <div class="subtitle">Heifer • Show Style</div>
+        <div class="details">
+          <div class="label">Breed</div><div>Holstein</div>
+          <div class="label">Sire</div><div>Update Sire</div>
+          <div class="label">Status</div><div>Show Prospect</div>
+          <div class="label">Location</div><div>Mitchell, SD</div>
+        </div>
+        <div class="notes">Stylish heifer with balance, openness, and ring presence.</div>
+        <a class="button" href="mailto:your-email@example.com">Inquire</a>
+      </div>
+    </div>
+
+    <div class="card" data-category="donor" data-name="venture serenity">
+      <div class="photo-wrap">
+        <img src="images/serenity.jpg" onerror="this.src='images/no-photo.jpg'" alt="Venture Serenity">
+      </div>
+      <div class="info">
+        <div class="status">Donor</div>
+        <h3>Venture Serenity</h3>
+        <div class="subtitle">Donor Female • Detective Family</div>
+        <div class="details">
+          <div class="label">Breed</div><div>Holstein</div>
+          <div class="label">Sire</div><div>Detective</div>
+          <div class="label">Status</div><div>Donor</div>
+          <div class="label">Location</div><div>Mitchell, SD</div>
+        </div>
+        <div class="notes">Maternal line with genetics suitable for future breeding work.</div>
+        <a class="button" href="mailto:your-email@example.com">Inquire</a>
+      </div>
+    </div>
+
+    <div class="card" data-category="available" data-name="venture carmen">
+      <div class="photo-wrap">
+        <img src="images/carmen.jpg" onerror="this.src='images/no-photo.jpg'" alt="Venture Carmen">
+      </div>
+      <div class="info">
+        <div class="status">Available</div>
+        <h3>Venture Carmen</h3>
+        <div class="subtitle">Bred Female • Major Daughter</div>
+        <div class="details">
+          <div class="label">Breed</div><div>Holstein</div>
+          <div class="label">Sire</div><div>Major</div>
+          <div class="label">Status</div><div>Bred</div>
+          <div class="label">Location</div><div>Mitchell, SD</div>
+        </div>
+        <div class="notes">Useful young female with strength, capacity, and breeding value.</div>
+        <a class="button" href="mailto:your-email@example.com">Inquire</a>
+      </div>
+    </div>
+
+    <div class="card" data-category="available" data-name="venture clover">
+      <div class="photo-wrap">
+        <img src="images/clover.jpg" onerror="this.src='images/no-photo.jpg'" alt="Venture Clover">
+      </div>
+      <div class="info">
+        <div class="status">Fresh Cow</div>
+        <h3>Venture Clover</h3>
+        <div class="subtitle">Fresh Cow • Master Daughter</div>
+        <div class="details">
+          <div class="label">Breed</div><div>Holstein</div>
+          <div class="label">Sire</div><div>Master</div>
+          <div class="label">Status</div><div>Fresh Cow</div>
+          <div class="label">Location</div><div>Mitchell, SD</div>
+        </div>
+        <div class="notes">Fresh young cow with a practical pedigree and strong dairy look.</div>
+        <a class="button" href="mailto:your-email@example.com">Inquire</a>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+<footer>
+  © 2026 Venture Holsteins
+</footer>
+
+<script>
+const searchInput = document.getElementById("searchInput");
+const buttons = document.querySelectorAll(".filter");
+const cards = document.querySelectorAll(".card");
+
+let currentFilter = "all";
+
+function filterCatalog() {
+  const searchText = searchInput.value.toLowerCase();
+
+  cards.forEach(card => {
+    const name = card.dataset.name;
+    const category = card.dataset.category;
+
+    const matchesSearch = name.includes(searchText);
+    const matchesFilter = currentFilter === "all" || category.includes(currentFilter);
+
+    card.style.display = matchesSearch && matchesFilter ? "grid" : "none";
+  });
+}
+
+buttons.forEach(button => {
+  button.addEventListener("click", () => {
+    buttons.forEach(btn => btn.classList.remove("active"));
+    button.classList.add("active");
+
+    currentFilter = button.dataset.filter;
+    filterCatalog();
+  });
+});
+
+searchInput.addEventListener("input", filterCatalog);
+</script>
+
+</body>
+</html>
+```
