@@ -389,7 +389,8 @@
     .herd-feature h2{font-weight:900;font-size:clamp(2.3rem,5vw,4.6rem);line-height:.95;letter-spacing:-.04em;text-transform:uppercase;margin:14px 0 20px}
     .herd-feature-copy{color:rgba(242,242,242,.73);font-family:"Roboto Slab",Georgia,serif;font-size:1.08rem;line-height:1.7;max-width:650px}
     .herd-actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:26px}
-    .herd-device{width:min(100%,540px);margin:auto;padding:8px;border-radius:18px;background:linear-gradient(145deg,#3a3e38,#080908);box-shadow:0 32px 75px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.14);transform:rotate(1deg)}\n    .herd-device img{width:100%;height:auto;display:block;border-radius:11px}
+    .herd-device{width:min(100%,540px);margin:auto;padding:8px;border-radius:18px;background:linear-gradient(145deg,#3a3e38,#080908);box-shadow:0 32px 75px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.14);transform:rotate(1deg)}
+    .herd-device img{width:100%;height:auto;display:block;border-radius:11px}
     .herd-screen{overflow:hidden;border-radius:19px;background:#edf2ed;color:#162219}
     .herd-screen-head{padding:27px 21px 20px;background:linear-gradient(135deg,#174630,#0d281c);color:#fff}
     .herd-screen-head small{color:rgba(255,255,255,.68)}.herd-screen-head strong{display:block;font-size:1.35rem;margin:5px 0}.herd-screen-head span{font-size:.57rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.75)}
@@ -398,7 +399,18 @@
     .herd-metric{padding:12px 7px}.herd-metric b{display:block;color:#174d34;font-size:1.2rem}.herd-metric small{font-size:.53rem;text-transform:uppercase;font-weight:800;color:#6d766f}
     .herd-list{margin-top:10px;padding:13px}.herd-list-title{font-size:.65rem;text-transform:uppercase;font-weight:900;letter-spacing:.05em}.herd-row{display:flex;align-items:center;gap:9px;padding:10px 0;border-bottom:1px solid #edf0ed}.herd-row:last-child{border:0}.herd-dot{width:31px;height:31px;border-radius:50%;display:grid;place-items:center;background:#e2eee6;color:#175137}.herd-row strong{display:block;font-size:.67rem}.herd-row small{display:block;color:#7b847d;font-size:.56rem}
     @media(max-width:900px){.herd-feature-grid{grid-template-columns:1fr}.herd-feature{text-align:center}.herd-feature-copy{margin-inline:auto}.herd-actions{justify-content:center}.herd-device{max-width:520px;transform:none}}
-    @media(max-width:520px){.herd-actions .btn{width:100%}.herd-device{width:96%}}
+    @media(max-width:520px){
+      .herd-feature{padding:56px 0;text-align:left}
+      .herd-feature .container{padding-inline:18px;max-width:100%}
+      .herd-feature-grid{gap:32px;min-width:0}
+      .herd-feature-grid>div{min-width:0}
+      .herd-feature h2{font-size:clamp(2rem,12vw,3rem);line-height:1;overflow-wrap:anywhere}
+      .herd-feature-copy{font-size:1rem;line-height:1.55}
+      .herd-actions{justify-content:stretch}
+      .herd-actions .btn{width:100%;padding-inline:12px}
+      .herd-device{width:100%;max-width:100%;padding:5px;border-radius:14px;transform:none}
+      .herd-device img{border-radius:9px}
+    }
 
     /* anchor offset for fixed nav */
     .anchor-offset{ scroll-margin-top: 90px; }
@@ -532,9 +544,9 @@
     <div class="container">
       <div class="herd-feature-grid">
         <div>
-          <div class="herd-kicker">Easy View · Built for the whole crew</div>
+          <div class="herd-kicker">Herd records · Built for the whole crew</div>
           <h2>Venture Herd Manager</h2>
-          <p class="herd-feature-copy">Easy View keeps herd work simple on a phone. More than one person can enter events, everyone sees the same ordered history, and automatic alerts show the crew what needs to happen next.</p>
+          <p class="herd-feature-copy">Record heats, breeding, embryos, calvings, and notes from the barn. Everyone sees the same history and the same jobs coming due.</p>
           <div class="herd-actions">
             <a class="btn btn-vam btn-lg px-4" href="herd-manager/">See How It Works</a>
             <a class="btn btn-vam-outline btn-lg px-4" href="https://delightful-sky-0c402ac0f.7.azurestaticapps.net/demo" target="_blank" rel="noopener">Try the Live Demo</a>
