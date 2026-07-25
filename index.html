@@ -389,7 +389,7 @@
     .herd-feature h2{font-weight:900;font-size:clamp(2.3rem,5vw,4.6rem);line-height:.95;letter-spacing:-.04em;text-transform:uppercase;margin:14px 0 20px}
     .herd-feature-copy{color:rgba(242,242,242,.73);font-family:"Roboto Slab",Georgia,serif;font-size:1.08rem;line-height:1.7;max-width:650px}
     .herd-actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:26px}
-    .herd-device{width:min(100%,430px);margin:auto;padding:11px;border-radius:28px;background:linear-gradient(145deg,#3a3e38,#080908);box-shadow:0 32px 75px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.14)}
+    .herd-device{width:min(100%,540px);margin:auto;padding:8px;border-radius:18px;background:linear-gradient(145deg,#3a3e38,#080908);box-shadow:0 32px 75px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.14);transform:rotate(1deg)}\n    .herd-device img{width:100%;height:auto;display:block;border-radius:11px}
     .herd-screen{overflow:hidden;border-radius:19px;background:#edf2ed;color:#162219}
     .herd-screen-head{padding:27px 21px 20px;background:linear-gradient(135deg,#174630,#0d281c);color:#fff}
     .herd-screen-head small{color:rgba(255,255,255,.68)}.herd-screen-head strong{display:block;font-size:1.35rem;margin:5px 0}.herd-screen-head span{font-size:.57rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.75)}
@@ -397,8 +397,8 @@
     .herd-metric,.herd-list{background:#fff;border:1px solid #dde5dc;border-radius:11px;box-shadow:0 7px 18px rgba(18,52,32,.07)}
     .herd-metric{padding:12px 7px}.herd-metric b{display:block;color:#174d34;font-size:1.2rem}.herd-metric small{font-size:.53rem;text-transform:uppercase;font-weight:800;color:#6d766f}
     .herd-list{margin-top:10px;padding:13px}.herd-list-title{font-size:.65rem;text-transform:uppercase;font-weight:900;letter-spacing:.05em}.herd-row{display:flex;align-items:center;gap:9px;padding:10px 0;border-bottom:1px solid #edf0ed}.herd-row:last-child{border:0}.herd-dot{width:31px;height:31px;border-radius:50%;display:grid;place-items:center;background:#e2eee6;color:#175137}.herd-row strong{display:block;font-size:.67rem}.herd-row small{display:block;color:#7b847d;font-size:.56rem}
-    @media(max-width:900px){.herd-feature-grid{grid-template-columns:1fr}.herd-feature{text-align:center}.herd-feature-copy{margin-inline:auto}.herd-actions{justify-content:center}.herd-device{max-width:410px}}
-    @media(max-width:520px){.herd-actions .btn{width:100%}.herd-device{width:94%}}
+    @media(max-width:900px){.herd-feature-grid{grid-template-columns:1fr}.herd-feature{text-align:center}.herd-feature-copy{margin-inline:auto}.herd-actions{justify-content:center}.herd-device{max-width:520px;transform:none}}
+    @media(max-width:520px){.herd-actions .btn{width:100%}.herd-device{width:96%}}
 
     /* anchor offset for fixed nav */
     .anchor-offset{ scroll-margin-top: 90px; }
@@ -532,22 +532,16 @@
     <div class="container">
       <div class="herd-feature-grid">
         <div>
-          <div class="herd-kicker">Custom agricultural software</div>
+          <div class="herd-kicker">Built by Venture Ag Marketing</div>
           <h2>Venture Herd Manager</h2>
-          <p class="herd-feature-copy">Modern herd management built for real work in the barn. Keep animal histories, breeding records, embryo workflows, analytics, and the herd calendar connected in one clean, mobile-ready system.</p>
+          <p class="herd-feature-copy">A working herd record for the barn: animal history, breeding, embryos, preg checks, due dates, and the jobs coming next—all in one place.</p>
           <div class="herd-actions">
-            <a class="btn btn-vam btn-lg px-4" href="herd-manager/">Explore the Software</a>
+            <a class="btn btn-vam btn-lg px-4" href="herd-manager/">See How It Works</a>
             <a class="btn btn-vam-outline btn-lg px-4" href="https://delightful-sky-0c402ac0f.7.azurestaticapps.net/demo" target="_blank" rel="noopener">Try the Live Demo</a>
           </div>
         </div>
-        <div class="herd-device" aria-label="Venture Herd Manager dashboard preview">
-          <div class="herd-screen">
-            <div class="herd-screen-head"><small>Good morning</small><strong>Herd Dashboard</strong><span>Powered by Venture Ag Marketing</span></div>
-            <div class="herd-screen-body">
-              <div class="herd-metrics"><div class="herd-metric"><b>24</b><small>Animals</small></div><div class="herd-metric"><b>6</b><small>Heats</small></div><div class="herd-metric"><b>3</b><small>Checks</small></div></div>
-              <div class="herd-list"><div class="herd-list-title">Recent activity</div><div class="herd-row"><div class="herd-dot"><i class="fa-solid fa-fire-flame-curved"></i></div><div><strong>Heat recorded</strong><small>Maple · today</small></div></div><div class="herd-row"><div class="herd-dot"><i class="fa-solid fa-dna"></i></div><div><strong>Embryo implanted</strong><small>Willow · yesterday</small></div></div><div class="herd-row"><div class="herd-dot"><i class="fa-solid fa-circle-check"></i></div><div><strong>Pregnancy confirmed</strong><small>June · 2 days ago</small></div></div></div>
-            </div>
-          </div>
+        <div class="herd-device" aria-label="Actual Venture Herd Manager dashboard">
+          <img src="assets/img/venture-herd-dashboard.png" alt="Actual Venture Herd Manager dashboard">
         </div>
       </div>
     </div>
