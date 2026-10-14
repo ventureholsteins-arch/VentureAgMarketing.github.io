@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#10120f">
+  <title>The Venture Collection | Cattle, Embryos & IVF</title>
+  <meta name="description" content="Cattle, embryo packages, and IVF opportunities from Venture Holsteins.">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Libre+Caslon+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="sale.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../"><img src="../assets/img/venture-logo.PNG" alt="Venture Ag Marketing"></a>
+    <nav><a href="#offerings">Offerings</a><a href="#details">How it works</a><a class="inquire" data-contact target="_blank" rel="noopener">Inquire</a></nav>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="hero__photo"></div><div class="hero__shade"></div>
+      <div class="hero__copy"><p class="eyebrow" id="eyebrow"></p><h1 id="title"></h1><p class="intro" id="intro"></p>
+        <div class="actions"><a class="button gold" href="#offerings">Explore the offering</a><a class="button glass" href="#details">Sale details</a></div>
+      </div>
+      <div class="hero__meta"><span id="farm"></span><i></i><span id="location"></span></div>
+    </section>
+
+    <section class="offerings" id="offerings">
+      <div class="section-head"><div><p class="eyebrow dark">The offering</p><h2>Built to let the cattle speak.</h2></div><p>Every lot gets room for the whole story—media, pedigree, production, genomics, terms, and the details buyers actually need.</p></div>
+      <div class="filters" aria-label="Filter offerings"><button class="active" data-filter="all">All offerings</button><button data-filter="animal">Live animals</button><button data-filter="embryo">Embryos</button><button data-filter="ivf">IVF sessions</button></div>
+      <div class="grid" id="listings"></div><p class="empty" id="empty" hidden>No offerings are posted here right now.</p>
+    </section>
+
+    <section class="sale-notes" id="details">
+      <div><p class="eyebrow">Simple by design</p><h2>Tag-sale easy.<br>Sale-catalog quality.</h2></div>
+      <div class="notes">
+        <article><span>01</span><h3>See everything</h3><p>Photos, video, pedigree, terms, price, and availability stay together on one buyer-friendly page.</p></article>
+        <article><span>02</span><h3>Ask directly</h3><p>Each offering has its own inquiry action, so buyers can tell you exactly what caught their eye.</p></article>
+        <article><span>03</span><h3>Close privately</h3><p>No auction account. Set a price, take inquiries, and handle the deal your way.</p></article>
+      </div>
+    </section>
+    <section class="manage"><div><p class="eyebrow dark">Made to change with the offering</p><h2>One page for the whole sale season.</h2></div><p>Listings can be reordered, marked sold, or hidden. Prices can be public or “contact for price.” Embryos, IVF sessions, and live animals each keep the details that matter to that offering.</p></section>
+    <section class="cta"><p class="eyebrow dark">The Venture Collection</p><h2>See something you like?</h2><p>Reach out for availability, additional media, terms, or help building the right package.</p><a class="button black" data-contact target="_blank" rel="noopener">Start a conversation</a></section>
+  </main>
+  <footer><img src="../assets/img/venture-logo.PNG" alt="Venture Ag Marketing"><p>Custom ag solutions built around the way you work.</p><a href="../">ventureagmarketing.com</a></footer>
+  <dialog id="listingDialog"><button class="close" id="dialogClose" aria-label="Close">×</button><div id="dialogBody"></div></dialog>
+  <script src="sale-data.js"></script><script src="sale.js"></script>
+</body>
+</html>
