@@ -1,0 +1,83 @@
+:root {
+  --green: #151515;
+  --green2: #373532;
+  --gold: #a48761;
+  --paper: #f4f1eb;
+  --cream: #f4f1eb;
+  --ink: #151515;
+  --muted: #6e6962;
+  --line: #d8d2c9;
+}
+
+.vh-logo {
+  position: relative;
+  display: block;
+  width: 172px;
+  height: 70px;
+  flex: 0 0 172px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.vh-logo img,
+.top .vh-logo img {
+  position: absolute;
+  top: -45px;
+  left: 6px;
+  width: 160px;
+  max-width: none;
+  height: 160px;
+  filter: contrast(4.5);
+  mix-blend-mode: normal;
+}
+
+.farm-photo {
+  background-image: url("../assets/img/venture-holsteins/candid-cow.jpg");
+  background-position: center 48%;
+}
+
+.farm-copy,
+.intro,
+.sale-footer {
+  background-color: #151515;
+}
+
+.farm-copy > span,
+.intro span,
+.inventory-head span,
+.label {
+  color: #c2a67d;
+}
+
+.choice .availability,
+.sale-footer .primary {
+  background: #b1956d;
+}
+
+.choice.sale .availability,
+.status,
+.kicker,
+.lot-top b,
+.filters .active,
+.quick-filters .active,
+.views .active,
+.primary,
+.contact,
+.copy > button {
+  background: #151515;
+}
+
+.line,
+.detail-price,
+.lot-actions .share-lot,
+.share-detail,
+.top nav a:hover,
+.top nav a.active {
+  color: #151515;
+}
+
+@media (max-width: 560px) {
+  .vh-logo { width: 146px; height: 58px; flex-basis: 146px; }
+  .vh-logo img,
+  .top .vh-logo img { top: -38px; left: 5px; width: 136px; height: 136px; }
+}
