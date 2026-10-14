@@ -1,46 +1,23 @@
 window.VENTURE_SALE_DATA = {
-  brand: {
-    farmName: "Venture Holsteins",
-    saleTitle: "The Venture Collection",
-    eyebrow: "Private Treaty · IVF Opportunities · Tag Sales",
-    intro: "Elite genetics, honest cow families, and the next generation selected with purpose.",
-    location: "South Dakota",
-    contactUrl: "https://www.facebook.com/ventureagmarketing"
+  sale: {
+    name: "Venture Holsteins Tag Sale", farm: "Venture Holsteins", status: "Catalog Preview",
+    dates: "Private treaty · Available by appointment", location: "South Dakota",
+    contactUrl: "https://www.facebook.com/ventureagmarketing",
+    notice: "Preview catalog only — sample lots are not currently offered for sale.",
+    terms: "Prices and availability are confirmed directly with Venture Holsteins. Health, trucking, insurance, and payment arrangements will be listed with each live offering."
   },
-  // Preview content only. Change status to "available" when a listing is truly for sale.
-  listings: [
-    {
-      id: "animal-preview", type: "animal", status: "preview", featured: true,
-      name: "Your Next Feature Animal", lot: "Tag Sale", price: "Contact for price",
-      headline: "A full feature built for the animal buyers need to remember.",
-      description: "Showcase a heifer, cow, or choice lot with her story, pedigree, photos, video, genomic highlights, health details, and terms in one clean place.",
-      image: "../assets/img/sale-showcase/show-heifer.jpg",
-      gallery: ["../assets/img/sale-showcase/show-heifer.jpg", "../assets/img/sale-showcase/show-cow.jpg"],
-      videoUrl: "",
-      details: [["Offering", "Live animal"], ["Format", "Private treaty / tag sale"], ["Location", "South Dakota"], ["Availability", "Preview only"]],
-      pedigree: { sire: "Sire name", dam: "Dam name", mgs: "Maternal grandsire", mgd: "Maternal granddam" },
-      highlights: ["Classification or genomic highlights", "Show results", "Freshening, due date, or reproductive status"]
-    },
-    {
-      id: "embryo-preview", type: "embryo", status: "preview", featured: false,
-      name: "Elite Embryo Package", lot: "Embryos", price: "Contact for price",
-      headline: "Sell the mating—not just a line of text.",
-      description: "Present the donor, sire, maternal line, grade, quantity, storage location, shipping details, and supporting media together.",
-      image: "../assets/img/sale-showcase/donor-cow.jpg", gallery: ["../assets/img/sale-showcase/donor-cow.jpg"], videoUrl: "",
-      details: [["Offering", "Embryos"], ["Quantity", "Configure per listing"], ["Type", "IVF or conventional"], ["Availability", "Preview only"]],
-      pedigree: { sire: "Embryo sire", dam: "Donor dam", mgs: "Donor's sire", mgd: "Next dam" },
-      highlights: ["Embryo grades and quantity", "Storage and shipping terms", "Donor and maternal-family media"]
-    },
-    {
-      id: "ivf-preview", type: "ivf", status: "preview", featured: false,
-      name: "IVF Session Opportunity", lot: "IVF Session", price: "Inquire",
-      headline: "A donor opportunity buyers can understand quickly.",
-      description: "Set the session date, guarantee, sire choices, buyer responsibilities, location, and terms while keeping the donor's story front and center.",
-      image: "../assets/img/sale-showcase/show-cow.jpg",
-      gallery: ["../assets/img/sale-showcase/show-cow.jpg", "../assets/img/sale-showcase/donor-cow.jpg"], videoUrl: "",
-      details: [["Offering", "IVF session"], ["Session date", "Set when scheduled"], ["Guarantee", "Configure terms"], ["Availability", "Preview only"]],
-      pedigree: { sire: "Donor sire", dam: "Donor dam", mgs: "Maternal grandsire", mgd: "Maternal granddam" },
-      highlights: ["Available sire choices", "Guarantee and flush terms", "Donor video and records"]
-    }
+  lots: [
+    {id:"1",lot:1,type:"animal",group:"Show Heifers",name:"Sample Show Heifer",price:"$7,500",status:"preview",dob:"March 2026",sire:"Sire Name",dam:"Dam Name",mgs:"Maternal Grandsire",image:"../assets/img/sale-showcase/show-heifer.jpg",video:"",summary:"Spring heifer prospect. Broke to lead and ready to view.",details:["Holstein","Spring heifer","South Dakota"]},
+    {id:"2",lot:2,type:"animal",group:"Show Heifers",name:"Sample Fall Heifer",price:"Contact",status:"preview",dob:"September 2025",sire:"Sire Name",dam:"Dam Name",mgs:"Maternal Grandsire",image:"../assets/img/sale-showcase/show-cow.jpg",video:"",summary:"Fall heifer with a deep maternal line.",details:["Holstein","Fall heifer","South Dakota"]},
+    {id:"3",lot:3,type:"animal",group:"Cows",name:"Sample Fresh Cow",price:"$12,500",status:"preview",dob:"December 2022",sire:"Sire Name",dam:"Dam Name",mgs:"Maternal Grandsire",image:"../assets/img/sale-showcase/donor-cow.jpg",video:"",summary:"Fresh cow opportunity with production and classification information available.",details:["Holstein","Fresh cow","South Dakota"]},
+    {id:"4",lot:4,type:"animal",group:"Cows",name:"Sample Bred Cow",price:"Contact",status:"preview",dob:"June 2021",sire:"Sire Name",dam:"Dam Name",mgs:"Maternal Grandsire",image:"../assets/img/sale-showcase/show-cow.jpg",video:"",summary:"Bred cow with service and due-date details listed in the full lot record.",details:["Holstein","Bred cow","South Dakota"]},
+    {id:"5",lot:5,type:"embryo",group:"Embryos",name:"Donor Dam × Embryo Sire",price:"$750 / embryo",status:"preview",dob:"3 embryo package",sire:"Embryo Sire",dam:"Donor Dam",mgs:"Donor's Sire",image:"../assets/img/sale-showcase/donor-cow.jpg",video:"",summary:"IVF embryo package. Grade, storage, shipping, and guarantee shown in the lot record.",details:["IVF embryos","3 available","Stored in South Dakota"]},
+    {id:"6",lot:6,type:"embryo",group:"Embryos",name:"Donor Dam × Choice of Sires",price:"Contact",status:"preview",dob:"Choice package",sire:"Choice of sires",dam:"Donor Dam",mgs:"Donor's Sire",image:"../assets/img/sale-showcase/show-cow.jpg",video:"",summary:"Choice embryo package from a featured donor family.",details:["IVF embryos","Choice package","Buyer selects mating"]},
+    {id:"7",lot:7,type:"ivf",group:"IVF Sessions",name:"IVF Session — Featured Donor",price:"Contact",status:"preview",dob:"Session date TBD",sire:"Buyer choice",dam:"Featured Donor",mgs:"Donor's Sire",image:"../assets/img/sale-showcase/donor-cow.jpg",video:"",summary:"IVF session with configurable sire choices and guarantee terms.",details:["IVF session","Buyer choice sire","Terms listed in lot"]},
+    {id:"8",lot:8,type:"animal",group:"Show Heifers",name:"Sample Summer Yearling",price:"$6,500",status:"preview",dob:"June 2025",sire:"Sire Name",dam:"Dam Name",mgs:"Maternal Grandsire",image:"../assets/img/sale-showcase/show-heifer.jpg",video:"",summary:"Summer yearling ready for the show season.",details:["Holstein","Summer yearling","South Dakota"]},
+    {id:"9",lot:9,type:"animal",group:"Bred Heifers",name:"Sample Bred Heifer",price:"$9,000",status:"preview",dob:"January 2025",sire:"Sire Name",dam:"Dam Name",mgs:"Maternal Grandsire",image:"../assets/img/sale-showcase/show-cow.jpg",video:"",summary:"Bred heifer with complete service information and due date.",details:["Holstein","Bred heifer","Due date listed"]},
+    {id:"10",lot:10,type:"embryo",group:"Embryos",name:"Show Family Embryo Package",price:"$2,500 / package",status:"preview",dob:"5 embryo package",sire:"Embryo Sire",dam:"Donor Dam",mgs:"Donor's Sire",image:"../assets/img/sale-showcase/show-heifer.jpg",video:"",summary:"Five-embryo package backed by a proven show family.",details:["IVF embryos","5 available","Guarantee listed"]},
+    {id:"11",lot:11,type:"animal",group:"Cows",name:"Sample Donor Prospect",price:"Contact",status:"preview",dob:"March 2023",sire:"Sire Name",dam:"Dam Name",mgs:"Maternal Grandsire",image:"../assets/img/sale-showcase/donor-cow.jpg",video:"",summary:"Donor prospect with genomic and family information available.",details:["Holstein","Donor prospect","Genomics available"]},
+    {id:"12",lot:12,type:"ivf",group:"IVF Sessions",name:"IVF Session — Choice Donor",price:"Contact",status:"preview",dob:"Session date TBD",sire:"Buyer choice",dam:"Choice Donor",mgs:"Donor's Sire",image:"../assets/img/sale-showcase/show-cow.jpg",video:"",summary:"Choice session with donor records and mating options included.",details:["IVF session","Choice donor","Custom mating"]}
   ]
 };

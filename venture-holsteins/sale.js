@@ -1,39 +1,18 @@
 (() => {
-  const data = window.VENTURE_SALE_DATA, $ = s => document.querySelector(s);
-  const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-  const label = t => ({animal:"Live Animal", embryo:"Embryos", ivf:"IVF Session"}[t] || t);
-  let filter = "all";
-
-  $("#title").textContent = data.brand.saleTitle; $("#eyebrow").textContent = data.brand.eyebrow;
-  $("#intro").textContent = data.brand.intro; $("#farm").textContent = data.brand.farmName; $("#location").textContent = data.brand.location;
-  document.querySelectorAll("[data-contact]").forEach(a => a.href = data.brand.contactUrl);
-
-  function render() {
-    const items = data.listings.filter(x => filter === "all" || x.type === filter);
-    $("#listings").innerHTML = items.map(x => `<article class="card ${x.featured ? "featured" : ""}">
-      <button class="photo" data-open="${esc(x.id)}"><img src="${esc(x.image)}" alt="${esc(x.name)}" loading="lazy"><span>${esc(x.lot)}</span>${x.status === "preview" ? "<b>Page preview</b>" : ""}</button>
-      <div class="card__copy"><p class="kind">${esc(label(x.type))}</p><h3>${esc(x.name)}</h3><p>${esc(x.headline)}</p><div class="card__foot"><strong>${esc(x.price)}</strong><button data-open="${esc(x.id)}">View details →</button></div></div>
-    </article>`).join("");
-    $("#empty").hidden = items.length > 0;
-  }
-
-  function open(id) {
-    const x = data.listings.find(y => y.id === id); if (!x) return;
-    const details = x.details.map(d => `<div><dt>${esc(d[0])}</dt><dd>${esc(d[1])}</dd></div>`).join("");
-    const thumbs = x.gallery.map((im,i) => `<button class="thumb ${i ? "" : "active"}" data-img="${esc(im)}"><img src="${esc(im)}" alt="${esc(x.name)} photo"></button>`).join("");
-    $("#dialogBody").innerHTML = `<div class="dialog-grid"><div class="gallery"><img class="main-img" id="mainImg" src="${esc(x.image)}" alt="${esc(x.name)}"><div class="thumbs">${thumbs}</div></div>
-      <div class="dialog-copy"><p class="kind">${esc(label(x.type))} · ${esc(x.lot)}</p><h2>${esc(x.name)}</h2>${x.status === "preview" ? '<p class="preview">Design preview — not currently offered for sale.</p>' : ""}<p class="lead">${esc(x.description)}</p>
-      <dl>${details}</dl><p class="block-label">Pedigree</p><div class="pedigree"><div><span>Sire</span><strong>${esc(x.pedigree.sire)}</strong></div><div><span>Dam</span><strong>${esc(x.pedigree.dam)}</strong><small>${esc(x.pedigree.mgs)} × ${esc(x.pedigree.mgd)}</small></div></div>
-      <p class="block-label">Highlights</p><ul>${x.highlights.map(h => `<li>${esc(h)}</li>`).join("")}</ul><div class="dialog-actions"><a class="button gold" href="${esc(data.brand.contactUrl)}" target="_blank" rel="noopener">Ask about this offering</a>${x.videoUrl ? `<a class="button outline" href="${esc(x.videoUrl)}" target="_blank">Watch video</a>` : ""}</div></div></div>`;
-    $("#listingDialog").showModal();
-  }
-
-  document.addEventListener("click", e => {
-    const f = e.target.closest("[data-filter]"); if (f) { filter = f.dataset.filter; document.querySelectorAll("[data-filter]").forEach(b => b.classList.toggle("active", b === f)); render(); }
-    const o = e.target.closest("[data-open]"); if (o) open(o.dataset.open);
-    const t = e.target.closest("[data-img]"); if (t) { $("#mainImg").src = t.dataset.img; document.querySelectorAll("[data-img]").forEach(b => b.classList.toggle("active", b === t)); }
-  });
-  $("#dialogClose").onclick = () => $("#listingDialog").close();
-  $("#listingDialog").onclick = e => { if (e.target.id === "listingDialog") e.target.close(); };
-  render();
+  const data=window.VENTURE_SALE_DATA,$=s=>document.querySelector(s),esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const state={search:"",category:"all",group:"all",sort:"lot",view:"grid",selected:new Set()};
+  $("#saleName").textContent=data.sale.name;$("#saleStatus").textContent=data.sale.status;$("#saleDates").textContent=data.sale.dates;$("#saleLocation").textContent=data.sale.location;$("#notice").textContent=data.sale.notice;$("#terms").textContent=data.sale.terms;document.querySelectorAll("[data-contact]").forEach(a=>a.href=data.sale.contactUrl);
+  const groups=["all",...new Set(data.lots.map(x=>x.group))];
+  $("#groupFilters").innerHTML=groups.map(g=>`<button class="${g==="all"?"active":""}" data-group="${esc(g)}">${g==="all"?"All":esc(g)}</button>`).join("");
+  function filtered(){let a=data.lots.filter(x=>(state.category==="all"||x.type===state.category)&&(state.group==="all"||x.group===state.group));if(state.search){const q=state.search.toLowerCase();a=a.filter(x=>[x.lot,x.name,x.sire,x.dam,x.mgs,x.group].join(" ").toLowerCase().includes(q))}return a.sort((a,b)=>state.sort==="name"?a.name.localeCompare(b.name):state.sort==="priceHigh"?number(b.price)-number(a.price):a.lot-b.lot)}
+  const number=v=>Number(String(v).replace(/[^0-9.]/g,""))||0;
+  function card(x){const checked=state.selected.has(x.id);return `<article class="lot-card"><label class="pick"><input type="checkbox" data-select="${x.id}" ${checked?"checked":""}><span>Select</span></label><button class="lot-photo" data-open="${x.id}"><img src="${esc(x.image)}" alt="Lot ${x.lot} ${esc(x.name)}" loading="lazy">${x.video?'<i>▶ Video</i>':""}</button><div class="lot-copy"><div class="lot-top"><b>LOT ${x.lot}</b><span>${esc(x.group)}</span></div><button class="lot-name" data-open="${x.id}">${esc(x.name)}</button><p class="pedigree">${esc(x.sire)} × ${esc(x.dam)}</p><dl><div><dt>Born / Package</dt><dd>${esc(x.dob)}</dd></div><div><dt>Price</dt><dd>${esc(x.price)}</dd></div></dl><p class="summary">${esc(x.summary)}</p><div class="lot-actions"><button data-open="${x.id}">View Lot</button><a href="${esc(data.sale.contactUrl)}" target="_blank" rel="noopener">Ask Seller</a></div></div></article>`}
+  function render(){const a=filtered();$("#lots").className=`lot-grid ${state.view==="list"?"list-view":""}`;$("#lots").innerHTML=a.map(card).join("");$("#lotCount").textContent=a.length;$("#noResults").hidden=!!a.length;renderSelection()}
+  function renderSelection(){const n=state.selected.size;$("#selection").hidden=!n;$("#selectedCount").textContent=n}
+  function openLot(id){const x=data.lots.find(y=>y.id===id);if(!x)return;$("#lotDetail").innerHTML=`<div class="detail-grid"><div class="detail-photo"><img src="${esc(x.image)}" alt="${esc(x.name)}">${x.video?`<a href="${esc(x.video)}" target="_blank">▶ Watch video</a>`:""}</div><div class="detail-copy"><span class="kicker">LOT ${x.lot} · ${esc(x.group)}</span><h2>${esc(x.name)}</h2><div class="detail-price">${esc(x.price)}</div><p>${esc(x.summary)}</p><div class="facts">${x.details.map(v=>`<span>${esc(v)}</span>`).join("")}</div><h3>Pedigree</h3><div class="tree"><div><small>SIRE</small><b>${esc(x.sire)}</b></div><div><small>DAM</small><b>${esc(x.dam)}</b><span>${esc(x.mgs)}</span></div></div><h3>Lot Information</h3><dl class="lot-info"><div><dt>Born / Package</dt><dd>${esc(x.dob)}</dd></div><div><dt>Availability</dt><dd>${x.status==="preview"?"Preview only":"Available"}</dd></div></dl><div class="detail-actions"><label><input type="checkbox" data-select="${x.id}" ${state.selected.has(x.id)?"checked":""}> Add to selected lots</label><a class="primary" href="${esc(data.sale.contactUrl)}" target="_blank" rel="noopener">Ask About Lot ${x.lot}</a></div></div></div>`;$("#lotDialog").showModal()}
+  function compare(){const a=data.lots.filter(x=>state.selected.has(x.id));$("#compareContent").innerHTML=`<div class="compare-table"><div class="compare-row head"><span>Lot</span><span>Offering</span><span>Pedigree</span><span>Price</span></div>${a.map(x=>`<div class="compare-row"><span><b>${x.lot}</b></span><span><b>${esc(x.name)}</b><small>${esc(x.group)}</small></span><span>${esc(x.sire)} × ${esc(x.dam)}</span><span><b>${esc(x.price)}</b></span></div>`).join("")}</div>`;$("#compareDialog").showModal()}
+  $("#search").oninput=e=>{state.search=e.target.value;render()};$("#category").onchange=e=>{state.category=e.target.value;render()};$("#sort").onchange=e=>{state.sort=e.target.value;render()};
+  document.addEventListener("click",e=>{const g=e.target.closest("[data-group]");if(g){state.group=g.dataset.group;document.querySelectorAll("[data-group]").forEach(b=>b.classList.toggle("active",b===g));render()}const v=e.target.closest("[data-view]");if(v){state.view=v.dataset.view;document.querySelectorAll("[data-view]").forEach(b=>b.classList.toggle("active",b===v));render()}const o=e.target.closest("[data-open]");if(o)openLot(o.dataset.open);const c=e.target.closest("[data-close]");if(c)$("#"+c.dataset.close).close()});
+  document.addEventListener("change",e=>{const s=e.target.closest("[data-select]");if(!s)return;s.checked?state.selected.add(s.dataset.select):state.selected.delete(s.dataset.select);document.querySelectorAll(`[data-select="${s.dataset.select}"]`).forEach(i=>i.checked=s.checked);renderSelection()});
+  $("#clearSelection").onclick=()=>{state.selected.clear();render()};$("#compareButton").onclick=compare;$("#termsButton").onclick=()=>$("#termsDialog").showModal();document.querySelectorAll("dialog").forEach(d=>d.addEventListener("click",e=>{if(e.target===d)d.close()}));render();
 })();
