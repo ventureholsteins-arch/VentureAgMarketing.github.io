@@ -8,7 +8,7 @@
     .then(catalog => {
       if (!catalog.isLive) return close(catalog);
       window.VENTURE_SALE_DATA = { sale: { name: catalog.saleName, status: "Open", dates: catalog.dates || "", location: catalog.location || "", notice: catalog.notice || "", terms: catalog.terms || "", contactUrl: catalog.contactUrl || "" }, lots: catalog.lots || [] };
-      const app = document.createElement("script"); app.src = "sale.js?v=20261014-2"; document.body.appendChild(app);
+      const app = document.createElement("script"); app.src = "sale.js?v=20261014-3"; document.body.appendChild(app);
     })
     .catch(() => close({ comingSoonMessage: "The sale catalog is temporarily unavailable. Please check back shortly." }));
 })();
