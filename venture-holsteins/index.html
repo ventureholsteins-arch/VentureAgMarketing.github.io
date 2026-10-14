@@ -1,29 +1,9 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#173522"><title>Venture Holsteins Tag Sale</title><meta name="description" content="Browse cattle, embryos and IVF opportunities from Venture Holsteins."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@500;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="sale.css"></head>
-<body>
-  <header class="site-head"><a href="../" class="logo"><img src="../assets/img/venture-logo.PNG" alt="Venture Ag Marketing"></a><div><strong>VENTURE HOLSTEINS</strong><span>Online Sale Catalog</span></div><a class="contact" data-contact target="_blank" rel="noopener">Contact Seller</a></header>
-  <main>
-    <section class="sale-head">
-      <div class="sale-photo"></div><div class="sale-info"><div class="status" id="saleStatus"></div><h1 id="saleName"></h1><p class="sale-dates" id="saleDates"></p><p class="sale-location" id="saleLocation"></p><div class="head-actions"><a href="#catalog" class="primary">View Lots</a><button id="termsButton">Sale Information</button></div></div>
-    </section>
-    <div class="notice" id="notice"></div>
-    <section class="catalog" id="catalog">
-      <div class="catalog-title"><div><span>VENTURE HOLSTEINS</span><h2>Sale Lots</h2></div><p><b id="lotCount">0</b> lots shown</p></div>
-      <div class="tools">
-        <label class="search"><span>Search</span><input id="search" type="search" placeholder="Lot, animal, sire, dam…"></label>
-        <label><span>Category</span><select id="category"><option value="all">All lots</option><option value="animal">Live animals</option><option value="embryo">Embryos</option><option value="ivf">IVF sessions</option></select></label>
-        <label><span>Sort</span><select id="sort"><option value="lot">Lot number</option><option value="priceHigh">Price: high to low</option><option value="name">Name</option></select></label>
-        <div class="views"><button class="active" data-view="grid" aria-label="Grid view">▦</button><button data-view="list" aria-label="List view">☷</button></div>
-      </div>
-      <div class="quick-filters" id="groupFilters"></div>
-      <div class="lot-grid" id="lots"></div><div class="no-results" id="noResults" hidden>No lots match those filters.</div>
-    </section>
-    <section class="sale-footer"><div><h2>Questions about a lot?</h2><p>Call, message, or schedule a time to see the cattle. Lot availability is confirmed directly with Venture Holsteins.</p></div><a class="primary" data-contact target="_blank" rel="noopener">Contact Venture Holsteins</a></section>
-  </main>
-  <footer><img src="../assets/img/venture-logo.PNG" alt="Venture Ag Marketing"><span>Sale page powered by Venture Ag Marketing</span><a href="../">ventureagmarketing.com</a></footer>
-
-  <aside class="selection" id="selection" hidden><div><strong><span id="selectedCount">0</span> lots selected</strong><span>Compare or send an inquiry about several lots.</span></div><button id="clearSelection">Clear</button><button class="primary" id="compareButton">Compare Selected</button></aside>
-  <dialog id="lotDialog"><button class="close" data-close="lotDialog">×</button><div id="lotDetail"></div></dialog>
-  <dialog id="compareDialog"><button class="close" data-close="compareDialog">×</button><div class="compare-wrap"><span class="kicker">YOUR SELECTED LOTS</span><h2>Compare Lots</h2><div id="compareContent"></div><a class="primary" data-contact target="_blank" rel="noopener">Ask About Selected Lots</a></div></dialog>
-  <dialog id="termsDialog"><button class="close" data-close="termsDialog">×</button><div class="terms-wrap"><span class="kicker">VENTURE HOLSTEINS</span><h2>Sale Information</h2><p id="terms"></p><a class="primary" data-contact target="_blank" rel="noopener">Contact Seller</a></div></dialog>
-  <script src="sale-data.js"></script><script src="sale.js"></script>
-</body></html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Venture Holsteins | Cattle & Genetics</title><meta name="description" content="Venture Holsteins cattle sales, embryos, and IVF opportunities."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Oswald:wght@500;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="hub.css"></head><body>
+<header class="top"><a href="../"><img src="../assets/img/venture-logo.PNG" alt="Venture Ag Marketing"></a><a href="../">Venture Ag Marketing</a></header>
+<main><section class="farm-hero"><div class="farm-photo"></div><div class="farm-copy"><span>VENTURE HOLSTEINS · SOUTH DAKOTA</span><h1>Cattle & Genetics</h1><p>Browse available embryo packages and IVF opportunities year-round. When a Venture Holsteins tag sale is posted, the complete lot catalog appears separately.</p></div></section>
+<section class="choices"><div class="choices-head"><div><span class="section-label">CHOOSE AN OFFERING</span><h2>What are you looking for?</h2></div><p>Genetics stay available throughout the year. Tag-sale cattle are posted only when an active offering is ready.</p></div><div class="choice-grid">
+<a class="choice genetics" href="genetics/"><span class="availability">Available year-round</span><h3>Embryos & IVF</h3><p>Embryo packages, donor information, IVF session opportunities, mating options, guarantees, and availability.</p><b>Browse Genetics →</b></a>
+<a class="choice sale" href="sale/"><span class="availability">Seasonal offering</span><h3>Tag Sale</h3><p>Browse numbered sale lots, photos, videos, pedigrees, prices, and terms when a sale catalog is posted.</p><b>View Sale Catalog →</b></a>
+</div></section>
+<section class="how"><span class="section-label">VENTURE HOLSTEINS</span><h2>Simple from first look to pickup.</h2><div class="steps"><article><b>1. Browse</b><p>Review the full lot or genetics information without creating an account.</p></article><article><b>2. Select</b><p>Choose and compare the cattle, embryo packages, or donor opportunities that interest you.</p></article><article><b>3. Contact</b><p>Confirm current availability, terms, payment, trucking, or embryo shipping directly.</p></article></div></section></main>
+<footer><img src="../assets/img/venture-logo.PNG" alt="Venture Ag Marketing"><span>Custom ag solutions built around the way you work.</span><a href="../">ventureagmarketing.com</a></footer></body></html>
