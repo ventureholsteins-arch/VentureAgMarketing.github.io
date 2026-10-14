@@ -25,8 +25,37 @@
   width: 146px;
   max-width: 146px;
   height: auto;
-  filter: none;
+  filter: brightness(0) invert(1);
   mix-blend-mode: normal;
+}
+
+.top,
+header,
+.site-head {
+  color: #fff;
+  background: #151515;
+  border-color: #373737;
+}
+
+.top nav a,
+.back,
+header a {
+  color: #c9c6c0;
+}
+
+.top nav a:hover,
+.top nav a.active {
+  color: #fff;
+}
+
+.site-head > div {
+  border-color: #444;
+}
+
+.site-head .contact,
+header > a:last-child {
+  color: #151515;
+  background: #fff;
 }
 
 .farm-photo {
@@ -65,6 +94,14 @@
   background: #151515;
 }
 
+.choice.coming-soon {
+  cursor: default;
+}
+
+.choice.coming-soon::before {
+  filter: grayscale(1);
+}
+
 .line,
 .detail-price,
 .lot-actions .share-lot,
@@ -78,4 +115,7 @@
   .vh-logo { width: 128px; height: 54px; flex-basis: 128px; }
   .vh-logo img,
   .top .vh-logo img { width: 122px; max-width: 122px; height: auto; }
+  .top { width: 100%; padding: 10px 14px 12px; overflow: hidden; }
+  .top nav { width: 100%; padding-top: 9px; gap: 17px; justify-content: flex-start; overflow: hidden; border-color: #373737; }
+  .top nav a { flex: none; margin: 0; color: #c9c6c0; font-size: .54rem; letter-spacing: .025em; }
 }

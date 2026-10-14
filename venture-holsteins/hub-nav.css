@@ -3,7 +3,7 @@
 .top nav { margin-left: auto; display: flex; align-items: center; gap: 26px; }
 .top nav a { margin: 0; color: var(--muted); font-size: .7rem; font-weight: 800; letter-spacing: .04em; text-decoration: none; text-transform: uppercase; }
 .top nav a:hover, .top nav a.active { color: var(--green); }
-.farm-copy h1 { font-family: Georgia, "Times New Roman", serif; font-size: clamp(3.7rem, 7vw, 6.8rem); font-weight: 400; letter-spacing: -.035em; line-height: .82; text-transform: none; }
+.farm-copy h1 { font-family: var(--head); font-size: clamp(3.7rem, 7vw, 6.8rem); font-weight: 600; letter-spacing: -.02em; line-height: .88; text-transform: uppercase; }
 .farm-copy > span { color: #ddbd81; letter-spacing: .18em; }
 .farm-copy p { max-width: 500px; margin-top: 20px; font-size: 1rem; }
 .farm-rule { width: 72px; height: 2px; margin-top: 10px; background: var(--gold); }
